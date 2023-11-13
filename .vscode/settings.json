@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/8902f34f-e80f-4ebf-9b21-8cf9a4fe297d/resourceGroups/doss-rg/providers/Microsoft.Web/sites/doss-api",
+    "appService.deploySubpath": "src\\Conectores\\Doss.Api"
+}

@@ -1,0 +1,56 @@
+using Doss.Core.Commands.OnBoard.ServiceProviders;
+using Doss.Core.Domain.OnBoard;
+using Doss.Core.Interfaces.Repositories;
+using Doss.Core.Seedwork;
+using FluentValidation;
+
+namespace Ageu.Core.Commands.OnBoard.ServiceProviders.Handlers;
+
+public class ServiceProviderOnBoardFormPaymentCommandHandler : BaseCommandHandler<ServiceProviderOnBoardFormPaymentCommand, ServiceProviderOnBoardFormPaymentCommandValidator>
+{
+    private readonly IOnBoardServiceProviderRepository onBoardServiceProviderRepository;
+    private readonly IBankRepository bankRepository;
+
+    public ServiceProviderOnBoardFormPaymentCommandHandler(IOnBoardServiceProviderRepository onBoardServiceProviderRepository,
+                                                           IBankRepository bankRepository,
+                                                           ServiceProviderOnBoardFormPaymentCommandValidator validator)
+        : base(validator)
+            => (this.onBoardServiceProviderRepository, this.bankRepository) = (onBoardServiceProviderRepository, bankRepository);
+
+    public override async Task<Result> HandleImplementation(ServiceProviderOnBoardFormPaymentCommand command)
+    {
+        var serviceProviderOnBoard = await onBoardServiceProviderRepository.ReturnByUserIdAsync(command.User!.Id);
+        if (serviceProviderOnBoard.IsNull())
+            return Results.Error("OnBoard not found.");
+
+        serviceProviderOnBoard.ChangeStep(OnBoardStepEnum.SelectPlan);
+
+        if (serviceProviderOnBoard.Plans.IsNotNull())
+            onBoardServiceProviderRepository.RemovePlans(serviceProviderOnBoard.Plans!);
+        
+        if (serviceProviderOnBoard.Bank.IsNotNull())
+            onBoardServiceProviderRepository.RemoveBank(serviceProviderOnBoard.Bank!);
+        
+        var bank = await bankRepository.ReturnByIdAsync(command.BankId);
+
+        serviceProviderOnBoard.AddBank(bank);
+        serviceProviderOnBoard.ChangeAccountBank(command.Account);
+        serviceProviderOnBoard.ChangeAgencyBank(command.Agency);
+        serviceProviderOnBoard.AddPlan(command.Plans.Select(c => new OnBoardPlan(c.Description, c.Price)).ToList());
+
+        await onBoardServiceProviderRepository.SaveAsync();
+
+        return Results.Ok("OnBoard successfully processed.");
+    }
+}
+
+public sealed class ServiceProviderOnBoardFormPaymentCommandValidator : AbstractValidator<ServiceProviderOnBoardFormPaymentCommand>
+{
+    public ServiceProviderOnBoardFormPaymentCommandValidator()
+    {
+        RuleFor(c => c.BankId).NotEmpty();
+        RuleFor(c => c.Agency).NotEmpty();
+        RuleFor(c => c.Account).NotEmpty();
+        RuleForEach(c => c.Plans).NotEmpty();
+    }
+}
