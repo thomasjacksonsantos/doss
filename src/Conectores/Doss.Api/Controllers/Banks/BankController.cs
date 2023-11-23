@@ -53,8 +53,8 @@ namespace Doss.Api.Controllers.Banks
         /// <response code="400">If the item is null</response>
         [ProducesResponseType(typeof(Result<BankAllQuery.Response>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-        [HttpGet]
-        public async Task<IActionResult> Get([FromBody] BankAllQuery query)
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAll([FromQuery] BankAllQuery query)
             => await HandleQuery<BankAllQuery, BankAllQuery.Response>(query);
     }
 }

@@ -122,7 +122,7 @@ public class Startup
                     Configuration.Bind("AzureAdB2C", options);
                 });
 
-        services.AddHttpClient(Configuration.GetSection("AppSettings:Cep:ServiceName").Value, c => c.BaseAddress = new Uri(Configuration.GetSection("AppSettings:Cep:Url").Value));
+        services.AddHttpClient(Configuration.GetSection("AppSettings:Cep:ServiceName").Value!, c => c.BaseAddress = new Uri(Configuration.GetSection("AppSettings:Cep:Url").Value!));
     }
 
     /// <summary>

@@ -179,7 +179,7 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
         /// <response code="400">If the item is null</response>
         [ProducesResponseType(typeof(Result<OnBoardServiceProvider>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-        [HttpGet("{Id}")]
+        [HttpGet]
         public async Task<IActionResult> Get([FromRoute] ReturnServiceProviderOnBoardByIdQuery query)
             => await HandleQuery<ReturnServiceProviderOnBoardByIdQuery, OnBoardServiceProvider>(query);
     }

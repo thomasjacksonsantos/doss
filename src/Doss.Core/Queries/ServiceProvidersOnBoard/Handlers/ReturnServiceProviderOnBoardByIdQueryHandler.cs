@@ -1,6 +1,5 @@
 using Doss.Core.Domain.OnBoard;
 using Doss.Core.Interfaces.Repositories;
-using Doss.Core.Queries.Banks;
 using Doss.Core.Seedwork;
 using MediatR;
 
@@ -15,7 +14,7 @@ public class ReturnServiceProviderOnBoardByIdQueryHandler : IRequestHandler<Retu
 
     public async Task<Result<OnBoardServiceProvider>> Handle(ReturnServiceProviderOnBoardByIdQuery query, CancellationToken cancellationToken)
     {
-        var onBoardServiceProvider = await onBoardServiceProviderRepository.ReturnByUserIdAsync(query.Id);
+        var onBoardServiceProvider = await onBoardServiceProviderRepository.ReturnByUserIdAsync(query.User.Id);
         if (onBoardServiceProvider.IsNotNull())
             return Results.Ok(onBoardServiceProvider);
 

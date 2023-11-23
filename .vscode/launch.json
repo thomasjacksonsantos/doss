@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Conectores/Doss.Api/bin/Debug/net6.0/Doss.Api.dll",
+            "program": "${workspaceFolder}/src/Conectores/Doss.Api/bin/Debug/net7.0/Doss.Api.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Conectores/Doss.Api",
             "stopAtEntry": false,

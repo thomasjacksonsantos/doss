@@ -12,7 +12,7 @@ public abstract class Query : IRequest<Result>
 public abstract class Query<TResponse> : IRequest<Result<TResponse>>
 {
     [JsonIgnore]
-    public UserQuery User { get; set; } = null!;
+    public UserQuery? User { get; set; }
 }
 
 public class UserQuery
