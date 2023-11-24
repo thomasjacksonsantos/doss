@@ -20,7 +20,7 @@ public class ServiceProviderOnBoardFinalizeCommandHandler : BaseCommandHandler<S
 
     public override async Task<Result> HandleImplementation(ServiceProviderOnBoardFinalizeCommand command)
     {
-        var serviceProviderOnBoard = await onBoardServiceProviderRepository.ReturnByUserIdAsync(command.User.Id);
+        var serviceProviderOnBoard = await onBoardServiceProviderRepository.ReturnByUserIdAsync(command.User!.Id);
         if (serviceProviderOnBoard.IsNull())
             return Results.Error("OnBoard not found.");
 
@@ -28,7 +28,7 @@ public class ServiceProviderOnBoardFinalizeCommandHandler : BaseCommandHandler<S
         if (serviceProviderVerify.IsNotNull())
             throw new ArgumentOutOfRangeException("Service provider already exists in our database.");
 
-        var serviceProvider = new ServiceProvider(serviceProviderOnBoard.User.UserId,
+        var serviceProvider = new ServiceProvider(serviceProviderOnBoard.TokenUserId,
                                                   serviceProviderOnBoard.User.Name,
                                                   serviceProviderOnBoard.User.Document,
                                                   serviceProviderOnBoard.User.Phone,

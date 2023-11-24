@@ -8,5 +8,6 @@ public enum OnBoardStepEnum
     SelectPlan = 4,
     CreditcardNumber = 5,
     CoverageArea = 6,
-    Vehicle = 7
+    Vehicle = 7,
+    TermsAccept = 8
 }

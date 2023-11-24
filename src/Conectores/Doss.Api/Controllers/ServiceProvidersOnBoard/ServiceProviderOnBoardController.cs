@@ -171,6 +171,28 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
             => await HandleCommand(command);
 
         /// <summary>
+        /// information the terms and acceptance confirmed by the customer
+        /// </summary>
+        /// <param name="command">Body</param>
+        /// <returns>Result</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Todo
+        ///     {
+        ///         "TermsAccept": true,
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpPost("terms")]
+        public async Task<IActionResult> Post([FromBody] ServiceProviderOnBoardTermsAcceptCommand command)
+            => await HandleCommand(command);
+
+        /// <summary>
         /// Return the service provider onboard by id.
         /// </summary>
         /// <param name="query">Quey</param>

@@ -10,5 +10,10 @@ public class OnBoardResidentialConfiguration : IEntityTypeConfiguration<OnBoardR
     {
         builder.Property(p => p.Step).HasConversion<string>();
         builder.Property(p => p.Step).HasColumnType("varchar").HasMaxLength(20);
+        builder.OwnsOne(p => p.TermsAccept, termsAccept =>
+        {
+            termsAccept.Property(e => e.TermsAccept).HasColumnName("TermsAccept");
+            termsAccept.Property(e => e.DateTimeAccept).HasColumnName("DateTimeAccept");
+        });
     }
 }

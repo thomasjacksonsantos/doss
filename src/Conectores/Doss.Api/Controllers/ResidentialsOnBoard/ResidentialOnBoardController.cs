@@ -74,6 +74,28 @@ namespace Doss.Api.Controllers.ResidentialsOnBoard
             => await HandleCommand(command);
 
         /// <summary>
+        /// information the terms and acceptance confirmed by the customer
+        /// </summary>
+        /// <param name="command">Body</param>
+        /// <returns>Result</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Todo
+        ///     {
+        ///         "TermsAccept": true,
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpPost("terms")]
+        public async Task<IActionResult> Post([FromBody] ResidentialOnBoardTermsAcceptCommand command)
+            => await HandleCommand(command);
+
+        /// <summary>
         /// Return the residential onboard by id.
         /// </summary>
         /// <param name="query">Quey</param>
@@ -82,7 +104,7 @@ namespace Doss.Api.Controllers.ResidentialsOnBoard
         /// <response code="400">If the item is null</response>
         [ProducesResponseType(typeof(Result<OnBoardResidential>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-        [HttpGet("{Id}")]
+        [HttpGet()]
         public async Task<IActionResult> Get([FromRoute] ReturnResidentialOnBoardByIdQuery query)
         => await HandleQuery<ReturnResidentialOnBoardByIdQuery, OnBoardResidential>(query);
     }

@@ -23,11 +23,10 @@ public class ResidentialOnBoardUserInformationCommandHandler : BaseCommandHandle
         {
             residentialOnBoard = new OnBoardResidential(OnBoardStepEnum.UserInfo);
 
-            residentialOnBoard.AddUser(new OnBoardUser(command.User.Id,
-                                                          command.Name,
-                                                          command.Document,
-                                                          command.Phone,
-                                                          command.Photo));
+            residentialOnBoard.AddUser(command.User.Id, new OnBoardUser(command.Name,
+                                                                        command.Document,
+                                                                        command.Phone,
+                                                                        command.Photo));
 
             await onBoardResidentialRepository.AddAsync(residentialOnBoard);
         }

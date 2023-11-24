@@ -16,5 +16,5 @@ public class OnBoardResidentialRepository : RepositoryBase<OnBoardResidential>, 
                         .Include(c => c.Address)
                         .Include(c => c.ServiceProvider)
                         .Include(c => c.Plan)
-                        .FirstOrDefaultAsync(c => c.User.UserId == userId) ?? null!;
+                        .FirstOrDefaultAsync(c => c.TokenUserId == userId) ?? null!;
 }

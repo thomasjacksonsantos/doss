@@ -23,11 +23,10 @@ public class ServiceProviderOnBoardUserInformationCommandHandler : BaseCommandHa
         {
             serviceProviderOnBoard = new OnBoardServiceProvider(OnBoardStepEnum.UserInfo);
 
-            serviceProviderOnBoard.AddUser(new OnBoardUser(command.User.Id,
-                                                          command.Name,
-                                                          command.Document,
-                                                          command.Phone,
-                                                          command.Photo));
+            serviceProviderOnBoard.AddUser(command.User.Id, new OnBoardUser(command.Name,
+                                                                            command.Document,
+                                                                            command.Phone,
+                                                                            command.Photo));
 
             await onBoardServiceProviderRepository.AddAsync(serviceProviderOnBoard);
         }

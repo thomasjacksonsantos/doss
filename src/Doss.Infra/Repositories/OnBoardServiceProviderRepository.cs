@@ -18,7 +18,7 @@ public class OnBoardServiceProviderRepository : RepositoryBase<OnBoardServicePro
                         .Include(c => c.Plans)
                         .Include(c => c.Vehicle)
                         .Include(c => c.Bank)
-                        .FirstOrDefaultAsync(c => c.User.UserId == userId) ?? null!;
+                        .FirstOrDefaultAsync(c => c.TokenUserId == userId) ?? null!;
 
     public void RemovePlans(IEnumerable<OnBoardPlan> plans)
         => Context.RemoveRange(plans);

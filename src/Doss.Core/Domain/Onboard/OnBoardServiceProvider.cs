@@ -6,6 +6,7 @@ namespace Doss.Core.Domain.OnBoard;
 public class OnBoardServiceProvider
 {
     public Guid Id { get; private set; }
+    public Guid TokenUserId { get; set; }
     public int CoverageArea { get; private set; }
     public string AgencyBank { get; private set; } = string.Empty;
     public string AccountBank { get; private set; } = string.Empty;
@@ -17,12 +18,16 @@ public class OnBoardServiceProvider
     public OnBoardVehicle? Vehicle { get; private set; }
     public Guid? BankId { get; private set; }
     public Bank? Bank { get; private set; }
+    public OnBoardTermsAccept? TermsAccept { get; set; }
 
     public OnBoardServiceProvider(OnBoardStepEnum step)
         => Step = step;
 
-    public void AddUser(OnBoardUser user)
-        => User = user;
+    public void AddUser(Guid userId, OnBoardUser user)
+    {
+        TokenUserId = userId;
+        User = user;
+    }
 
     public void AddBank(Bank bank)
     {
@@ -50,4 +55,7 @@ public class OnBoardServiceProvider
 
     public void ChangeAgencyBank(string agencyBank)
         => AgencyBank = agencyBank;
+
+    public void ChangeTermsAccept(OnBoardTermsAccept termsAccept)
+        => TermsAccept = termsAccept;
 }

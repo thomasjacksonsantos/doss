@@ -14,7 +14,7 @@ public class ReturnResidentialOnBoardByIdQueryHandler : IRequestHandler<ReturnRe
 
     public async Task<Result<OnBoardResidential>> Handle(ReturnResidentialOnBoardByIdQuery query, CancellationToken cancellationToken)
     {
-        var onBoardResidential = await onBoardResidentialRepository.ReturnByUserIdAsync(query.Id);
+        var onBoardResidential = await onBoardResidentialRepository.ReturnByUserIdAsync(query.User!.Id);
         if (onBoardResidential.IsNotNull())
             return Results.Ok(onBoardResidential);
 
