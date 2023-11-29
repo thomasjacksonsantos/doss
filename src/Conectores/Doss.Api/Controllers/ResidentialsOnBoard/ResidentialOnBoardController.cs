@@ -60,6 +60,7 @@ namespace Doss.Api.Controllers.ResidentialsOnBoard
         ///        "state": "Sao Paulo",
         ///        "city": "Sao Paulo",
         ///        "street": "Rua amadeu mendes",
+        ///        "complement": "Casa do fundo",
         ///        "zipCode": "13100-474",
         ///        "number": "430"
         ///    }
