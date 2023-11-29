@@ -17,7 +17,7 @@ public class UpdateResidentialCommandHandler : BaseCommandHandler<UpdateResident
         var residential = await residentialRepository.ReturnResidentialByIdAsync(command.Id);
 
         residential.AddAddress(command.Addresses
-                                            .Select(c => new Doss.Core.Domain.Addresses.Address(c.Country, c.State, c.City, c.Street, c.ZipCode, c.Latitude, c.Longitude))
+                                            .Select(c => new Doss.Core.Domain.Addresses.Address(c.Country, c.State, c.City, c.Street, c.Complement, c.ZipCode, c.Latitude, c.Longitude))
                                             .ToList());
 
         return Results.Ok("Residentia user updated with success.");

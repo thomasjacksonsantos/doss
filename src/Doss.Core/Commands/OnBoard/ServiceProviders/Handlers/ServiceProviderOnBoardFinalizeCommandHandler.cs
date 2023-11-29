@@ -46,6 +46,7 @@ public class ServiceProviderOnBoardFinalizeCommandHandler : BaseCommandHandler<S
                                                    serviceProviderOnBoard.Address.State,
                                                    serviceProviderOnBoard.Address.City,
                                                    serviceProviderOnBoard.Address.Street,
+                                                   serviceProviderOnBoard.Address.Complement,
                                                    serviceProviderOnBoard.Address.ZipCode,
                                                    serviceProviderOnBoard.Address.Latitude,
                                                    serviceProviderOnBoard.Address.Longitude));

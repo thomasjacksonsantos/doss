@@ -13,6 +13,7 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
         builder.Property(p => p.State).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.City).HasColumnType("varchar").HasMaxLength(30);
         builder.Property(p => p.Street).HasColumnType("varchar").HasMaxLength(200);
+        builder.Property(p => p.Complement).HasColumnType("varchar").HasMaxLength(200);
         builder.Property(p => p.ZipCode).HasColumnType("varchar").HasMaxLength(10);
         builder.Property(p => p.Latitude);
         builder.Property(p => p.Longitude);
