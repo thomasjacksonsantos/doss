@@ -12,6 +12,7 @@ public class OnBoardServiceProviderConfiguration : IEntityTypeConfiguration<OnBo
         builder.Property(p => p.Step).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.AccountBank).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.AgencyBank).HasColumnType("varchar").HasMaxLength(20);
+        builder.HasMany(p => p.Plans).WithOne().OnDelete(DeleteBehavior.Cascade);
         builder.OwnsOne(p => p.TermsAccept, termsAccept => {
             termsAccept.Property(e => e.TermsAccept).HasColumnName("TermsAccept");
             termsAccept.Property(e => e.DateTimeAccept).HasColumnName("DateTimeAccept");

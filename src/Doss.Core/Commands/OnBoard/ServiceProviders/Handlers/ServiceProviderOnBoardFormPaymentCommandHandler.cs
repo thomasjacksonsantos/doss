@@ -26,10 +26,12 @@ public class ServiceProviderOnBoardFormPaymentCommandHandler : BaseCommandHandle
         serviceProviderOnBoard.ChangeStep(OnBoardStepEnum.SelectPlan);
 
         if (serviceProviderOnBoard.Plans.IsNotNull())
-            onBoardServiceProviderRepository.RemovePlans(serviceProviderOnBoard.Plans!);
+            serviceProviderOnBoard.RemovePlans();
+            
+            // onBoardServiceProviderRepository.RemovePlans(serviceProviderOnBoard.Plans!);
         
-        if (serviceProviderOnBoard.Bank.IsNotNull())
-            onBoardServiceProviderRepository.RemoveBank(serviceProviderOnBoard.Bank!);
+        // if (serviceProviderOnBoard.Bank.IsNotNull())
+        //     onBoardServiceProviderRepository.RemoveBank(serviceProviderOnBoard.Bank!);
         
         var bank = await bankRepository.ReturnByIdAsync(command.BankId);
 

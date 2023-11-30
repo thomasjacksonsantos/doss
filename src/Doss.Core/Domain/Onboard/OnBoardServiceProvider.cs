@@ -50,6 +50,9 @@ public class OnBoardServiceProvider
     public void AddPlan(IEnumerable<OnBoardPlan> plans)
         => Plans = plans;
 
+    public void RemovePlans()
+        => Plans = null;
+        
     public void ChangeAccountBank(string accountBank)
         => AccountBank = accountBank;
 
