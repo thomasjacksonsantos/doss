@@ -27,11 +27,6 @@ public class ServiceProviderOnBoardFormPaymentCommandHandler : BaseCommandHandle
 
         if (serviceProviderOnBoard.Plans.IsNotNull())
             serviceProviderOnBoard.RemovePlans();
-            
-            // onBoardServiceProviderRepository.RemovePlans(serviceProviderOnBoard.Plans!);
-        
-        // if (serviceProviderOnBoard.Bank.IsNotNull())
-        //     onBoardServiceProviderRepository.RemoveBank(serviceProviderOnBoard.Bank!);
         
         var bank = await bankRepository.ReturnByIdAsync(command.BankId);
 
