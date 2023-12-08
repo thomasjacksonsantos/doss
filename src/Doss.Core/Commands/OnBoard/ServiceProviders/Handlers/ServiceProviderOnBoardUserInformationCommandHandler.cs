@@ -24,6 +24,7 @@ public class ServiceProviderOnBoardUserInformationCommandHandler : BaseCommandHa
             serviceProviderOnBoard = new OnBoardServiceProvider(OnBoardStepEnum.UserInfo);
 
             serviceProviderOnBoard.AddUser(command.User.Id, new OnBoardUser(command.Name,
+                                                                            command.TypeDocument,
                                                                             command.Document,
                                                                             command.Phone,
                                                                             command.Photo));
@@ -33,6 +34,7 @@ public class ServiceProviderOnBoardUserInformationCommandHandler : BaseCommandHa
         else
         {
             serviceProviderOnBoard.User.ChangeName(command.Name);
+            serviceProviderOnBoard.User.ChangeTypeDocument(command.TypeDocument);
             serviceProviderOnBoard.User.ChangeDocument(command.Document);
             serviceProviderOnBoard.User.ChangePhone(command.Phone);
             serviceProviderOnBoard.User.ChangePhoto(command.Photo);

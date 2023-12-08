@@ -24,6 +24,7 @@ public class ResidentialOnBoardUserInformationCommandHandler : BaseCommandHandle
             residentialOnBoard = new OnBoardResidential(OnBoardStepEnum.UserInfo);
 
             residentialOnBoard.AddUser(command.User.Id, new OnBoardUser(command.Name,
+                                                                        command.TypeDocument,
                                                                         command.Document,
                                                                         command.Phone,
                                                                         command.Photo));
@@ -33,6 +34,7 @@ public class ResidentialOnBoardUserInformationCommandHandler : BaseCommandHandle
         else
         {
             residentialOnBoard.User.ChangeName(command.Name);
+            residentialOnBoard.User.ChangeTypeDocument(command.TypeDocument);
             residentialOnBoard.User.ChangeDocument(command.Document);
             residentialOnBoard.User.ChangePhone(command.Phone);
             residentialOnBoard.User.ChangePhoto(command.Photo);

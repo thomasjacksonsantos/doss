@@ -12,7 +12,7 @@ namespace System
             => !string.IsNullOrEmpty(value);
 
         public static bool IsNullOrEmpty(this string value)
-            => string.IsNullOrEmpty(value);            
+            => string.IsNullOrEmpty(value);
 
         public static bool IsValidCpf(this string value)
         {
@@ -153,5 +153,8 @@ namespace System
 
         public static string RemoveSpecialCharacter(this string value)
             => Regex.Replace(value, "[^0-9a-zA-Z]", "");
+
+        public static string OnlyNumbers(this string value)
+            => string.Join("", new Regex(@"\d+").Matches(value));
     }
 }

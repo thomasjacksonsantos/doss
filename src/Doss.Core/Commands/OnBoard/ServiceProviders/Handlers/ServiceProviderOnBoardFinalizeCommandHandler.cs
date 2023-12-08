@@ -30,6 +30,7 @@ public class ServiceProviderOnBoardFinalizeCommandHandler : BaseCommandHandler<S
 
         var serviceProvider = new ServiceProvider(serviceProviderOnBoard.TokenUserId,
                                                   serviceProviderOnBoard.User.Name,
+                                                  serviceProviderOnBoard.User.TypeDocument,
                                                   serviceProviderOnBoard.User.Document,
                                                   serviceProviderOnBoard.User.Phone,
                                                   serviceProviderOnBoard.User.Phone,

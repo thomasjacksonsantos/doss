@@ -9,6 +9,7 @@ public class User
     public Guid UserId { get; set; }
     public string Name { get; private set; }
     public string Document { get; private set; }
+    public TypeDocument TypeDocument { get; private set;}
     public string Phone { get; private set; }
     public string Photo { get; private set; }
     public bool CompletedRegistration { get; private set; }
@@ -17,9 +18,9 @@ public class User
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
 
-    public User(Guid userid, string name, string document, string phone, string photo, bool completedRegistration)
-        => (Id, UserId, Name, Document, Phone, Photo, CompletedRegistration, UserStatus, Created)
-            = (Guid.NewGuid(), userid, name, document, phone, photo, completedRegistration, UserStatus.Active, DateTime.Now);
+    public User(Guid userid, string name, TypeDocument typeDocument, string document, string phone, string photo, bool completedRegistration)
+        => (Id, UserId, Name, TypeDocument, Document, Phone, Photo, CompletedRegistration, UserStatus, Created)
+            = (Guid.NewGuid(), userid, name, typeDocument, document.OnlyNumbers(), phone.OnlyNumbers(), photo, completedRegistration, UserStatus.Active, DateTime.Now);
 
     public void AddVehicle(Vehicle vehicle)
     {
@@ -33,6 +34,9 @@ public class User
 
     public void ChangeDocument(string document)
         => Document = document;
+
+    public void ChangeTypeDocument(TypeDocument typeDocument)
+        => TypeDocument = typeDocument;        
 
     public void ChangePhoto(string photo)
         => Photo = photo;

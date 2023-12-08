@@ -21,6 +21,9 @@ public class ServiceProviderPlan
     public ServiceProviderPlan(string accountBank, string agencyBank, int coverageArea)
         => (AccountBank, AgencyBank, CoverageArea, Created) = (accountBank, agencyBank, coverageArea, DateTime.Now);
 
+    public ServiceProviderPlan(string accountBank, string agencyBank, int coverageArea, Address address, IEnumerable<Plan> plans)
+        => (AccountBank, AgencyBank, CoverageArea, Address, Plans, Created) = (accountBank, agencyBank, coverageArea, address, plans, DateTime.Now);
+
     public void AddPlans(IEnumerable<Plan> plans)
         => Plans = plans;
 
@@ -29,7 +32,7 @@ public class ServiceProviderPlan
         BankId = bank.Id;
         Bank = bank;
     }
-    
+
     public void AddAddress(Address address)
         => Address = address;
 }

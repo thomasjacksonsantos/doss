@@ -1,8 +1,10 @@
 using Doss.Core.Commands.OnBoard.ServiceProviders;
+using Doss.Core.Commands.ServiceProviders;
 using Doss.Core.Domain.OnBoard;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;
+using MediatR;
 
 namespace Ageu.Core.Commands.OnBoard.ServiceProviders.Handlers;
 
@@ -10,12 +12,14 @@ public class ServiceProviderOnBoardFormPaymentCommandHandler : BaseCommandHandle
 {
     private readonly IOnBoardServiceProviderRepository onBoardServiceProviderRepository;
     private readonly IBankRepository bankRepository;
+    private readonly IMediator mediator;
 
     public ServiceProviderOnBoardFormPaymentCommandHandler(IOnBoardServiceProviderRepository onBoardServiceProviderRepository,
                                                            IBankRepository bankRepository,
+                                                           IMediator mediator,
                                                            ServiceProviderOnBoardFormPaymentCommandValidator validator)
         : base(validator)
-            => (this.onBoardServiceProviderRepository, this.bankRepository) = (onBoardServiceProviderRepository, bankRepository);
+            => (this.onBoardServiceProviderRepository, this.bankRepository, this.mediator) = (onBoardServiceProviderRepository, bankRepository, mediator);
 
     public override async Task<Result> HandleImplementation(ServiceProviderOnBoardFormPaymentCommand command)
     {
@@ -36,6 +40,9 @@ public class ServiceProviderOnBoardFormPaymentCommandHandler : BaseCommandHandle
         serviceProviderOnBoard.AddPlan(command.Plans.Select(c => new OnBoardPlan(c.Description, c.Price)).ToList());
 
         await onBoardServiceProviderRepository.SaveAsync();
+
+        /// TODO: Criar evento para salvar o usuario no dominio service provider
+        await mediator.Send(new ServiceProviderOnBoardCompletedCommand(command.User.Id));
 
         return Results.Ok("OnBoard successfully processed.");
     }

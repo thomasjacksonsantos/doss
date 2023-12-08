@@ -1,4 +1,5 @@
 using Doss.Core.Domain.Enums;
+using Doss.Core.Domain.OnBoard;
 
 namespace Doss.Core.Domain.Plans;
 
@@ -25,4 +26,7 @@ public class Plan
         PlanStatus = status;
         Updated = DateTime.Now;
     }
+
+    public static implicit operator Plan(OnBoardPlan plan)
+        => new Plan(plan.Description, plan.Price);
 }

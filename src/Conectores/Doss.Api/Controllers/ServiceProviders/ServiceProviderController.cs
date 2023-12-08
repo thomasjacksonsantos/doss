@@ -95,7 +95,7 @@ public class ServiceProviderController : DossBaseController
     /// <returns>Return all bank</returns>
     /// <response code="201">Returns the newly created item</response>
     /// <response code="400">If the item is null</response>
-    [ProducesResponseType(typeof(Result<IEnumerable<Core.Domain.Users.ServiceProvider>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<ServiceProviderInfoQuery.Response>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [HttpGet("info")]
     public async Task<IActionResult> Get([FromRoute] ServiceProviderInfoQuery query)
