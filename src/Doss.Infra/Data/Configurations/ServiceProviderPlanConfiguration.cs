@@ -1,4 +1,4 @@
-using Doss.Core.Domain.Users;
+using Doss.Core.Domain.ServiceProviders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

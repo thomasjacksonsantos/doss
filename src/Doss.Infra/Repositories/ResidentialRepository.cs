@@ -1,6 +1,6 @@
 using Doss.Infra.Data;
-using Doss.Core.Domain.Users;
 using Doss.Core.Interfaces.Repositories;
+using Doss.Core.Domain.Residentials;
 
 namespace Doss.Infra.Repositories;
 

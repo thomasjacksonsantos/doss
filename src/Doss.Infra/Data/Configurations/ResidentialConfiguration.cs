@@ -1,4 +1,4 @@
-using Doss.Core.Domain.Users;
+using Doss.Core.Domain.Residentials;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -15,5 +15,6 @@ public class ResidentialConfiguration : IEntityTypeConfiguration<Residential>
         builder.Property(p => p.Phone).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.UserStatus).HasConversion<string>();
         builder.Property(p => p.UserStatus).HasColumnType("varchar").HasMaxLength(20);
+        builder.Property(p => p.TypeDocument).HasConversion<string>().HasColumnType("varchar").HasMaxLength(16);
     }
 }

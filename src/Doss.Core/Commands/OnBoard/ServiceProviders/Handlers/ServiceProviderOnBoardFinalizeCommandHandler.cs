@@ -1,6 +1,6 @@
 using Doss.Core.Commands.OnBoard.ServiceProviders;
 using Doss.Core.Domain.Addresses;
-using Doss.Core.Domain.Users;
+using Doss.Core.Domain.ServiceProviders;
 using Doss.Core.Domain.Vehicles;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;

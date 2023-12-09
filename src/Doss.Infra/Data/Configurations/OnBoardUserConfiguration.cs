@@ -13,5 +13,6 @@ public class OnBoardUserConfiguration : IEntityTypeConfiguration<OnBoardUser>
         builder.Property(p => p.Document).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.Phone).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.Photo).HasColumnType("text");
+        builder.Property(p => p.TypeDocument).HasConversion<string>().HasColumnType("varchar").HasMaxLength(16);
     }
 }

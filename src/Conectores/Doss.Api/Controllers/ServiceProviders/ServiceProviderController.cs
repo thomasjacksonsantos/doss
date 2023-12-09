@@ -49,17 +49,39 @@ public class ServiceProviderController : DossBaseController
         => await HandleCommand(command);
 
     /// <summary>
+    /// Create new alert to service provider.
+    /// </summary>
+    /// <param name="command">command</param>
+    /// <returns>Results ok</returns>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     POST /Todo
+    ///     {
+    ///         "description": "Alert to service provider"
+    ///    }
+    ///
+    /// </remarks>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpPost("alert")]
+    public async Task<IActionResult> Post([FromBody] ServiceProviderAlertCommand command)
+        => await HandleCommand(command);         
+
+    /// <summary>
     /// Return a service provider list by zipcode.
     /// </summary>
     /// <param name="query">Quey</param>
     /// <returns>Return all bank</returns>
     /// <response code="201">Returns the newly created item</response>
     /// <response code="400">If the item is null</response>
-    [ProducesResponseType(typeof(Result<IEnumerable<Core.Domain.Users.ServiceProvider>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<IEnumerable<Core.Domain.ServiceProviders.ServiceProvider>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [HttpGet("zipcode/{zipcode}")]
     public async Task<IActionResult> Get([FromRoute] ReturnServiceProvidersByZipCodeQuery query)
-        => await HandleQuery<ReturnServiceProvidersByZipCodeQuery, IEnumerable<Core.Domain.Users.ServiceProvider>>(query);
+        => await HandleQuery<ReturnServiceProvidersByZipCodeQuery, IEnumerable<Core.Domain.ServiceProviders.ServiceProvider>>(query);
 
     /// <summary>
     /// Return a list of provider plans.
@@ -99,5 +121,18 @@ public class ServiceProviderController : DossBaseController
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [HttpGet("info")]
     public async Task<IActionResult> Get([FromRoute] ServiceProviderInfoQuery query)
-        => await HandleQuery<ServiceProviderInfoQuery, ServiceProviderInfoQuery.Response>(query);
+        => await HandleQuery<ServiceProviderInfoQuery, ServiceProviderInfoQuery.Response>(query);       
+
+    /// <summary>
+    /// Return list alerts to service provider with paged.
+    /// </summary>
+    /// <param name="query">Quey</param>
+    /// <returns>Return list alert</returns>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result<ServiceProviderAlertByIdQuery.Response>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpGet("alert")]
+    public async Task<IActionResult> Get([FromRoute] ServiceProviderAlertByIdQuery query)
+        => await HandleQuery<ServiceProviderAlertByIdQuery, ServiceProviderAlertByIdQuery.Response>(query);          
 }

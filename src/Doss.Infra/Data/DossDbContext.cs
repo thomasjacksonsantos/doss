@@ -1,5 +1,7 @@
 using Doss.Core.Domain.OnBoard;
 using Doss.Core.Domain.Plans;
+using Doss.Core.Domain.Residentials;
+using Doss.Core.Domain.ServiceProviders;
 using Doss.Core.Domain.Users;
 using Doss.Infra.Data.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +32,7 @@ namespace Doss.Infra.Data
             modelBuilder.ApplyConfiguration(new ServiceProviderPlanConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleConfiguration());
             modelBuilder.ApplyConfiguration(new BankConfiguration());
+            modelBuilder.ApplyConfiguration(new ServiceProviderAlertConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -64,10 +67,13 @@ namespace Doss.Infra.Data
         public DbSet<ServiceProviderPlan> ServiceProviderPlan
             => Set<ServiceProviderPlan>();
 
+        public DbSet<ServiceProviderAlert> ServiceProviderAlert
+            => Set<ServiceProviderAlert>();
+
         public DbSet<ResidentialWithServiceProvider> ResidentialWithServiceProvider
             => Set<ResidentialWithServiceProvider>();
 
-        public DbSet<Plan> Plans
+        public DbSet<Plan> Plan
             => Set<Plan>();
     }
 }

@@ -1,7 +1,8 @@
 using Doss.Core.Domain.Addresses;
 using Doss.Core.Domain.Enums;
+using Doss.Core.Domain.Users;
 
-namespace Doss.Core.Domain.Users;
+namespace Doss.Core.Domain.Residentials;
 
 public class Residential : User
 {

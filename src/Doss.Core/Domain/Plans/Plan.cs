@@ -13,7 +13,7 @@ public class Plan
     public DateTime Updated { get; private set; }
 
     public Plan(string description, decimal price)
-        => (Id, Description, Price, PlanStatus, Created) = (Guid.NewGuid(), description, price, PlanStatus.Active, DateTime.Now);
+        => (Description, Price, PlanStatus, Created) = (description, price, PlanStatus.Active, DateTime.Now);
 
     public void ChangePrice(decimal price)
     {

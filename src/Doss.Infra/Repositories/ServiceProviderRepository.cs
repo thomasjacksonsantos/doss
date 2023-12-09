@@ -1,8 +1,8 @@
 using Doss.Infra.Data;
-using Doss.Core.Domain.Users;
 using Doss.Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Doss.Core.Domain.Plans;
+using Doss.Core.Domain.ServiceProviders;
 
 namespace Doss.Infra.Repositories;
 

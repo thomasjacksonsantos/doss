@@ -1,7 +1,8 @@
 using Doss.Core.Domain.Enums;
 using Doss.Core.Domain.Plans;
+using Doss.Core.Domain.Users;
 
-namespace Doss.Core.Domain.Users;
+namespace Doss.Core.Domain.ServiceProviders;
 
 public class ServiceProvider : User
 {

@@ -1,6 +1,6 @@
 
 using Doss.Core.Domain.Plans;
-using Doss.Core.Domain.Users;
+using Doss.Core.Domain.ServiceProviders;
 
 namespace Doss.Core.Domain.OnBoard;
 

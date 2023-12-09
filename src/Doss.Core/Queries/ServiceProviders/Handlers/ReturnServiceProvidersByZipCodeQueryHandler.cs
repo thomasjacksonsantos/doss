@@ -1,4 +1,4 @@
-using Doss.Core.Domain.Users;
+using Doss.Core.Domain.ServiceProviders;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using MediatR;

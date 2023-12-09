@@ -1,4 +1,4 @@
-using Doss.Core.Domain.Users;
+using Doss.Core.Domain.Residentials;
 
 namespace Doss.Core.Interfaces.Repositories;
 

@@ -1,6 +1,7 @@
 using Doss.Core.Domain.Plans;
+using Doss.Core.Domain.ServiceProviders;
 
-namespace Doss.Core.Domain.Users;
+namespace Doss.Core.Domain.Residentials;
 
 public class ResidentialWithServiceProvider
 {
