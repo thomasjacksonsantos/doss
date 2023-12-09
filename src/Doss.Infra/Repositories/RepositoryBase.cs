@@ -92,9 +92,9 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     public async Task SaveAsync()
         => await Context.SaveChangesAsync();
 
-    public Task<IEnumerable<T>> SqlListAsync(string sql, dynamic param)
+    public async Task<IEnumerable<T>> SqlListAsync(string sql, object param)
     {
-        throw new NotImplementedException();
+        return await Connection.QueryAsync<T>(sql, param: param);
     }
 
     public async Task<TParam> SqlSingleAsync<TParam>(string sql, object param)

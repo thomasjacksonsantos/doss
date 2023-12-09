@@ -26,6 +26,6 @@ public sealed class ServiceProviderAlertCommandValidator : AbstractValidator<Ser
 {
     public ServiceProviderAlertCommandValidator()
     {
-        RuleFor(c => c.Description).NotEmpty().Length(100);
+        RuleFor(c => c.Description).NotEmpty().MaximumLength(100);
     }
 }

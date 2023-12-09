@@ -1,3 +1,4 @@
+using Doss.Core.Domain.Enums;
 using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.ServiceProviders;
 
@@ -8,4 +9,5 @@ public interface IServiceProviderRepository : IRepositoryBase<ServiceProvider>
     Task<ServiceProvider> ReturnByUserIdAsync(Guid userId);
     Task<IEnumerable<ServiceProvider>> ReturnByZipCodeAsync(string zipCode);
     Task<IEnumerable<Plan>> ReturnPlanAll(Guid serviceProviderId);
+    Task UpdateServiceProviderStatus(Guid userId, UserStatus userStatus);
 }

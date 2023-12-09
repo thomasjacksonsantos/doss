@@ -3,6 +3,8 @@ using Doss.Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.ServiceProviders;
+using Doss.Core.Domain.Enums;
+using Dapper;
 
 namespace Doss.Infra.Repositories;
 
@@ -36,4 +38,11 @@ public class ServiceProviderRepository : RepositoryBase<ServiceProvider>, IServi
                         .Where(c => c.ServiceProviderId == serviceProviderId)
                         .SelectMany(c => c.Plans)
                         .ToListAsync();
+
+    public async Task UpdateServiceProviderStatus(Guid userId, UserStatus userStatus)
+        => await Connection.ExecuteAsync(@"Update Doss.ServiceProvider set UserStatus = @UserStatus
+                                            WHERE
+                                                UserId = @UserId", 
+                                            param: new {UserId = userId, UserStatus = userStatus }, 
+                                            commandType: System.Data.CommandType.Text);
 }

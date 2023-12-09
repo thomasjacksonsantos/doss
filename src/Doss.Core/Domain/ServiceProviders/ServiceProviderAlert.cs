@@ -7,5 +7,8 @@ public class ServiceProviderAlert
     public DateTime Created { get; private set; }
 
     public ServiceProviderAlert(string description)
-        => (Description,  Created) = (description, DateTime.Now);
+        => (Description, Created) = (description, DateTime.Now);
+
+    public ServiceProviderAlert(string description, DateTime created)
+        => (Description, Created) = (description, created);
 }

@@ -68,6 +68,28 @@ public class ServiceProviderController : DossBaseController
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [HttpPost("alert")]
     public async Task<IActionResult> Post([FromBody] ServiceProviderAlertCommand command)
+        => await HandleCommand(command);  
+
+    /// <summary>
+    /// Create new alert to service provider.
+    /// </summary>
+    /// <param name="command">command</param>
+    /// <returns>Results ok</returns>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     POST /Todo
+    ///     {
+    ///         "userStatus": "Active" --Inactive
+    ///    }
+    ///
+    /// </remarks>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpPost("update-status")]
+    public async Task<IActionResult> Post([FromBody] UpdateServiceProviderStatusCommand command)
         => await HandleCommand(command);         
 
     /// <summary>
