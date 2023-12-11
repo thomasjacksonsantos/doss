@@ -88,7 +88,7 @@ public class ServiceProviderController : DossBaseController
     /// <response code="400">If the item is null</response>
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    [HttpPost("update-status")]
+    [HttpPut("update-status")]
     public async Task<IActionResult> Post([FromBody] UpdateServiceProviderStatusCommand command)
         => await HandleCommand(command);         
 
