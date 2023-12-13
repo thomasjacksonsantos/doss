@@ -3,8 +3,9 @@ using Doss.Core.Seedwork;
 
 namespace Doss.Core.Queries.Verifications;
 
-public class VerificationByUserIdQuery : Query<VerificationByUserIdQuery.Response>
+public class VerificationByServiceProviderIdQuery : Query<VerificationByServiceProviderIdQuery.Response>
 {
+    public VerificationStatus Status { get; set; }
     public class Response
     {
         public Response(VerificationStatus status)

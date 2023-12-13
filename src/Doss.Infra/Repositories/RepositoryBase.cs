@@ -33,6 +33,9 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : class
         throw new NotImplementedException();
     }
 
+    public async Task ExecuteAsync(string sql, object param)
+        => await Connection.ExecuteAsync(sql, param: param);
+
     public Task<bool> ExistsAsync(Guid id)
     {
         throw new NotImplementedException();
@@ -82,7 +85,6 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : class
 
     public virtual async Task<T> ReturnByIdAsync(Guid id)
       => await Context.Set<T>().FindAsync(id) ?? null!;
-
 
     public Task<T> ReturnFirstOrDefaultAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
     {

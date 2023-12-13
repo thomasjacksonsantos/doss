@@ -19,7 +19,7 @@ public class ServiceProviderOnBoardAddressCommandHandler : BaseCommandHandler<Se
 
     public override async Task<Result> HandleImplementation(ServiceProviderOnBoardAddressCommand command)
     {
-        var serviceProviderOnBoard = await onBoardServiceProviderRepository.ReturnByUserIdAsync(command.User!.Id);
+        var serviceProviderOnBoard = await onBoardServiceProviderRepository.ReturnByIdAsync(command.User!.Id);
         if (serviceProviderOnBoard.IsNull())
             return Results.Error("OnBoard not found.");
 
@@ -37,6 +37,7 @@ public class ServiceProviderOnBoardAddressCommandHandler : BaseCommandHandler<Se
                                                              command.Street,
                                                              command.Complement,
                                                              command.ZipCode,
+                                                             command.Number,
                                                              zipCode.Latitude ?? 0,
                                                              zipCode.Longitude ?? 0));
         else

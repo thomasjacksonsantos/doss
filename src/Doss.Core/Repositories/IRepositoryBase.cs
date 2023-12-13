@@ -7,6 +7,7 @@ public interface IRepositoryBase<TEntity> where TEntity : class
     Task<TEntity> ReturnByIdAsync(Guid id);
     Task<T> SqlSingleAsync<T>(string sql, object param);
     Task<IEnumerable<TEntity>> SqlListAsync(string sql, object param);
+    Task ExecuteAsync(string sql, object param);
     Task<TEntity> ReturnAsNoTrackingAsync(Guid id);
     Task<IEnumerable<TEntity>> ReturnAllAsync(Expression<Func<TEntity, bool>>? filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, string? includeProperties = null);
     Task<IEnumerable<TEntity>> ReturnAllAsync();

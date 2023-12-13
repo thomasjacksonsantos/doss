@@ -21,12 +21,12 @@ public class ServiceProviderOnBoardCompletedCommandHandler : BaseCommandHandler<
 
     public override async Task<Result> HandleImplementation(ServiceProviderOnBoardCompletedCommand command)
     {
-        var onboard = await onBoardServiceProviderRepository.ReturnByUserIdAsync(command.UserId);
+        var onboard = await onBoardServiceProviderRepository.ReturnByIdAsync(command.UserId);
 
         if (onboard.IsNull())
             return Results.Ok("Onboard not found.");
 
-        var serviceProvider = await serviceProviderRepository.ReturnByUserIdAsync(command.UserId);
+        var serviceProvider = await serviceProviderRepository.ReturnByIdAsync(command.UserId);
 
         if (serviceProvider.IsNotNull())
             return Results.Error("service provider has already been registered.");

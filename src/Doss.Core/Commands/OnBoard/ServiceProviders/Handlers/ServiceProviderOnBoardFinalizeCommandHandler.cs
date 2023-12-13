@@ -20,11 +20,11 @@ public class ServiceProviderOnBoardFinalizeCommandHandler : BaseCommandHandler<S
 
     public override async Task<Result> HandleImplementation(ServiceProviderOnBoardFinalizeCommand command)
     {
-        var serviceProviderOnBoard = await onBoardServiceProviderRepository.ReturnByUserIdAsync(command.User!.Id);
+        var serviceProviderOnBoard = await onBoardServiceProviderRepository.ReturnByIdAsync(command.User!.Id);
         if (serviceProviderOnBoard.IsNull())
             return Results.Error("OnBoard not found.");
 
-        var serviceProviderVerify = await serviceProviderRepository.ReturnByUserIdAsync(command.User.Id);
+        var serviceProviderVerify = await serviceProviderRepository.ReturnByIdAsync(command.User.Id);
         if (serviceProviderVerify.IsNotNull())
             throw new ArgumentOutOfRangeException("Service provider already exists in our database.");
 
@@ -49,6 +49,7 @@ public class ServiceProviderOnBoardFinalizeCommandHandler : BaseCommandHandler<S
                                                    serviceProviderOnBoard.Address.Street,
                                                    serviceProviderOnBoard.Address.Complement,
                                                    serviceProviderOnBoard.Address.ZipCode,
+                                                   serviceProviderOnBoard.Address.Number,
                                                    serviceProviderOnBoard.Address.Latitude,
                                                    serviceProviderOnBoard.Address.Longitude));
 

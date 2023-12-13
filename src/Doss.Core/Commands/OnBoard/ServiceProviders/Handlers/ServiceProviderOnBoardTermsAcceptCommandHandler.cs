@@ -16,7 +16,7 @@ public class ServiceProviderOnBoardTermsAcceptCommandHandler : BaseCommandHandle
 
     public override async Task<Result> HandleImplementation(ServiceProviderOnBoardTermsAcceptCommand command)
     {
-        var serviceProviderOnBoard = await onBoardServiceProviderRepository.ReturnByUserIdAsync(command.User!.Id);
+        var serviceProviderOnBoard = await onBoardServiceProviderRepository.ReturnByIdAsync(command.User!.Id);
         if (serviceProviderOnBoard.IsNull())
             return Results.Error("OnBoard not found.");
 

@@ -11,7 +11,7 @@ public class OnBoardServiceProviderRepository : RepositoryBase<OnBoardServicePro
     public OnBoardServiceProviderRepository(DossDbContext context)
         : base(context) { }
 
-    public async Task<OnBoardServiceProvider> ReturnByUserIdAsync(Guid userId)
+    public override async Task<OnBoardServiceProvider> ReturnByIdAsync(Guid userId)
         => await Context.OnBoardServiceProvider
                         .Include(c => c.User)
                         .Include(c => c.Address)

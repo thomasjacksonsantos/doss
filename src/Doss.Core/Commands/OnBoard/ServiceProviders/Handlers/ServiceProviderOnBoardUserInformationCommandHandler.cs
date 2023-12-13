@@ -17,7 +17,7 @@ public class ServiceProviderOnBoardUserInformationCommandHandler : BaseCommandHa
 
     public override async Task<Result> HandleImplementation(ServiceProviderOnBoardUserInformationCommand command)
     {
-        var serviceProviderOnBoard = await onBoardServiceProviderRepository.ReturnByUserIdAsync(command.User!.Id);
+        var serviceProviderOnBoard = await onBoardServiceProviderRepository.ReturnByIdAsync(command.User!.Id);
 
         if (serviceProviderOnBoard.IsNull())
         {

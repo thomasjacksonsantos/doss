@@ -1,3 +1,4 @@
+using Doss.Core.Domain.Addresses;
 using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.ServiceProviders;
 
@@ -11,7 +12,11 @@ public class ResidentialWithServiceProvider
     public ServiceProvider ServiceProvider { get; set; } = null!;
     public Guid PlanId { get; set; }
     public Plan Plan { get; set; } = null!;
+    public Address Address { get; set; }
+    public ResidentialWithServiceProvider()
+    {
 
-    public ResidentialWithServiceProvider(Guid residentialId, Guid serviceProviderId, Guid planId)
-        => (ResidentialId, ServiceProviderId, PlanId) = (residentialId, serviceProviderId, planId);
+    }
+    public ResidentialWithServiceProvider(Guid residentialId, Guid serviceProviderId, Guid planId, Address address)
+        => (ResidentialId, ServiceProviderId, PlanId, Address) = (residentialId, serviceProviderId, planId, address);
 }

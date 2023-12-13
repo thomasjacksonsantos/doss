@@ -4,6 +4,7 @@ using Doss.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Doss.Infra.Migrations
 {
     [DbContext(typeof(DossDbContext))]
-    partial class DossDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231213011129_refactory-user-verification")]
+    partial class refactoryuserverification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,6 +24,58 @@ namespace Doss.Infra.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Doss.Core.Domain.Addresses.Address", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<string>("Complement")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<Guid?>("ResidentialId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResidentialId");
+
+                    b.ToTable("Address", "Doss");
+                });
 
             modelBuilder.Entity("Doss.Core.Domain.Banks.Bank", b =>
                 {
@@ -76,10 +130,6 @@ namespace Doss.Infra.Migrations
 
                     b.Property<double>("Longitude")
                         .HasColumnType("float");
-
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -475,6 +525,9 @@ namespace Doss.Infra.Migrations
                         .HasMaxLength(160)
                         .HasColumnType("varchar(160)");
 
+                    b.Property<Guid>("AddressId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("AgencyBank")
                         .IsRequired()
                         .HasMaxLength(160)
@@ -493,6 +546,8 @@ namespace Doss.Infra.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("BankId");
 
@@ -621,6 +676,13 @@ namespace Doss.Infra.Migrations
                     b.HasIndex("VerificationId");
 
                     b.ToTable("VerificationMessage", "Doss");
+                });
+
+            modelBuilder.Entity("Doss.Core.Domain.Addresses.Address", b =>
+                {
+                    b.HasOne("Doss.Core.Domain.Residentials.Residential", null)
+                        .WithMany("Addresses")
+                        .HasForeignKey("ResidentialId");
                 });
 
             modelBuilder.Entity("Doss.Core.Domain.OnBoard.OnBoardPlan", b =>
@@ -762,78 +824,6 @@ namespace Doss.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Doss.Core.Domain.Addresses.Address", "Address", b1 =>
-                        {
-                            b1.Property<Guid>("ResidentialWithServiceProviderResidentialId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<Guid>("ResidentialWithServiceProviderServiceProviderId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<Guid>("ResidentialWithServiceProviderPlanId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("varchar(30)")
-                                .HasColumnName("Address_City");
-
-                            b1.Property<string>("Complement")
-                                .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("varchar(200)")
-                                .HasColumnName("Address_Complement");
-
-                            b1.Property<string>("Country")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
-                                .HasColumnName("Address_Country");
-
-                            b1.Property<double>("Latitude")
-                                .HasColumnType("float")
-                                .HasColumnName("Address_Latitude");
-
-                            b1.Property<double>("Longitude")
-                                .HasColumnType("float")
-                                .HasColumnName("Address_Longitude");
-
-                            b1.Property<string>("Number")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
-                                .HasColumnName("Address_Number");
-
-                            b1.Property<string>("State")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
-                                .HasColumnName("Address_State");
-
-                            b1.Property<string>("Street")
-                                .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("varchar(200)")
-                                .HasColumnName("Address_Street");
-
-                            b1.Property<string>("ZipCode")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
-                                .HasColumnName("Address_ZipCode");
-
-                            b1.HasKey("ResidentialWithServiceProviderResidentialId", "ResidentialWithServiceProviderServiceProviderId", "ResidentialWithServiceProviderPlanId");
-
-                            b1.ToTable("ResidentialWithServiceProvider", "Doss");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ResidentialWithServiceProviderResidentialId", "ResidentialWithServiceProviderServiceProviderId", "ResidentialWithServiceProviderPlanId");
-                        });
-
-                    b.Navigation("Address")
-                        .IsRequired();
-
                     b.Navigation("Plan");
 
                     b.Navigation("Residential");
@@ -843,6 +833,12 @@ namespace Doss.Infra.Migrations
 
             modelBuilder.Entity("Doss.Core.Domain.ServiceProviders.ServiceProviderPlan", b =>
                 {
+                    b.HasOne("Doss.Core.Domain.Addresses.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Doss.Core.Domain.Banks.Bank", "Bank")
                         .WithMany()
                         .HasForeignKey("BankId")
@@ -855,71 +851,7 @@ namespace Doss.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Doss.Core.Domain.Addresses.Address", "Address", b1 =>
-                        {
-                            b1.Property<Guid>("ServiceProviderPlanId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("varchar(30)")
-                                .HasColumnName("Address_City");
-
-                            b1.Property<string>("Complement")
-                                .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("varchar(200)")
-                                .HasColumnName("Address_Complement");
-
-                            b1.Property<string>("Country")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
-                                .HasColumnName("Address_Country");
-
-                            b1.Property<double>("Latitude")
-                                .HasColumnType("float")
-                                .HasColumnName("Address_Latitude");
-
-                            b1.Property<double>("Longitude")
-                                .HasColumnType("float")
-                                .HasColumnName("Address_Longitude");
-
-                            b1.Property<string>("Number")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
-                                .HasColumnName("Address_Number");
-
-                            b1.Property<string>("State")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
-                                .HasColumnName("Address_State");
-
-                            b1.Property<string>("Street")
-                                .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("varchar(200)")
-                                .HasColumnName("Address_Street");
-
-                            b1.Property<string>("ZipCode")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
-                                .HasColumnName("Address_ZipCode");
-
-                            b1.HasKey("ServiceProviderPlanId");
-
-                            b1.ToTable("ServiceProviderPlan", "Doss");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ServiceProviderPlanId");
-                        });
-
-                    b.Navigation("Address")
-                        .IsRequired();
+                    b.Navigation("Address");
 
                     b.Navigation("Bank");
 
@@ -951,6 +883,8 @@ namespace Doss.Infra.Migrations
 
             modelBuilder.Entity("Doss.Core.Domain.Residentials.Residential", b =>
                 {
+                    b.Navigation("Addresses");
+
                     b.Navigation("ResidentialWithServiceProviders");
 
                     b.Navigation("Vehicles");

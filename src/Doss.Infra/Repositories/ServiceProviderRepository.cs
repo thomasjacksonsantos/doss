@@ -22,12 +22,6 @@ public class ServiceProviderRepository : RepositoryBase<ServiceProvider>, IServi
                         .AsSplitQuery()
                         .SingleOrDefaultAsync(c => c.Id == id) ?? null!;
 
-    public async Task<ServiceProvider> ReturnByUserIdAsync(Guid userId)
-        => await Context.ServiceProvider
-                        .Include(c => c.ServiceProviderPlans)
-                        .AsSplitQuery()
-                        .SingleOrDefaultAsync(c => c.UserId == userId) ?? null!;
-
     public async Task<IEnumerable<ServiceProvider>> ReturnByZipCodeAsync(string zipCode)
         => await Context.ServiceProvider.ToListAsync();
 

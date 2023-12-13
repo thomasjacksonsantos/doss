@@ -8,7 +8,6 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
 {
     public void Configure(EntityTypeBuilder<Address> builder)
     {
-        builder.HasKey(p => p.Id);
         builder.Property(p => p.Country).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.State).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.City).HasColumnType("varchar").HasMaxLength(30);

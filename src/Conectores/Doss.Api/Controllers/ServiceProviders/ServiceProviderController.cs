@@ -81,7 +81,7 @@ public class ServiceProviderController : DossBaseController
     ///     POST /Todo
     ///     {
     ///         "userStatus": "Active" --Inactive
-    ///    }
+    ///     }
     ///
     /// </remarks>
     /// <response code="201">Returns the newly created item</response>

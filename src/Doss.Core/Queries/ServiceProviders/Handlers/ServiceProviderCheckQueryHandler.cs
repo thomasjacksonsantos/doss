@@ -14,9 +14,9 @@ public class ServiceProviderCheckQueryHandler : IRequestHandler<ServiceProviderC
 
     public async Task<Result<ServiceProviderCheckQuery.Response>> Handle(ServiceProviderCheckQuery query, CancellationToken cancellationToken)
     {
-        var sql = @"SELECT UserId from Doss.ServiceProvider
+        var sql = @"SELECT Id from Doss.ServiceProvider
                     WHERE
-                        UserId = @UserId";
+                        Id = @UserId";
 
         var serviceProviderCheck = await serviceProviderRepository.SqlSingleAsync<ServiceProviderCheckQuery.Response>(sql, new { UserId = query.User.Id });
 

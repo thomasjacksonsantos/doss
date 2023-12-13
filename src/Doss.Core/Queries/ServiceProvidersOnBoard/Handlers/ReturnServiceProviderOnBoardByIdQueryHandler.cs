@@ -14,7 +14,7 @@ public class ReturnServiceProviderOnBoardByIdQueryHandler : IRequestHandler<Retu
 
     public async Task<Result<OnBoardServiceProvider>> Handle(ReturnServiceProviderOnBoardByIdQuery query, CancellationToken cancellationToken)
     {
-        var onBoardServiceProvider = await onBoardServiceProviderRepository.ReturnByUserIdAsync(query.User.Id);
+        var onBoardServiceProvider = await onBoardServiceProviderRepository.ReturnByIdAsync(query.User!.Id);
         if (onBoardServiceProvider.IsNotNull())
             return Results.Ok(onBoardServiceProvider);
 

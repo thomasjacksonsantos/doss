@@ -9,13 +9,18 @@ public class OnBoardAddress
     public string Street { get; private set; }
     public string ZipCode { get; private set; }
     public string Complement { get; private set; }
+    public string Number { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
-    public OnBoardAddress(string country, string state, string city, string street, string complement, string zipCode, double latitude, double longitude)
-        => (Country, State, City, Street, Complement, ZipCode, Latitude, Longitude) = (country, state, city, street, complement, zipCode, latitude, longitude);
+    public OnBoardAddress(string country, string state, string city, string street, string complement, string zipCode, string number, double latitude, double longitude)
+        => (Country, State, City, Street, Complement, ZipCode, Number, Latitude, Longitude) 
+            = (country, state, city, street, complement, zipCode, number, latitude, longitude);
 
     public void ChangeCountry(string country)
         => Country = country;
+
+    public void ChangeNumber(string number)
+        => Number = number;
 
     public void ChangeState(string state)
         => State = state;

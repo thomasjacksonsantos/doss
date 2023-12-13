@@ -4,6 +4,7 @@ using Doss.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Doss.Infra.Migrations
 {
     [DbContext(typeof(DossDbContext))]
-    partial class DossDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231213122116_address-number-user-verification")]
+    partial class addressnumberuserverification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -775,20 +777,17 @@ namespace Doss.Infra.Migrations
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("varchar(30)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_City");
 
                             b1.Property<string>("Complement")
                                 .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("varchar(200)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_Complement");
 
                             b1.Property<string>("Country")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_Country");
 
                             b1.Property<double>("Latitude")
@@ -801,26 +800,22 @@ namespace Doss.Infra.Migrations
 
                             b1.Property<string>("Number")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_Number");
 
                             b1.Property<string>("State")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_State");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("varchar(200)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_Street");
 
                             b1.Property<string>("ZipCode")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_ZipCode");
 
                             b1.HasKey("ResidentialWithServiceProviderResidentialId", "ResidentialWithServiceProviderServiceProviderId", "ResidentialWithServiceProviderPlanId");
@@ -862,20 +857,17 @@ namespace Doss.Infra.Migrations
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("varchar(30)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_City");
 
                             b1.Property<string>("Complement")
                                 .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("varchar(200)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_Complement");
 
                             b1.Property<string>("Country")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_Country");
 
                             b1.Property<double>("Latitude")
@@ -888,26 +880,22 @@ namespace Doss.Infra.Migrations
 
                             b1.Property<string>("Number")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_Number");
 
                             b1.Property<string>("State")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_State");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("varchar(200)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_Street");
 
                             b1.Property<string>("ZipCode")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("varchar(20)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Address_ZipCode");
 
                             b1.HasKey("ServiceProviderPlanId");

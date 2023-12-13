@@ -3,6 +3,7 @@ using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.Residentials;
 using Doss.Core.Domain.ServiceProviders;
 using Doss.Core.Domain.Users;
+using Doss.Core.Domain.Verifications;
 using Doss.Infra.Data.Configuration;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,6 @@ namespace Doss.Infra.Data
             modelBuilder.HasDefaultSchema("Doss");
             SetDefaultDateTimeColumnType(modelBuilder);
             
-            modelBuilder.ApplyConfiguration(new AddressConfiguration());
             modelBuilder.ApplyConfiguration(new OnBoardAddressConfiguration());
             modelBuilder.ApplyConfiguration(new OnBoardResidentialConfiguration());
             modelBuilder.ApplyConfiguration(new OnBoardUserConfiguration());
@@ -33,7 +33,8 @@ namespace Doss.Infra.Data
             modelBuilder.ApplyConfiguration(new VehicleConfiguration());
             modelBuilder.ApplyConfiguration(new BankConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceProviderAlertConfiguration());
-
+            modelBuilder.ApplyConfiguration(new VerificationConfiguration());
+            
             base.OnModelCreating(modelBuilder);
         }
 
@@ -75,5 +76,8 @@ namespace Doss.Infra.Data
 
         public DbSet<Plan> Plan
             => Set<Plan>();
+
+        public DbSet<Verification> Verification
+            => Set<Verification>();
     }
 }

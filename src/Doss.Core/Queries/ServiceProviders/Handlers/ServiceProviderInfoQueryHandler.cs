@@ -15,7 +15,7 @@ public class ServiceProviderInfoQueryHandler : IRequestHandler<ServiceProviderIn
     {
         var sql = @"SELECT Name, UserStatus, Photo from Doss.ServiceProvider
                     WHERE
-                        UserId = @UserId";
+                        Id = @UserId";
 
         return Results.Ok(await serviceProviderRepository
                                 .SqlSingleAsync<ServiceProviderInfoQuery.Response>(sql, new { UserId = query.User.Id }));
