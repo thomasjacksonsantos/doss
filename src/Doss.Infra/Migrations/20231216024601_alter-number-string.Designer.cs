@@ -4,6 +4,7 @@ using Doss.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Doss.Infra.Migrations
 {
     [DbContext(typeof(DossDbContext))]
-    partial class DossDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231216024601_alter-number-string")]
+    partial class alternumberstring
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -388,8 +390,7 @@ namespace Doss.Infra.Migrations
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(4000)
-                        .HasColumnType("varchar(4000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ResidentialWithServiceProviderId")
                         .HasColumnType("uniqueidentifier");

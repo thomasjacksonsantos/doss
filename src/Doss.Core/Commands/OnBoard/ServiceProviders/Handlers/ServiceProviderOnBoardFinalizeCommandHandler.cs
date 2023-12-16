@@ -26,7 +26,7 @@ public class ServiceProviderOnBoardFinalizeCommandHandler : BaseCommandHandler<S
 
         var serviceProviderVerify = await serviceProviderRepository.ReturnByIdAsync(command.User.Id);
         if (serviceProviderVerify.IsNotNull())
-            throw new ArgumentOutOfRangeException("Service provider already exists in our database.");
+            return Results.Error("Service provider already exists in our database.");
 
         var serviceProvider = new ServiceProvider(serviceProviderOnBoard.TokenUserId,
                                                   serviceProviderOnBoard.User.Name,

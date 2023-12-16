@@ -7,12 +7,12 @@ public class OnBoardAddress
     public string State { get; private set; }
     public string City { get; private set; }
     public string Street { get; private set; }
-    public string ZipCode { get; private set; }
+    public int ZipCode { get; private set; }
     public string Complement { get; private set; }
     public string Number { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
-    public OnBoardAddress(string country, string state, string city, string street, string complement, string zipCode, string number, double latitude, double longitude)
+    public OnBoardAddress(string country, string state, string city, string street, string complement, int zipCode, string number, double latitude, double longitude)
         => (Country, State, City, Street, Complement, ZipCode, Number, Latitude, Longitude) 
             = (country, state, city, street, complement, zipCode, number, latitude, longitude);
 
@@ -33,7 +33,7 @@ public class OnBoardAddress
     public void ChangeComplement(string complement)
         => Complement = complement;
 
-    public void ChangeZipCode(string zipCode)
+    public void ChangeZipCode(int zipCode)
         => ZipCode = zipCode;
 
     public void ChangeLatitude(double latitude)

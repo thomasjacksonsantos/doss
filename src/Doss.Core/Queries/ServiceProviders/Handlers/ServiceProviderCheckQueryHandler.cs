@@ -1,4 +1,3 @@
-using Doss.Core.Domain.Users;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using MediatR;
@@ -13,13 +12,6 @@ public class ServiceProviderCheckQueryHandler : IRequestHandler<ServiceProviderC
         => this.serviceProviderRepository = serviceProviderRepository;
 
     public async Task<Result<ServiceProviderCheckQuery.Response>> Handle(ServiceProviderCheckQuery query, CancellationToken cancellationToken)
-    {
-        var sql = @"SELECT Id from Doss.ServiceProvider
-                    WHERE
-                        Id = @UserId";
-
-        var serviceProviderCheck = await serviceProviderRepository.SqlSingleAsync<ServiceProviderCheckQuery.Response>(sql, new { UserId = query.User.Id });
-
-        return Results.Ok(serviceProviderCheck);
-    }
+        => Results.Ok(await serviceProviderRepository.SqlSingleAsync<ServiceProviderCheckQuery.Response>("SELECT Id from Doss.ServiceProvider WHERE Id = @UserId",
+                                                                                                            new { UserId = query.User!.Id }));
 }

@@ -156,5 +156,8 @@ namespace System
 
         public static string OnlyNumbers(this string value)
             => string.Join("", new Regex(@"\d+").Matches(value));
+
+        public static int ConvertToInt(this string value)
+            => int.Parse(value.OnlyNumbers());
     }
 }

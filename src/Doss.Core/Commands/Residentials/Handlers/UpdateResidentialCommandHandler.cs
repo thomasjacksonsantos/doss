@@ -14,7 +14,7 @@ public class UpdateResidentialCommandHandler : BaseCommandHandler<UpdateResident
 
     public override async Task<Result> HandleImplementation(UpdateResidentialCommand command)
     {
-        var residential = await residentialRepository.ReturnResidentialByIdAsync(command.Id);
+        var residential = await residentialRepository.ReturnByIdAsync(command.Id);
 
 
         return Results.Ok("Residentia user updated with success.");

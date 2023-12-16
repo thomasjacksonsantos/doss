@@ -1,5 +1,4 @@
 using Doss.Core.Commands.Residentials;
-using Doss.Core.Domain.Users;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;

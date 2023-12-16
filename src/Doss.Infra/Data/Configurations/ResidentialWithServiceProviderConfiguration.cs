@@ -8,10 +8,7 @@ public class ResidentialWithServiceProviderConfiguration : IEntityTypeConfigurat
 {
     public void Configure(EntityTypeBuilder<ResidentialWithServiceProvider> builder)
     {
-        builder.HasKey(c => new { c.ResidentialId, c.ServiceProviderId, c.PlanId });
-        builder.Property(c => c.ResidentialId);
-        builder.Property(c => c.ServiceProviderId);
-        builder.Property(c => c.PlanId);
+        builder.HasKey(c => c.Id);
         builder.OwnsOne(p => p.Address, address =>
         {
             address.Property(a => a.Country).HasColumnName("Address_Country").HasColumnType("varchar").HasMaxLength(20);

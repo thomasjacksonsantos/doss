@@ -12,12 +12,8 @@ public class ServiceProviderInfoQueryHandler : IRequestHandler<ServiceProviderIn
         => this.serviceProviderRepository = serviceProviderRepository;
 
     public async Task<Result<ServiceProviderInfoQuery.Response>> Handle(ServiceProviderInfoQuery query, CancellationToken cancellationToken)
-    {
-        var sql = @"SELECT Name, UserStatus, Photo from Doss.ServiceProvider
-                    WHERE
-                        Id = @UserId";
+        => Results.Ok(await serviceProviderRepository
+                            .SqlSingleAsync<ServiceProviderInfoQuery.Response>("SELECT Name, UserStatus, Photo from Doss.ServiceProvider WHERE Id = @UserId",
+                            new { UserId = query.User!.Id }));
 
-        return Results.Ok(await serviceProviderRepository
-                                .SqlSingleAsync<ServiceProviderInfoQuery.Response>(sql, new { UserId = query.User.Id }));
-    }
 }

@@ -1,9 +1,9 @@
 
 namespace Doss.Core.Interfaces.Repositories;
 
-public interface IUnitOfWork : IDisposable
+public interface IUnitOfWork
 {
-    IResidentialRepository ResidencialRepository { get; set; }
-    IServiceProviderRepository ServiceProviderRepository { get; set; }
-    IFeeRepository FeeRepository { get; set; }
+    IResidentialRepository ResidencialRepository { get; }
+    IServiceProviderRepository ServiceProviderRepository { get; }
+    IFeeRepository FeeRepository { get; }
 }
