@@ -91,29 +91,7 @@ public class ServiceProviderController : DossBaseController
     [HttpPut("status/{UserStatus}")]
     public async Task<IActionResult> Put([FromRoute] UpdateServiceProviderStatusCommand command)
         => await HandleCommand(command);   
-
-    /// <summary>
-    /// Update status verification
-    /// </summary>
-    /// <param name="command">command</param>
-    /// <returns>Results ok</returns>
-    /// <remarks>
-    /// Sample request:
-    ///
-    ///     POST /Todo
-    ///     {
-    ///         "VerificationId": "Guid",
-    ///         "Status": "VerificationStatus"
-    ///     }
-    ///
-    /// </remarks>
-    /// <response code="201">Returns the newly created item</response>
-    /// <response code="400">If the item is null</response>
-    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    [HttpPut("verification/{VerificationId}/status/{Status}")]
-    public async Task<IActionResult> Put([FromRoute] UpdateServiceProviderVerificationStatusCommand command)
-        => await HandleCommand(command);         
+        
 
     /// <summary>
     /// Return a service provider list by zipcode.

@@ -1,6 +1,6 @@
 using Doss.Core.Seedwork;
 
-namespace Doss.Core.Commands.ServiceProviders;
+namespace Doss.Core.Commands.Residentials;
 
 public class CreateVerificationMessageCommand : Command
 {

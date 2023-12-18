@@ -1,10 +1,9 @@
-using System.Data;
-using Doss.Core.Commands.ServiceProviders;
+using Doss.Core.Commands.Residentials;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;
 
-namespace Ageu.Core.Commands.ServiceProviders.Handlers;
+namespace Ageu.Core.Commands.Residentials.Handlers;
 
 public class CreateVerificationMessageCommandHandler : BaseCommandHandler<CreateVerificationMessageCommand, CreateVerificationMessageCommandValidator>
 {

@@ -8,6 +8,7 @@ using Doss.Core.Domain.Residentials;
 using Doss.Core.Commands.Verifications;
 using Doss.Core.Queries.Residentials;
 using Doss.Core.Queries.ServiceProviders;
+using Doss.Core.Commands.Residentials;
 
 namespace Doss.Api.Controllers.ResidentialsOnBoard
 {
@@ -24,30 +25,6 @@ namespace Doss.Api.Controllers.ResidentialsOnBoard
         /// <param name="mediator">mediator</param>
         public ResidentialController(IMediator mediator)
             : base(mediator) { }
-
-        /// <summary>
-        /// message requesting a check on the owner's residence.
-        /// </summary>
-        /// <param name="command">Body</param>
-        /// <returns>Result</returns>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     POST /Todo
-        ///     {
-        ///        "residentialWithServiceProviderId": Guid,
-        ///        "message": "Description "
-        ///    }
-        ///
-        /// </remarks>
-        /// <response code="201">Returns the newly created item</response>
-        /// <response code="400">If the item is null</response>
-        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-        [HttpPost("verification-request")]
-        public async Task<IActionResult> Post([FromBody] ResidentialVerificationRequestCommand command)
-            => await HandleCommand(command);
-
 
         /// <summary>
         /// Return the residential info by id.
@@ -75,18 +52,5 @@ namespace Doss.Api.Controllers.ResidentialsOnBoard
         [HttpGet("check")]
         public async Task<IActionResult> Get([FromRoute] ResidentialCheckQuery query)
         => await HandleQuery<ResidentialCheckQuery, ResidentialCheckQuery.Response>(query);
-
-        /// <summary>
-        /// return all service provider checks.
-        /// </summary>
-        /// <param name="query">Quey</param>
-        /// <returns>Return all bank</returns>
-        /// <response code="201">Returns the newly created item</response>
-        /// <response code="400">If the item is null</response>
-        [ProducesResponseType(typeof(Result<ServiceProviderVerificationRequestAllQuery.Response>), StatusCodes.Status200OK)] 
-        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-        [HttpGet("verification/all")]
-        public async Task<IActionResult> Get([FromRoute] ServiceProviderVerificationRequestAllQuery query)
-        => await HandleQuery<ServiceProviderVerificationRequestAllQuery, ServiceProviderVerificationRequestAllQuery.Response>(query);
     }
 }
