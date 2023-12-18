@@ -2,7 +2,7 @@ using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using MediatR;
 
-namespace Doss.Core.Queries.ServiceProviders.Handlers;
+namespace Doss.Core.Queries.Verifications.Handlers;
 
 public class ServiceProviderVerificationRequestAllQueryHandler : IRequestHandler<ServiceProviderVerificationRequestAllQuery, Result<ServiceProviderVerificationRequestAllQuery.Response>>
 {

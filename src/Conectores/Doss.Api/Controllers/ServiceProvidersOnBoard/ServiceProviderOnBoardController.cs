@@ -71,18 +71,6 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
         public async Task<IActionResult> Post([FromBody] ServiceProviderOnBoardCoverageCommand command)
             => await HandleCommand(command);
 
-        /// <summary>
-        /// Create the payment method in the onboard service provider flow.
-        /// </summary>
-        /// <param name="command">Body</param>
-        /// <returns>Result</returns>
-        /// <response code="201">Returns the newly created item</response>
-        /// <response code="400">If the item is null</response>
-        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-        [HttpPost("finalize")]
-        public async Task<IActionResult> Post([FromBody] ServiceProviderOnBoardFinalizeCommand command)
-            => await HandleCommand(command);
 
         /// <summary>
         /// Create the payment method in the onboard service provider flow.

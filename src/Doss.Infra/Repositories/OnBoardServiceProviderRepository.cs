@@ -13,7 +13,7 @@ public class OnBoardServiceProviderRepository : RepositoryBase<OnBoardServicePro
 
     public override async Task<OnBoardServiceProvider> ReturnByIdAsync(Guid userId)
         => await Context.OnBoardServiceProvider
-                        .Include(c => c.User)
+                        .Include(c => c.OnBoardUser)
                         .Include(c => c.Address)
                         .Include(c => c.Plans)
                         .Include(c => c.Vehicle)

@@ -1,7 +1,7 @@
 using Doss.Core.Domain.Enums;
 using Doss.Core.Domain.Residentials;
 using Doss.Core.Queries.Residentials;
-using Doss.Core.Queries.ServiceProviders;
+using Doss.Core.Queries.Verifications;
 
 namespace Doss.Core.Interfaces.Repositories;
 

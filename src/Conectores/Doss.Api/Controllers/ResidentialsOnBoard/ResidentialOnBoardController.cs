@@ -97,6 +97,29 @@ namespace Doss.Api.Controllers.ResidentialsOnBoard
             => await HandleCommand(command);
 
         /// <summary>
+        /// Select the service provider that will secure your home.
+        /// </summary>
+        /// <param name="command">Body</param>
+        /// <returns>Result</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Todo
+        ///     {
+        ///         "ServiceProviderPlanId": Guid,
+        ///         "PlanId": Guid
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpPost("service-provider/{ServiceProviderPlanId}/plan/{planId}")]
+        public async Task<IActionResult> Post([FromRoute] ResidentialOnBoardServiceProviderWithPlanCommand command)
+            => await HandleCommand(command);            
+
+        /// <summary>
         /// Return the residential onboard by id.
         /// </summary>
         /// <param name="query">Quey</param>

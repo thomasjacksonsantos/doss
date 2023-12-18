@@ -2,9 +2,9 @@ using Doss.Core.Seedwork;
 
 namespace Doss.Core.Commands.ServiceProviders;
 
-public class ServiceProviderOnBoardCompletedCommand : Command
+public class CreateServiceProviderOnBoardCompletedCommand : Command
 {
-    public ServiceProviderOnBoardCompletedCommand(Guid userId)
+    public CreateServiceProviderOnBoardCompletedCommand(Guid userId)
     {
         UserId = userId;
     }

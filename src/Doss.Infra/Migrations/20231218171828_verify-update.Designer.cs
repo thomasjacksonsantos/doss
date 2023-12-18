@@ -4,6 +4,7 @@ using Doss.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Doss.Infra.Migrations
 {
     [DbContext(typeof(DossDbContext))]
-    partial class DossDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231218171828_verify-update")]
+    partial class verifyupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,13 +137,10 @@ namespace Doss.Infra.Migrations
                     b.Property<Guid?>("AddressId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("OnBoardUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("PlanId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ServiceProviderPlanId")
+                    b.Property<Guid?>("ServiceProviderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Step")
@@ -152,15 +151,18 @@ namespace Doss.Infra.Migrations
                     b.Property<Guid>("TokenUserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("OnBoardUserId");
-
                     b.HasIndex("PlanId");
 
-                    b.HasIndex("ServiceProviderPlanId");
+                    b.HasIndex("ServiceProviderId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("OnBoardResidential", "Doss");
                 });
@@ -190,9 +192,6 @@ namespace Doss.Infra.Migrations
                     b.Property<int>("CoverageArea")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("OnBoardUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("OnBoardVehicleId")
                         .HasColumnType("uniqueidentifier");
 
@@ -204,15 +203,18 @@ namespace Doss.Infra.Migrations
                     b.Property<Guid>("TokenUserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
                     b.HasIndex("BankId");
 
-                    b.HasIndex("OnBoardUserId");
-
                     b.HasIndex("OnBoardVehicleId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("OnBoardServiceProvider", "Doss");
                 });
@@ -396,8 +398,8 @@ namespace Doss.Infra.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar(25)");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2");
@@ -445,9 +447,6 @@ namespace Doss.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PlanId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ResidentialId")
                         .HasColumnType("uniqueidentifier");
 
@@ -455,8 +454,6 @@ namespace Doss.Infra.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlanId");
 
                     b.HasIndex("ResidentialId");
 
@@ -643,19 +640,19 @@ namespace Doss.Infra.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("Doss.Core.Domain.OnBoard.OnBoardUser", "OnBoardUser")
-                        .WithMany()
-                        .HasForeignKey("OnBoardUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Doss.Core.Domain.Plans.Plan", "Plan")
                         .WithMany()
                         .HasForeignKey("PlanId");
 
-                    b.HasOne("Doss.Core.Domain.ServiceProviders.ServiceProviderPlan", "ServiceProviderPlan")
+                    b.HasOne("Doss.Core.Domain.ServiceProviders.ServiceProvider", "ServiceProvider")
                         .WithMany()
-                        .HasForeignKey("ServiceProviderPlanId");
+                        .HasForeignKey("ServiceProviderId");
+
+                    b.HasOne("Doss.Core.Domain.OnBoard.OnBoardUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.OwnsOne("Doss.Core.Domain.OnBoard.OnBoardTermsAccept", "TermsAccept", b1 =>
                         {
@@ -680,13 +677,13 @@ namespace Doss.Infra.Migrations
 
                     b.Navigation("Address");
 
-                    b.Navigation("OnBoardUser");
-
                     b.Navigation("Plan");
 
-                    b.Navigation("ServiceProviderPlan");
+                    b.Navigation("ServiceProvider");
 
                     b.Navigation("TermsAccept");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Doss.Core.Domain.OnBoard.OnBoardServiceProvider", b =>
@@ -699,15 +696,15 @@ namespace Doss.Infra.Migrations
                         .WithMany()
                         .HasForeignKey("BankId");
 
-                    b.HasOne("Doss.Core.Domain.OnBoard.OnBoardUser", "OnBoardUser")
-                        .WithMany()
-                        .HasForeignKey("OnBoardUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Doss.Core.Domain.OnBoard.OnBoardVehicle", "Vehicle")
                         .WithMany()
                         .HasForeignKey("OnBoardVehicleId");
+
+                    b.HasOne("Doss.Core.Domain.OnBoard.OnBoardUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.OwnsOne("Doss.Core.Domain.OnBoard.OnBoardTermsAccept", "TermsAccept", b1 =>
                         {
@@ -734,9 +731,9 @@ namespace Doss.Infra.Migrations
 
                     b.Navigation("Bank");
 
-                    b.Navigation("OnBoardUser");
-
                     b.Navigation("TermsAccept");
+
+                    b.Navigation("User");
 
                     b.Navigation("Vehicle");
                 });
@@ -768,12 +765,6 @@ namespace Doss.Infra.Migrations
 
             modelBuilder.Entity("Doss.Core.Domain.Residentials.ResidentialWithServiceProvider", b =>
                 {
-                    b.HasOne("Doss.Core.Domain.Plans.Plan", "Plan")
-                        .WithMany()
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Doss.Core.Domain.Residentials.Residential", "Residential")
                         .WithMany("ResidentialWithServiceProviders")
                         .HasForeignKey("ResidentialId")
@@ -851,8 +842,6 @@ namespace Doss.Infra.Migrations
 
                     b.Navigation("Address")
                         .IsRequired();
-
-                    b.Navigation("Plan");
 
                     b.Navigation("Residential");
 

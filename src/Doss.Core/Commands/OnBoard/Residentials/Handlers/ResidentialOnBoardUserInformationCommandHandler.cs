@@ -33,11 +33,11 @@ public class ResidentialOnBoardUserInformationCommandHandler : BaseCommandHandle
         }
         else
         {
-            residentialOnBoard.User.ChangeName(command.Name);
-            residentialOnBoard.User.ChangeTypeDocument(command.TypeDocument);
-            residentialOnBoard.User.ChangeDocument(command.Document);
-            residentialOnBoard.User.ChangePhone(command.Phone);
-            residentialOnBoard.User.ChangePhoto(command.Photo);
+            residentialOnBoard.OnBoardUser.ChangeName(command.Name);
+            residentialOnBoard.OnBoardUser.ChangeTypeDocument(command.TypeDocument);
+            residentialOnBoard.OnBoardUser.ChangeDocument(command.Document);
+            residentialOnBoard.OnBoardUser.ChangePhone(command.Phone);
+            residentialOnBoard.OnBoardUser.ChangePhoto(command.Photo);
         }
 
         await onBoardResidentialRepository.SaveAsync();

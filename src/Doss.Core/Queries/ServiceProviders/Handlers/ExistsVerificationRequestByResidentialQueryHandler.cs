@@ -13,10 +13,12 @@ public class ExistsVerificationRequestByResidentialQueryHandler : IRequestHandle
 
     public async Task<Result<ExistsVerificationRequestByResidentialQuery.Response>> Handle(ExistsVerificationRequestByResidentialQuery query, CancellationToken cancellationToken)
         => Results.Ok(await serviceProviderRepository
-                            .SqlSingleAsync<ExistsVerificationRequestByResidentialQuery.Response>(@"SELECT COUNT(*) as Total FROM Doss.ResidentialWithServiceProvider
+                            .SqlSingleAsync<ExistsVerificationRequestByResidentialQuery.Response>(@"SELECT COUNT(*) as Total FROM Doss.ResidentialVerificationRequest
+                                                                                                    INNER JOIN Doss.ResidentialWithServiceProvider 
+                                                                                                        on ResidentialWithServiceProvider.Id = ResidentialVerificationRequest.ResidentialWithServiceProviderId
                                                                                                     INNER JOIN Doss.ServiceProviderPlan on ServiceProviderPlan.Id = ResidentialWithServiceProvider.ServiceProviderPlanId
                                                                                                     WHERE
                                                                                                         ServiceProviderPlan.ServiceProviderId = @UserId",
-                                                                                                                                new { UserId = query.User!.Id }));
+                                                                                                    new { UserId = query.User!.Id }));
 
 }

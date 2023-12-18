@@ -1,7 +1,7 @@
 using Doss.Core.Domain.Enums;
 using Doss.Core.Seedwork;
 
-namespace Doss.Core.Queries.ServiceProviders;
+namespace Doss.Core.Queries.Verifications;
 
 public class ServiceProviderVerificationRequestAllQuery : Query<ServiceProviderVerificationRequestAllQuery.Response>
 {

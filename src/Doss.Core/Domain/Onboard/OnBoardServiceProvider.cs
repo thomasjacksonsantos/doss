@@ -10,7 +10,7 @@ public class OnBoardServiceProvider
     public int CoverageArea { get; private set; }
     public string AgencyBank { get; private set; } = string.Empty;
     public string AccountBank { get; private set; } = string.Empty;
-    public OnBoardUser User { get; private set; } = null!;
+    public OnBoardUser OnBoardUser { get; private set; } = null!;
     public OnBoardStepEnum Step { get; private set; }
     public OnBoardAddress? Address { get; private set; }
     public IEnumerable<OnBoardPlan>? Plans { get; private set; }
@@ -26,7 +26,7 @@ public class OnBoardServiceProvider
     public void AddUser(Guid userId, OnBoardUser user)
     {
         TokenUserId = userId;
-        User = user;
+        OnBoardUser = user;
     }
 
     public void AddBank(Bank bank)

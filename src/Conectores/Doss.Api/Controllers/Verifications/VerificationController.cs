@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Doss.Core.Commands.ServiceProviders;
 using Doss.Core.Seedwork;
-using Doss.Core.Queries.ServiceProviders;
-using Doss.Core.Commands.Residentials;
 using Doss.Core.Commands.Verifications;
+using Doss.Core.Queries.Verifications;
 using MediatR;
+using Doss.Core.Queries.ServiceProviders;
 
 namespace Doss.Api.Controllers.ServiceProviders;
 
@@ -90,7 +89,20 @@ public class VerificationController : DossBaseController
     /// <response code="400">If the item is null</response>
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    [HttpPost("message")]
-    public async Task<IActionResult> Post([FromBody] CreateVerificationMessageCommand command)
+    [HttpPost("chat")]
+    public async Task<IActionResult> Post([FromBody] VerificationChatCommand command)
             => await HandleCommand(command);
+
+    /// <summary>
+    /// Checks if there is any verification requested by the resident.
+    /// </summary>
+    /// <param name="query">Quey</param>
+    /// <returns>Return all bank</returns>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result<ExistsVerificationRequestByResidentialQuery.Response>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpGet("check")]
+    public async Task<IActionResult> Get([FromRoute] ExistsVerificationRequestByResidentialQuery query)
+            => await HandleQuery<ExistsVerificationRequestByResidentialQuery, ExistsVerificationRequestByResidentialQuery.Response>(query);
 }

@@ -1,19 +1,19 @@
-using Doss.Core.Commands.Residentials;
+using Doss.Core.Commands.Verifications;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;
 
-namespace Ageu.Core.Commands.Residentials.Handlers;
+namespace Ageu.Core.Commands.Verifications.Handlers;
 
-public class CreateVerificationMessageCommandHandler : BaseCommandHandler<CreateVerificationMessageCommand, CreateVerificationMessageCommandValidator>
+public class VerificationChatCommandHandler : BaseCommandHandler<VerificationChatCommand, VerificationChatCommandValidator>
 {
     private readonly IUnitOfWork unitOfWork;
-    public CreateVerificationMessageCommandHandler(IUnitOfWork unitOfWork,
-                                                    CreateVerificationMessageCommandValidator validator)
+    public VerificationChatCommandHandler(IUnitOfWork unitOfWork,
+                                          VerificationChatCommandValidator validator)
         : base(validator)
             => (this.unitOfWork) = (unitOfWork);
 
-    public override async Task<Result> HandleImplementation(CreateVerificationMessageCommand command)
+    public override async Task<Result> HandleImplementation(VerificationChatCommand command)
     {
         var verification = await unitOfWork.ResidencialRepository.ReturnVerificationRequestById(command.ResidentialVerificationRequestId);
         verification.AddMessage(command.User!.Id, command.Message, command.Photo);
@@ -23,9 +23,9 @@ public class CreateVerificationMessageCommandHandler : BaseCommandHandler<Create
     }
 }
 
-public sealed class CreateVerificationMessageCommandValidator : AbstractValidator<CreateVerificationMessageCommand>
+public sealed class VerificationChatCommandValidator : AbstractValidator<VerificationChatCommand>
 {
-    public CreateVerificationMessageCommandValidator()
+    public VerificationChatCommandValidator()
     {
         RuleFor(c => c.Message).NotEmpty();
         RuleFor(c => c.ResidentialVerificationRequestId).NotEmpty();

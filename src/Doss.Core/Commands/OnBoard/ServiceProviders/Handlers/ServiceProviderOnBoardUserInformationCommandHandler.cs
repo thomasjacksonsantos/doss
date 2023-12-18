@@ -33,11 +33,11 @@ public class ServiceProviderOnBoardUserInformationCommandHandler : BaseCommandHa
         }
         else
         {
-            serviceProviderOnBoard.User.ChangeName(command.Name);
-            serviceProviderOnBoard.User.ChangeTypeDocument(command.TypeDocument);
-            serviceProviderOnBoard.User.ChangeDocument(command.Document);
-            serviceProviderOnBoard.User.ChangePhone(command.Phone);
-            serviceProviderOnBoard.User.ChangePhoto(command.Photo);
+            serviceProviderOnBoard.OnBoardUser.ChangeName(command.Name);
+            serviceProviderOnBoard.OnBoardUser.ChangeTypeDocument(command.TypeDocument);
+            serviceProviderOnBoard.OnBoardUser.ChangeDocument(command.Document);
+            serviceProviderOnBoard.OnBoardUser.ChangePhone(command.Phone);
+            serviceProviderOnBoard.OnBoardUser.ChangePhoto(command.Photo);
         }
 
         await onBoardServiceProviderRepository.SaveAsync();

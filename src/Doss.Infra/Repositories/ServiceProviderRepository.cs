@@ -25,6 +25,9 @@ public class ServiceProviderRepository : RepositoryBase<ServiceProvider>, IServi
     public async Task<IEnumerable<ServiceProvider>> ReturnByZipCodeAsync(string zipCode)
         => await Context.ServiceProvider.ToListAsync();
 
+    public async Task<ServiceProviderPlan> ReturnServiceProviderPlan(Guid id)
+        => await Context.ServiceProviderPlan.Include(c => c.Plans).SingleAsync(c => c.Id == id);
+
     public async Task<IEnumerable<Plan>> ReturnPlanAll(Guid serviceProviderId)
         => await Context.ServiceProviderPlan
                         .Include(c => c.Plans)
@@ -36,7 +39,7 @@ public class ServiceProviderRepository : RepositoryBase<ServiceProvider>, IServi
     public async Task UpdateServiceProviderStatus(Guid userId, UserStatus userStatus)
         => await Connection.ExecuteAsync(@"Update Doss.ServiceProvider set UserStatus = @UserStatus
                                             WHERE
-                                                UserId = @UserId", 
-                                            param: new {UserId = userId, UserStatus = userStatus }, 
+                                                UserId = @UserId",
+                                            param: new { UserId = userId, UserStatus = userStatus },
                                             commandType: System.Data.CommandType.Text);
 }

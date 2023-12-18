@@ -18,12 +18,18 @@ public class Residential
     public DateTime? Updated { get; set; }
     public IEnumerable<ResidentialWithServiceProvider> ResidentialWithServiceProviders { get; set; } = new List<ResidentialWithServiceProvider>();
     public Residential(Guid id, string name, TypeDocument typeDocument, string document, string phone, string photo, bool completedRegistration)
-            => (Id, Name, TypeDocument, Document, Phone, Photo, CompletedRegistration) = (id, name, typeDocument, document.OnlyNumbers(), phone.OnlyNumbers(), photo, completedRegistration);
+            => (Id, Name, TypeDocument, Document, Phone, Photo, CompletedRegistration, UserStatus, Created) = (id, name, typeDocument, document.OnlyNumbers(), phone.OnlyNumbers(), photo, completedRegistration, UserStatus.Active, DateTime.Now);
 
     public void AddVehicle(Vehicle vehicle)
     {
         if (Vehicles is not { }) Vehicles = new List<Vehicle>();
         ((List<Vehicle>)Vehicles).Add(vehicle);
+    }
+
+    public void AddResidentialWithServiceProvider(ResidentialWithServiceProvider residentialWithServiceProvider)
+    {
+        if (ResidentialWithServiceProviders is not {}) ResidentialWithServiceProviders = new List<ResidentialWithServiceProvider>();
+        ((List<ResidentialWithServiceProvider>)ResidentialWithServiceProviders).Add(residentialWithServiceProvider);
     }
 
     public void ChangeName(string name)

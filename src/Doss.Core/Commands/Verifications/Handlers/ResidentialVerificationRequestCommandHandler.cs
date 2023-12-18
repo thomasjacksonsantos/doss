@@ -25,5 +25,7 @@ public sealed class ResidentialVerificationRequestCommandValidator : AbstractVal
 {
     public ResidentialVerificationRequestCommandValidator()
     {
+        RuleFor(c => c.ResidentialWithServiceProviderId).NotEmpty();
+        RuleFor(c => c.Message).NotEmpty();
     }
 }

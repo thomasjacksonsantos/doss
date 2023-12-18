@@ -11,11 +11,13 @@ public class ResidentialWithServiceProvider
     public Residential Residential { get; set; }
     public Guid ServiceProviderPlanId { get; set; }
     public ServiceProviderPlan ServiceProviderPlan { get; set; } = null!;
+    public Guid PlanId { get; set; }
+    public Plan Plan { get; set; }
     public Address Address { get; set; }
     public ResidentialWithServiceProvider()
     {
 
     }
-    public ResidentialWithServiceProvider(Guid serviceProviderPlanId, Address address)
-        => (ServiceProviderPlanId, Address) = (serviceProviderPlanId, address);
+    public ResidentialWithServiceProvider(Guid serviceProviderPlanId, Guid planId, Address address)
+        => (ServiceProviderPlanId, PlanId, Address) = (serviceProviderPlanId, planId, address);
 }

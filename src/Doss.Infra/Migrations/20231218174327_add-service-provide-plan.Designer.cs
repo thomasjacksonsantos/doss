@@ -4,6 +4,7 @@ using Doss.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Doss.Infra.Migrations
 {
     [DbContext(typeof(DossDbContext))]
-    partial class DossDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231218174327_add-service-provide-plan")]
+    partial class addserviceprovideplan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -396,8 +398,8 @@ namespace Doss.Infra.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar(25)");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2");
@@ -445,9 +447,6 @@ namespace Doss.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PlanId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ResidentialId")
                         .HasColumnType("uniqueidentifier");
 
@@ -455,8 +454,6 @@ namespace Doss.Infra.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlanId");
 
                     b.HasIndex("ResidentialId");
 
@@ -768,12 +765,6 @@ namespace Doss.Infra.Migrations
 
             modelBuilder.Entity("Doss.Core.Domain.Residentials.ResidentialWithServiceProvider", b =>
                 {
-                    b.HasOne("Doss.Core.Domain.Plans.Plan", "Plan")
-                        .WithMany()
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Doss.Core.Domain.Residentials.Residential", "Residential")
                         .WithMany("ResidentialWithServiceProviders")
                         .HasForeignKey("ResidentialId")
@@ -851,8 +842,6 @@ namespace Doss.Infra.Migrations
 
                     b.Navigation("Address")
                         .IsRequired();
-
-                    b.Navigation("Plan");
 
                     b.Navigation("Residential");
 

@@ -4,5 +4,6 @@ public enum VerificationStatus
 {
     Active = 1,
     Inactive = 2,
-    Done = 3
+    Done = 3,
+    WaitingConfirmation = 4
 }

@@ -24,6 +24,9 @@ public class ServiceProviderPlan
     public ServiceProviderPlan(string accountBank, string agencyBank, int coverageArea, Address address, Bank bank, IEnumerable<Plan> plans)
         => (AccountBank, AgencyBank, CoverageArea, Address, Bank, Plans, Created) = (accountBank, agencyBank, coverageArea, address, bank, plans, DateTime.Now);
 
+    public Plan ReturnPlanById(Guid planId)
+        => Plans.SingleOrDefault(c => c.Id == planId) ?? null!;
+        
     public void AddPlans(IEnumerable<Plan> plans)
         => Plans = plans;
 

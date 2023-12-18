@@ -9,7 +9,7 @@ public class ResidentialVerificationRequestConfiguration : IEntityTypeConfigurat
     public void Configure(EntityTypeBuilder<ResidentialVerificationRequest> builder)
     {
         builder.HasKey(p => p.Id);
-        builder.Property(p => p.Status).HasConversion<string>().HasColumnType("varchar").HasMaxLength(25);
+        builder.Property(p => p.Status).HasConversion<string>().HasColumnType("varchar").HasMaxLength(100);
         builder.Property(p => p.Message).HasConversion<string>().HasColumnType("varchar").HasMaxLength(300);
     }
 }

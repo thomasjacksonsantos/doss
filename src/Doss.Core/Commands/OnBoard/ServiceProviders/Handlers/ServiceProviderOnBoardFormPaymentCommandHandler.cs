@@ -42,7 +42,7 @@ public class ServiceProviderOnBoardFormPaymentCommandHandler : BaseCommandHandle
         await onBoardServiceProviderRepository.SaveAsync();
 
         /// TODO: Criar evento para salvar o usuario no dominio service provider
-        await mediator.Send(new ServiceProviderOnBoardCompletedCommand(command.User.Id));
+        await mediator.Send(new CreateServiceProviderOnBoardCompletedCommand(command.User.Id));
 
         return Results.Ok("OnBoard successfully processed.");
     }

@@ -3,7 +3,7 @@ using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Domain.Residentials;
 using Microsoft.EntityFrameworkCore;
 using Doss.Core.Queries.Residentials;
-using Doss.Core.Queries.ServiceProviders;
+using Doss.Core.Queries.Verifications;
 using Doss.Core.Domain.Enums;
 using Dapper;
 
@@ -75,7 +75,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
 
     public async Task UpdateVerificationStatus(Guid id, VerificationStatus verificationStatus)
         => await Connection.ExecuteAsync(sql: "UPDATE Doss.ResidentialVerificationRequest Set [Status] = @VerificationStatus WHERE Id = @Id",
-                                      param: new { Id = id, VerificationStatus = verificationStatus });
+                                      param: new { Id = id, VerificationStatus = verificationStatus.ToString() });
 
     public async Task<ResidentialVerificationRequest> ReturnVerificationRequestById(Guid id)
     {

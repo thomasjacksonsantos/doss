@@ -17,7 +17,7 @@ public class ResidentialOnBoardTermsAcceptCommandHandler : BaseCommandHandler<Re
 
     public override async Task<Result> HandleImplementation(ResidentialOnBoardTermsAcceptCommand command)
     {
-        var residentialOnBoard = await onBoardResidentialRepository.ReturnByUserIdAsync(command.User!.Id);
+        var residentialOnBoard = await onBoardResidentialRepository.ReturnByIdAsync(command.User!.Id);
         if (residentialOnBoard.IsNull())
             return Results.Error("OnBoard not found.");
 

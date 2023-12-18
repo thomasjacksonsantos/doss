@@ -10,11 +10,11 @@ public class OnBoardResidentialRepository : RepositoryBase<OnBoardResidential>, 
     public OnBoardResidentialRepository(DossDbContext context)
         : base(context) { }
 
-    public async Task<OnBoardResidential> ReturnByUserIdAsync(Guid userId)
+    public override async Task<OnBoardResidential> ReturnByIdAsync(Guid userId)
         => await Context.OnBoardResidential
-                        .Include(c => c.User)
+                        .Include(c => c.OnBoardUser)
                         .Include(c => c.Address)
-                        .Include(c => c.ServiceProvider)
+                        .Include(c => c.ServiceProviderPlan)
                         .Include(c => c.Plan)
                         .FirstOrDefaultAsync(c => c.TokenUserId == userId) ?? null!;
 }
