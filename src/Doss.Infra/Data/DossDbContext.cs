@@ -32,6 +32,7 @@ namespace Doss.Infra.Data
             modelBuilder.ApplyConfiguration(new BankConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceProviderAlertConfiguration());
             modelBuilder.ApplyConfiguration(new ResidentialVerificationRequestConfiguration());
+            modelBuilder.ApplyConfiguration(new VerificationMessageConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -74,6 +75,9 @@ namespace Doss.Infra.Data
 
         public DbSet<ResidentialVerificationRequest> ResidentialVerificationRequest
             => Set<ResidentialVerificationRequest>();
+
+        public DbSet<VerificationMessage> VerificationMessage
+            => Set<VerificationMessage>();            
 
         public DbSet<Plan> Plan
             => Set<Plan>();

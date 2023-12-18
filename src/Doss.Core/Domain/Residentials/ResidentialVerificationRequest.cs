@@ -14,7 +14,7 @@ public class ResidentialVerificationRequest
     public IEnumerable<VerificationMessage> Messages { get; private set; } = new List<VerificationMessage>();
 
     public ResidentialVerificationRequest() { }
-    
+
     public ResidentialVerificationRequest(ResidentialWithServiceProvider residentialWithServiceProvider, string message)
         => (ResidentialWithServiceProvider, Status, Message, Created) = (residentialWithServiceProvider, VerificationStatus.WaitingConfirmation, message, DateTime.Now);
 
@@ -24,17 +24,18 @@ public class ResidentialVerificationRequest
     public void ChangeStatus(VerificationStatus status)
         => Status = status;
 
-    public class VerificationMessage
-    {
-        public Guid Id { get; set; }
-        public Guid UserId { get; set; }
-        public string Message { get; set; }
-        public DateTime Created { get; set; }
-        public string Photo { get; set; }
-        public VerificationMessage()
-        { }
+}
+public class VerificationMessage
+{
+    public Guid Id { get; set; }
+    public Guid UserId { get; set; }
+    public Guid ResidentialVerificationRequestId { get; set; }
+    public string Message { get; set; }
+    public DateTime Created { get; set; }
+    public string Photo { get; set; }
+    public VerificationMessage()
+    { }
 
-        public VerificationMessage(Guid userId, string message, string photo)
-            => (UserId, Message, Photo) = (userId, message, photo);
-    }
+    public VerificationMessage(Guid userId, string message, string photo)
+        => (UserId, Message, Photo, Created) = (userId, message, photo, DateTime.Now);
 }

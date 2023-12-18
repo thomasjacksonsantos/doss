@@ -66,7 +66,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                                                                                 c.ResidentialWithServiceProvider.Address.Street,
                                                                                 c.ResidentialWithServiceProvider.Address.Number,
                                                                                 c.ResidentialWithServiceProvider.Address.ZipCode)))
-                                                                                .Skip(page)
+                                                                                .Skip((page - 1) * total)
                                                                                 .Take(total)
                                                                                 .ToListAsync();
 
@@ -82,5 +82,19 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
         return await Context.ResidentialVerificationRequest
                         .Include(c => c.Messages)
                         .SingleOrDefaultAsync(c => c.Id == id) ?? null!;
+    }
+
+    public async Task<IEnumerable<ReturnChatQuery.Chat>> ReturnChatMessage(Guid residentialVerificationRequestId, int page, int total)
+    {
+        if (total <= 0)
+            total = 20;
+
+        return await Context.VerificationMessage
+                .OrderByDescending(c => c.Created)
+                .Where(c => c.ResidentialVerificationRequestId == residentialVerificationRequestId)
+                .Skip((page - 1) * total)
+                .Take(total)
+                .Select(c => new ReturnChatQuery.Chat(c.Id, c.UserId, c.Message, c.Photo, c.Created))
+                .ToListAsync();
     }
 }

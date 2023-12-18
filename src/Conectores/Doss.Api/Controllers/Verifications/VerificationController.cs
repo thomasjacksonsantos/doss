@@ -105,4 +105,17 @@ public class VerificationController : DossBaseController
     [HttpGet("check")]
     public async Task<IActionResult> Get([FromRoute] ExistsVerificationRequestByResidentialQuery query)
             => await HandleQuery<ExistsVerificationRequestByResidentialQuery, ExistsVerificationRequestByResidentialQuery.Response>(query);
+
+    /// <summary>
+    /// Returns chat messages using the requested verification id.
+    /// </summary>
+    /// <param name="query">Quey</param>
+    /// <returns>Return all bank</returns>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result<ReturnChatQuery.Response>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpGet("chat/messages")]
+    public async Task<IActionResult> Get([FromQuery] ReturnChatQuery query)
+            => await HandleQuery<ReturnChatQuery, ReturnChatQuery.Response>(query);            
 }
