@@ -49,7 +49,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
 
     public async Task<ServiceProviderVerificationRequestAllQuery.Response> ReturnVerificationAllByServiceProvider(Guid id, int page, int total = 20)
     {
-        if (total <= 0)
+        if (total <= 0 || total > 20)
             total = 20;
 
         if (page > 0)
@@ -89,13 +89,16 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
 
     public async Task<IEnumerable<ReturnChatQuery.Chat>> ReturnChatMessage(Guid residentialVerificationRequestId, int page, int total)
     {
-        if (total <= 0)
+        if (total <= 0 || total > 20)
             total = 20;
+
+        if (page > 0)
+            page = (page - 1) * total;
 
         return await Context.VerificationMessage
                 .OrderByDescending(c => c.Created)
                 .Where(c => c.ResidentialVerificationRequestId == residentialVerificationRequestId)
-                .Skip((page - 1) * total)
+                .Skip(page)
                 .Take(total)
                 .Select(c => new ReturnChatQuery.Chat(c.Id, c.UserId, c.Message, c.Photo, c.Created))
                 .ToListAsync();

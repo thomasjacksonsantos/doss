@@ -54,7 +54,7 @@ public class VerificationController : DossBaseController
     [ProducesResponseType(typeof(Result<ServiceProviderVerificationRequestAllQuery.Response>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [HttpGet("all")]
-    public async Task<IActionResult> Get([FromRoute] ServiceProviderVerificationRequestAllQuery query)
+    public async Task<IActionResult> Get([FromQuery] ServiceProviderVerificationRequestAllQuery query)
     => await HandleQuery<ServiceProviderVerificationRequestAllQuery, ServiceProviderVerificationRequestAllQuery.Response>(query);
 
     /// <summary>
