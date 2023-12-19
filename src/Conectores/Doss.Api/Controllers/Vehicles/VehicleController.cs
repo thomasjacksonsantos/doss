@@ -59,8 +59,8 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
         /// <response code="400">If the item is null</response>
         [ProducesResponseType(typeof(Result<OnBoardServiceProvider>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-        [HttpGet("all")]
-        public async Task<IActionResult> Get([FromRoute] VehicleByUserIdQuery query)
-            => await HandleQuery<VehicleByUserIdQuery, VehicleByUserIdQuery.Response>(query);
+        [HttpGet("service-provider/all")]
+        public async Task<IActionResult> Get([FromRoute] ReturnVehiclesByServiceProviderIdQuery query)
+            => await HandleQuery<ReturnVehiclesByServiceProviderIdQuery, ReturnVehiclesByServiceProviderIdQuery.Response>(query);
     }
 }

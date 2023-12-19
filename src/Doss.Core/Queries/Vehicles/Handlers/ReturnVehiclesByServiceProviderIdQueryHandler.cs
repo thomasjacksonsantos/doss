@@ -4,21 +4,21 @@ using MediatR;
 
 namespace Doss.Core.Queries.Vehicles.Handlers;
 
-public class VehicleByIdQueryHandler : IRequestHandler<VehicleByUserIdQuery, Result<VehicleByUserIdQuery.Response>>
+public class ReturnVehiclesByServiceProviderIdQueryHandler : IRequestHandler<ReturnVehiclesByServiceProviderIdQuery, Result<ReturnVehiclesByServiceProviderIdQuery.Response>>
 {
-    private readonly IVehicleRepository vehicleRepository;
+    private readonly IServiceProviderVehicleRepository serviceProviderVehicleRepository;
 
-    public VehicleByIdQueryHandler(IVehicleRepository vehicleRepository)
-        => this.vehicleRepository = vehicleRepository;
+    public ReturnVehiclesByServiceProviderIdQueryHandler(IServiceProviderVehicleRepository serviceProviderVehicleRepository)
+        => this.serviceProviderVehicleRepository = serviceProviderVehicleRepository;
 
-    public async Task<Result<VehicleByUserIdQuery.Response>> Handle(VehicleByUserIdQuery query, CancellationToken cancellationToken)
+    public async Task<Result<ReturnVehiclesByServiceProviderIdQuery.Response>> Handle(ReturnVehiclesByServiceProviderIdQuery query, CancellationToken cancellationToken)
     {
 
-        var vehicles = await vehicleRepository.ReturnAllAsync(c => c.UserId == query.User!.Id, includeProperties: "Vehicle");
+        var vehicles = await serviceProviderVehicleRepository.ReturnAllAsync(c => c.ServiceProviderId == query.User!.Id, includeProperties: "Vehicle");
 
-        return Results.Ok(new VehicleByUserIdQuery.Response(vehicles
+        return Results.Ok(new ReturnVehiclesByServiceProviderIdQuery.Response(vehicles
                                                             .Select(c => 
-                                                                new VehicleByUserIdQuery.Vehicle(c.Id, 
+                                                                new ReturnVehiclesByServiceProviderIdQuery.Vehicle(c.Id, 
                                                                                                  c.Vehicle.Brand, 
                                                                                                  c.Vehicle.Model, 
                                                                                                  c.Vehicle.Color, 

@@ -3,7 +3,7 @@ using Doss.Core.Seedwork;
 
 namespace Doss.Core.Commands.Vehicles
 {
-    public class UpdateVehicleCommand : Command
+    public class UpdateServiceProviderVehicleCommand : Command
     {
         public Guid Id { get; set; }
         public string Brand { get; set; } = string.Empty;

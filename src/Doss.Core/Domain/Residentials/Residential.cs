@@ -13,17 +13,17 @@ public class Residential
     public string Photo { get; private set; }
     public bool CompletedRegistration { get; private set; }
     public UserStatus UserStatus { get; private set; }
-    public IEnumerable<Vehicle>? Vehicles { get; private set; }
+    public IEnumerable<ResidentialVehicle>? ResidentialVehicles { get; private set; }
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
     public IEnumerable<ResidentialWithServiceProvider> ResidentialWithServiceProviders { get; set; } = new List<ResidentialWithServiceProvider>();
     public Residential(Guid id, string name, TypeDocument typeDocument, string document, string phone, string photo, bool completedRegistration)
             => (Id, Name, TypeDocument, Document, Phone, Photo, CompletedRegistration, UserStatus, Created) = (id, name, typeDocument, document.OnlyNumbers(), phone.OnlyNumbers(), photo, completedRegistration, UserStatus.Active, DateTime.Now);
 
-    public void AddVehicle(Vehicle vehicle)
+    public void AddVehicle(ResidentialVehicle residentialVehicle)
     {
-        if (Vehicles is not { }) Vehicles = new List<Vehicle>();
-        ((List<Vehicle>)Vehicles).Add(vehicle);
+        if (ResidentialVehicles is not { }) ResidentialVehicles = new List<ResidentialVehicle>();
+        ((List<ResidentialVehicle>)ResidentialVehicles).Add(residentialVehicle);
     }
 
     public void AddResidentialWithServiceProvider(ResidentialWithServiceProvider residentialWithServiceProvider)

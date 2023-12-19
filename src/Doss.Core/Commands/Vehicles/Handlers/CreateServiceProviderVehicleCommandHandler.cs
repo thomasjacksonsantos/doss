@@ -6,17 +6,17 @@ using FluentValidation;
 
 namespace Ageu.Core.Commands.Vehicles.Handlers
 {
-    public class CreateVehicleCommandHandler : BaseCommandHandler<CreateVehicleCommand, CreateVehicleCommandValidator>
+    public class CreateServiceProviderVehicleCommandHandler : BaseCommandHandler<CreateServiceProviderVehicleCommand, CreateServiceProviderVehicleCommandValidator>
     {
-        private readonly IVehicleRepository vehicleRepository;
-        public CreateVehicleCommandHandler(IVehicleRepository vehicleRepository,
-                                             CreateVehicleCommandValidator validator)
+        private readonly IServiceProviderVehicleRepository serviceProviderVehicleRepository;
+        public CreateServiceProviderVehicleCommandHandler(IServiceProviderVehicleRepository serviceProviderVehicleRepository,
+                                             CreateServiceProviderVehicleCommandValidator validator)
             : base(validator)
-                => this.vehicleRepository = vehicleRepository;
+                => this.serviceProviderVehicleRepository = serviceProviderVehicleRepository;
 
-        public override async Task<Result> HandleImplementation(CreateVehicleCommand command)
+        public override async Task<Result> HandleImplementation(CreateServiceProviderVehicleCommand command)
         {
-            await vehicleRepository.AddAsync(new UserVehicle(new Vehicle(command.Brand,
+            await serviceProviderVehicleRepository.AddAsync(new ServiceProviderVehicle(new Vehicle(command.Brand,
                                                                         command.Model,
                                                                         command.Color,
                                                                         command.Plate,
@@ -24,15 +24,15 @@ namespace Ageu.Core.Commands.Vehicles.Handlers
                                                                         command.DefaultVehicle,
                                                                         command.VehicleType)));
 
-            await vehicleRepository.SaveAsync();
+            await serviceProviderVehicleRepository.SaveAsync();
 
             return Results.Ok("Vehicle created with success.");
         }
     }
 
-    public sealed class CreateVehicleCommandValidator : AbstractValidator<CreateVehicleCommand>
+    public sealed class CreateServiceProviderVehicleCommandValidator : AbstractValidator<CreateServiceProviderVehicleCommand>
     {
-        public CreateVehicleCommandValidator()
+        public CreateServiceProviderVehicleCommandValidator()
         {
             RuleFor(c => c.Brand).NotEmpty();
             RuleFor(c => c.Model).NotEmpty();

@@ -3,7 +3,7 @@ using Doss.Core.Seedwork;
 
 namespace Doss.Core.Queries.Vehicles;
 
-public class VehicleByUserIdQuery : Query<VehicleByUserIdQuery.Response>
+public class ReturnVehiclesByServiceProviderIdQuery : Query<ReturnVehiclesByServiceProviderIdQuery.Response>
 {
     public class Response
     {

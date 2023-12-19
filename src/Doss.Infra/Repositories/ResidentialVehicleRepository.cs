@@ -4,9 +4,9 @@ using Doss.Core.Domain.Vehicles;
 
 namespace Doss.Infra.Repositories;
 
-public class VehicleRepository : RepositoryBase<UserVehicle>, IVehicleRepository
+public class ResidentialVehicleRepository : RepositoryBase<ResidentialVehicle>, IResidentialVehicleRepository
 {
-    public VehicleRepository(DossDbContext context)
+    public ResidentialVehicleRepository(DossDbContext context)
         : base(context)
     {
 

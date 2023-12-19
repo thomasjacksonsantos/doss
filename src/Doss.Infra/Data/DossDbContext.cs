@@ -30,7 +30,8 @@ namespace Doss.Infra.Data
             modelBuilder.ApplyConfiguration(new ServiceProviderConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceProviderPlanConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleConfiguration());
-            modelBuilder.ApplyConfiguration(new UserVehicleConfiguration());
+            modelBuilder.ApplyConfiguration(new ServiceProviderVehicleConfiguration());
+            modelBuilder.ApplyConfiguration(new ResidentialVehicleConfiguration());
             modelBuilder.ApplyConfiguration(new BankConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceProviderAlertConfiguration());
             modelBuilder.ApplyConfiguration(new ResidentialVerificationRequestConfiguration());
@@ -87,7 +88,10 @@ namespace Doss.Infra.Data
         public DbSet<Vehicle> Vehicle
             => Set<Vehicle>();
 
-        public DbSet<UserVehicle> UserVehicle
-            => Set<UserVehicle>();
+        public DbSet<ServiceProviderVehicle> ServiceProviderVehicle
+            => Set<ServiceProviderVehicle>();
+
+        public DbSet<ResidentialVehicle> ResidentialVehicle
+            => Set<ResidentialVehicle>();
     }
 }

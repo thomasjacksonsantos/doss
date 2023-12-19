@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Doss.Infra.Data.Configuration;
 
-public class UserVehicleConfiguration : IEntityTypeConfiguration<UserVehicle>
+public class ResidentialVehicleConfiguration : IEntityTypeConfiguration<ResidentialVehicle>
 {
-    public void Configure(EntityTypeBuilder<UserVehicle> builder)
+    public void Configure(EntityTypeBuilder<ResidentialVehicle> builder)
     {
         builder.HasKey(p => p.Id);
     }
