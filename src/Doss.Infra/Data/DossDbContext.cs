@@ -2,6 +2,7 @@ using Doss.Core.Domain.OnBoard;
 using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.Residentials;
 using Doss.Core.Domain.ServiceProviders;
+using Doss.Core.Domain.Vehicles;
 using Doss.Infra.Data.Configuration;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,7 @@ namespace Doss.Infra.Data
             modelBuilder.ApplyConfiguration(new ServiceProviderConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceProviderPlanConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleConfiguration());
+            modelBuilder.ApplyConfiguration(new UserVehicleConfiguration());
             modelBuilder.ApplyConfiguration(new BankConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceProviderAlertConfiguration());
             modelBuilder.ApplyConfiguration(new ResidentialVerificationRequestConfiguration());
@@ -81,5 +83,11 @@ namespace Doss.Infra.Data
 
         public DbSet<Plan> Plan
             => Set<Plan>();
+
+        public DbSet<Vehicle> Vehicle
+            => Set<Vehicle>();
+
+        public DbSet<UserVehicle> UserVehicle
+            => Set<UserVehicle>();
     }
 }

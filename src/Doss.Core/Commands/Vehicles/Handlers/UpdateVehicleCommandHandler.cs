@@ -16,14 +16,14 @@ namespace Ageu.Core.Commands.Vehicles.Handlers
 
         public override async Task<Result> HandleImplementation(UpdateVehicleCommand command)
         {
-            await vehicleRepository.UpdateAsync(new Vehicle(command.Id,
-                                                       command.Brand, 
-                                                       command.Model, 
-                                                       command.Color, 
-                                                       command.Plate, 
-                                                       command.Photo, 
-                                                       command.DefaultVehicle, 
-                                                       command.VehicleType));
+            await vehicleRepository.UpdateAsync(new UserVehicle(new Vehicle(command.Id,
+                                                                            command.Brand,
+                                                                            command.Model,
+                                                                            command.Color,
+                                                                            command.Plate,
+                                                                            command.Photo,
+                                                                            command.DefaultVehicle,
+                                                                            command.VehicleType)));
 
             await vehicleRepository.SaveAsync();
 

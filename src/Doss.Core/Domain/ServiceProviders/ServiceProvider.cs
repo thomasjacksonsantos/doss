@@ -14,7 +14,7 @@ public class ServiceProvider
     public string Photo { get; private set; }
     public bool CompletedRegistration { get; private set; }
     public UserStatus UserStatus { get; private set; }
-    public IEnumerable<Vehicle>? Vehicles { get; private set; }
+    public IEnumerable<UserVehicle>? UserVehicles { get; private set; }
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
     public IEnumerable<ServiceProviderPlan> ServiceProviderPlans { get; private set; } = new List<ServiceProviderPlan>();
@@ -23,11 +23,11 @@ public class ServiceProvider
     => (Id, Name, TypeDocument, Document, Phone, Photo, CompletedRegistration, UserStatus, Created)
         = (id, name, typeDocument, document.OnlyNumbers(), phone.OnlyNumbers(), photo, completedRegistration, UserStatus.Active, DateTime.Now);
 
-    public void AddVehicle(Vehicle vehicle)
+    public void AddVehicle(UserVehicle userVehicle)
     {
-        if (Vehicles is not { }) Vehicles = new List<Vehicle>();
+        if (UserVehicles is not { }) UserVehicles = new List<UserVehicle>();
 
-        ((List<Vehicle>)Vehicles).Add(vehicle);
+        ((List<UserVehicle>)UserVehicles).Add(userVehicle);
     }
 
     public void ChangeName(string name)

@@ -16,13 +16,13 @@ namespace Ageu.Core.Commands.Vehicles.Handlers
 
         public override async Task<Result> HandleImplementation(CreateVehicleCommand command)
         {
-            await vehicleRepository.AddAsync(new Vehicle(command.Brand, 
-                                                         command.Model, 
-                                                         command.Color, 
-                                                         command.Plate, 
-                                                         command.Photo, 
-                                                         command.DefaultVehicle, 
-                                                         command.VehicleType));
+            await vehicleRepository.AddAsync(new UserVehicle(new Vehicle(command.Brand,
+                                                                        command.Model,
+                                                                        command.Color,
+                                                                        command.Plate,
+                                                                        command.Photo,
+                                                                        command.DefaultVehicle,
+                                                                        command.VehicleType)));
 
             await vehicleRepository.SaveAsync();
 

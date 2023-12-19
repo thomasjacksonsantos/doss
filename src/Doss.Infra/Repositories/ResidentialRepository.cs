@@ -52,6 +52,9 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
         if (total <= 0)
             total = 20;
 
+        if (page > 0)
+            page = (page - 1) * total;
+
         var verifications = await Context.ResidentialVerificationRequest
                                      .Where(c => c.ResidentialWithServiceProvider.ServiceProviderPlan.ServiceProviderId == id)
                                      .Select(c => new ServiceProviderVerificationRequestAllQuery
@@ -66,7 +69,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                                                                                 c.ResidentialWithServiceProvider.Address.Street,
                                                                                 c.ResidentialWithServiceProvider.Address.Number,
                                                                                 c.ResidentialWithServiceProvider.Address.ZipCode)))
-                                                                                .Skip((page - 1) * total)
+                                                                                .Skip(page)
                                                                                 .Take(total)
                                                                                 .ToListAsync();
 

@@ -13,31 +13,19 @@ public class VehicleByIdQueryHandler : IRequestHandler<VehicleByUserIdQuery, Res
 
     public async Task<Result<VehicleByUserIdQuery.Response>> Handle(VehicleByUserIdQuery query, CancellationToken cancellationToken)
     {
-        var sql = @"Select 
-                    Vehicle.Id,
-                    Vehicle.Brand,
-                    Vehicle.Model,
-                    Vehicle.Color,
-                    Vehicle.Plante,
-                    Vehicle.DefaultVehicle,
-                    Vehicle.VehicleType,
-                    Vehicle.Created
-                      from Vehicle
-                        Inner Join UserVehicle On Vehicle.Id = UserVehicle.VehicleId
-                        Where UserVehicle.UserId = @UserId 
-                        Order By Vehicle.DefaultVehicle";
-        var vehicles = await vehicleRepository.SqlListAsync(sql, new { UserId = query.User!.Id });
+
+        var vehicles = await vehicleRepository.ReturnAllAsync(c => c.UserId == query.User!.Id, includeProperties: "Vehicle");
 
         return Results.Ok(new VehicleByUserIdQuery.Response(vehicles
                                                             .Select(c => 
                                                                 new VehicleByUserIdQuery.Vehicle(c.Id, 
-                                                                                                 c.Brand, 
-                                                                                                 c.Model, 
-                                                                                                 c.Color, 
-                                                                                                 c.Plate, 
-                                                                                                 c.Photo, 
-                                                                                                 c.DefaultVehicle, 
-                                                                                                 c.VehicleType, 
+                                                                                                 c.Vehicle.Brand, 
+                                                                                                 c.Vehicle.Model, 
+                                                                                                 c.Vehicle.Color, 
+                                                                                                 c.Vehicle.Plate, 
+                                                                                                 c.Vehicle.Photo, 
+                                                                                                 c.Vehicle.DefaultVehicle, 
+                                                                                                 c.Vehicle.VehicleType, 
                                                                                                  c.Created))));
     }
 }

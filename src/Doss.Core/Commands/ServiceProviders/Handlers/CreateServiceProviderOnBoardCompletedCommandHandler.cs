@@ -32,7 +32,7 @@ public class CreateServiceProviderOnBoardCompletedCommandHandler : BaseCommandHa
             return Results.Error("service provider has already been registered.");
 
         serviceProvider = new ServiceProvider(command.UserId, onboard.OnBoardUser.Name, onboard.OnBoardUser.TypeDocument, onboard.OnBoardUser.Document, onboard.OnBoardUser.Phone, onboard.OnBoardUser.Photo, true);
-        serviceProvider.AddVehicle(onboard.Vehicle!);
+        serviceProvider.AddVehicle(new Doss.Core.Domain.Vehicles.UserVehicle(onboard.Vehicle!));
         var bank = await bankRepository.ReturnByIdAsync(onboard.BankId!.Value);
         serviceProvider.AddServiceProviderPlan(new ServiceProviderPlan(onboard.AccountBank, onboard.AgencyBank, onboard.CoverageArea, onboard.Address!, bank, onboard.Plans!.Select(c => (Plan)c).ToList()!));
         serviceProvider.ChangeUserStatus(Doss.Core.Domain.Enums.UserStatus.Active);
