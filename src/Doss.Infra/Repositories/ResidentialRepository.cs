@@ -100,7 +100,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                 .Where(c => c.ResidentialVerificationRequestId == residentialVerificationRequestId)
                 .Skip(page)
                 .Take(total)
-                .Select(c => new ReturnChatQuery.Chat(c.Id, c.UserId, c.Message, c.Photo, c.Created))
+                .Select(c => new ReturnChatQuery.Chat(c.Id, c.UserId, c.Message, c.Photo, c.Audio, c.Created))
                 .ToListAsync();
     }
 }

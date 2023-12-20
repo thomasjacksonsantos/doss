@@ -1,4 +1,3 @@
-using Doss.Core.Commands.OnBoard.Residentials;
 using Doss.Core.Commands.Residentials;
 using Doss.Core.Domain.OnBoard;
 using Doss.Core.Interfaces.Repositories;
@@ -6,7 +5,7 @@ using Doss.Core.Seedwork;
 using FluentValidation;
 using MediatR;
 
-namespace Ageu.Core.Commands.OnBoard.Residentials.Handlers;
+namespace Doss.Core.Commands.OnBoard.Residentials.Handlers;
 
 public class ResidentialOnBoardServiceProviderWithPlanCommandHandler : BaseCommandHandler<ResidentialOnBoardServiceProviderWithPlanCommand, ResidentialOnBoardServiceProviderWithPlanCommandValidator>
 {

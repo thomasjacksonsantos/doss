@@ -21,8 +21,9 @@ public class ReturnChatQuery : Query<ReturnChatQuery.Response>
         public Guid UserId { get; set; }
         public string Message { get; set; }
         public string Photo { get; set; }
+        public string Audio { get; set; }
         public DateTime When { get; set; }
-        public Chat(Guid id, Guid userId, string message, string photo, DateTime when)
-            => (Id, UserId, Message, Photo, When) = (id, userId, message, photo, when);
+        public Chat(Guid id, Guid userId, string message, string photo, string audio, DateTime when)
+            => (Id, UserId, Message, Photo, Audio, When) = (id, userId, message, photo, audio, when);
     }
 }

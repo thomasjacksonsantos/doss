@@ -1,3 +1,4 @@
+using Doss.Core.Domain.Contacts;
 using Doss.Core.Domain.OnBoard;
 using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.Residentials;
@@ -36,7 +37,8 @@ namespace Doss.Infra.Data
             modelBuilder.ApplyConfiguration(new ServiceProviderAlertConfiguration());
             modelBuilder.ApplyConfiguration(new ResidentialVerificationRequestConfiguration());
             modelBuilder.ApplyConfiguration(new VerificationMessageConfiguration());
-
+            modelBuilder.ApplyConfiguration(new UsefulContactConfiguration());
+            
             base.OnModelCreating(modelBuilder);
         }
 
@@ -93,5 +95,8 @@ namespace Doss.Infra.Data
 
         public DbSet<ResidentialVehicle> ResidentialVehicle
             => Set<ResidentialVehicle>();
+
+        public DbSet<UsefulContact> UsefulContact
+            => Set<UsefulContact>();
     }
 }
