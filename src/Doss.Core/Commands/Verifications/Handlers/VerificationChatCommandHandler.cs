@@ -14,6 +14,9 @@ public class VerificationChatCommandHandler : BaseCommandHandler<VerificationCha
 
     public override async Task<Result> HandleImplementation(VerificationChatCommand command)
     {
+        if (command.Message.IsNull() && command.Photo.IsNull() && command.Audio.IsNull())
+            return Results.Error("Message is empty");
+
         var verification = await unitOfWork.ResidencialRepository.ReturnVerificationRequestById(command.ResidentialVerificationRequestId);
         verification.AddMessage(command.User!.Id, command.Message, command.Photo);
         await unitOfWork.ServiceProviderRepository.SaveAsync();
@@ -26,7 +29,6 @@ public sealed class VerificationChatCommandValidator : AbstractValidator<Verific
 {
     public VerificationChatCommandValidator()
     {
-        RuleFor(c => c.Message).NotEmpty();
         RuleFor(c => c.ResidentialVerificationRequestId).NotEmpty();
     }
 }
