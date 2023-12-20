@@ -22,6 +22,9 @@ namespace Ageu.Core.Commands.Vehicles.Handlers
                 return Results.Error("Vehicle not found");
 
             var vehicle = serviceProvider.ReturnVehicleById(command.Id);
+            
+            if (command.DefaultVehicle)
+                serviceProvider.ResetDefaultVehicles();
 
             vehicle.ChangeBrand(command.Brand);
             vehicle.ChangeModel(command.Model);

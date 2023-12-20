@@ -15,8 +15,11 @@ public class ServiceProvider
     public bool CompletedRegistration { get; private set; }
     public UserStatus UserStatus { get; private set; }
     public IEnumerable<ServiceProviderVehicle>? ServiceProviderVehicles { get; private set; }
-    public Vehicle ReturnVehicleById(Guid vehicleId) 
-        => ServiceProviderVehicles!.Select(c => c.Vehicle).Single(c => c.Id == vehicleId);        
+    public Vehicle ReturnVehicleById(Guid vehicleId)
+        => ServiceProviderVehicles!.Select(c => c.Vehicle).Single(c => c.Id == vehicleId);
+    public void ResetDefaultVehicles()
+        => ServiceProviderVehicles!.ForEach(c => c.Vehicle.ChangeDefaultVehicle(false));
+        
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
     public IEnumerable<ServiceProviderPlan> ServiceProviderPlans { get; private set; } = new List<ServiceProviderPlan>();
