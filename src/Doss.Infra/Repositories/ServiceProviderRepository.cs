@@ -36,11 +36,11 @@ public class ServiceProviderRepository : RepositoryBase<ServiceProvider>, IServi
                         .SelectMany(c => c.Plans)
                         .ToListAsync();
 
-    public async Task UpdateServiceProviderStatus(Guid userId, UserStatus userStatus)
+    public async Task UpdateServiceProviderStatus(Guid id, UserStatus userStatus)
         => await Connection.ExecuteAsync(@"Update Doss.ServiceProvider set UserStatus = @UserStatus
                                             WHERE
-                                                UserId = @UserId",
-                                            param: new { UserId = userId, UserStatus = userStatus },
+                                                id = @Id",
+                                            param: new { Id = id, UserStatus = userStatus },
                                             commandType: System.Data.CommandType.Text);
 
     public async Task<ServiceProvider> ReturnVehiclesAll(Guid serviceProviderId)
