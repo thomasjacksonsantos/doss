@@ -17,15 +17,16 @@ public class ReturnVehiclesByServiceProviderIdQueryHandler : IRequestHandler<Ret
         var vehicles = await serviceProviderVehicleRepository.ReturnAllAsync(c => c.ServiceProviderId == query.User!.Id, includeProperties: "Vehicle");
 
         return Results.Ok(new ReturnVehiclesByServiceProviderIdQuery.Response(vehicles
-                                                            .Select(c => 
-                                                                new ReturnVehiclesByServiceProviderIdQuery.Vehicle(c.Id, 
-                                                                                                 c.Vehicle.Brand, 
-                                                                                                 c.Vehicle.Model, 
-                                                                                                 c.Vehicle.Color, 
-                                                                                                 c.Vehicle.Plate, 
-                                                                                                 c.Vehicle.Photo, 
-                                                                                                 c.Vehicle.DefaultVehicle, 
-                                                                                                 c.Vehicle.VehicleType, 
-                                                                                                 c.Created))));
+                                                            .Select(c =>
+                                                                new ReturnVehiclesByServiceProviderIdQuery.Vehicle(c.Vehicle.Id,
+                                                                                                                    c.Vehicle.Brand,
+                                                                                                                    c.Vehicle.Model,
+                                                                                                                    c.Vehicle.Color,
+                                                                                                                    c.Vehicle.Plate,
+                                                                                                                    c.Vehicle.Photo,
+                                                                                                                    c.Vehicle.DefaultVehicle,
+                                                                                                                    c.Vehicle.VehicleType,
+                                                                                                                    c.Vehicle.Created,
+                                                                                                                    c.Vehicle.Updated))));
     }
 }

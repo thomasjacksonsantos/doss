@@ -5,6 +5,7 @@ using Doss.Core.Domain.OnBoard;
 using Doss.Core.Queries.ServiceProvidersOnBoard;
 using MediatR;
 using Doss.Core.Queries.Vehicles;
+using Doss.Core.Commands.Vehicles;
 
 namespace Doss.Api.Controllers.ServiceProvidersOnBoard
 {
@@ -23,7 +24,7 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
             : base(mediator) { }
 
         /// <summary>
-        /// Create the address in the onboard service provider flow.
+        /// Create vehicle of service provider.
         /// </summary>
         /// <param name="command">Body</param>
         /// <returns>Result</returns>
@@ -32,24 +33,53 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
         ///
         ///     POST /Todo
         ///     {
-        ///         "country": "BR",
-        ///         "state": "Sao Paulo",
-        ///         "city": "Sao Paulo",
-        ///         "street": "Rua amadeu mendes",
-        ///         "complement": "Casa do fundo",
-        ///         "zipCode": "13100-474",
-        ///         "number": "430"
+        ///         "brand": "honda",
+        ///         "model": "civic",
+        ///         "color": "black",
+        ///         "plate": "xxx8dd",
+        ///         "photo": "base64",
+        ///         "defaultVehicle": true,
+        ///         "vehicleType": "Car"
         ///     }
         ///
         /// </remarks>
         /// <response code="201">Returns the newly created item</response>
         /// <response code="400">If the item is null</response>
-        // [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-        // [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-        // [HttpPost("address")]
-        // public async Task<IActionResult> Post([FromBody] ServiceProviderOnBoardAddressCommand command)
-        //         => await HandleCommand(command);
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpPost("service-provider")]
+        public async Task<IActionResult> Post([FromBody] CreateServiceProviderVehicleCommand command)
+                => await HandleCommand(command);
        
+        /// <summary>
+        /// Update vehicle of service provider.
+        /// </summary>
+        /// <param name="command">Body</param>
+        /// <returns>Result</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Todo
+        ///     {
+        ///         "id": Guid,
+        ///         "brand": "honda",
+        ///         "model": "civic",
+        ///         "color": "black",
+        ///         "plate": "xxx8dd",
+        ///         "photo": "base64",
+        ///         "defaultVehicle": true,
+        ///         "vehicleType": "Car"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpPut("service-provider")]
+        public async Task<IActionResult> Put([FromBody] UpdateServiceProviderVehicleCommand command)
+            => await HandleCommand(command);
+
         /// <summary>
         /// Return list vehicles.
         /// </summary>

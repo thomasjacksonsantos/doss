@@ -10,6 +10,7 @@ public interface IRepositoryBase<TEntity> where TEntity : class
     Task ExecuteAsync(string sql, object param);
     Task<TEntity> ReturnAsNoTrackingAsync(Guid id);
     Task<IEnumerable<TEntity>> ReturnAllAsync(Expression<Func<TEntity, bool>>? filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, string? includeProperties = null);
+    Task<TEntity> ReturnByFilterAsync(Expression<Func<TEntity, bool>>? filter = null, string? includeProperties = null);
     Task<IEnumerable<TEntity>> ReturnAllAsync();
     Task<TEntity> ReturnFirstOrDefaultAsync(Expression<Func<TEntity, bool>>? filter = null, string? includeProperties = null);
     Task<TEntity> AddAsync(TEntity entity, bool saveChanges = true);

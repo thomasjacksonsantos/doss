@@ -10,4 +10,5 @@ public interface IServiceProviderRepository : IRepositoryBase<ServiceProvider>
     Task<IEnumerable<Plan>> ReturnPlanAll(Guid serviceProviderId);
     Task<ServiceProviderPlan> ReturnServiceProviderPlan(Guid id);
     Task UpdateServiceProviderStatus(Guid userId, UserStatus userStatus);
+    Task<ServiceProvider> ReturnVehiclesAll(Guid serviceProviderId);
 }

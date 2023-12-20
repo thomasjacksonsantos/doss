@@ -8,23 +8,25 @@ namespace Ageu.Core.Commands.Vehicles.Handlers
 {
     public class CreateServiceProviderVehicleCommandHandler : BaseCommandHandler<CreateServiceProviderVehicleCommand, CreateServiceProviderVehicleCommandValidator>
     {
-        private readonly IServiceProviderVehicleRepository serviceProviderVehicleRepository;
-        public CreateServiceProviderVehicleCommandHandler(IServiceProviderVehicleRepository serviceProviderVehicleRepository,
-                                             CreateServiceProviderVehicleCommandValidator validator)
+        private readonly IServiceProviderRepository serviceProviderRepository;
+        public CreateServiceProviderVehicleCommandHandler(IServiceProviderRepository serviceProviderRepository,
+                                                          CreateServiceProviderVehicleCommandValidator validator)
             : base(validator)
-                => this.serviceProviderVehicleRepository = serviceProviderVehicleRepository;
+                => this.serviceProviderRepository = serviceProviderRepository;
 
         public override async Task<Result> HandleImplementation(CreateServiceProviderVehicleCommand command)
         {
-            await serviceProviderVehicleRepository.AddAsync(new ServiceProviderVehicle(new Vehicle(command.Brand,
-                                                                        command.Model,
-                                                                        command.Color,
-                                                                        command.Plate,
-                                                                        command.Photo,
-                                                                        command.DefaultVehicle,
-                                                                        command.VehicleType)));
+            var serviceProvider = await serviceProviderRepository.ReturnByIdAsync(command.User!.Id);
 
-            await serviceProviderVehicleRepository.SaveAsync();
+            serviceProvider.AddVehicle(new ServiceProviderVehicle(new Vehicle(command.Brand,
+                                                                              command.Model,
+                                                                              command.Color,
+                                                                              command.Plate,
+                                                                              command.Photo,
+                                                                              command.DefaultVehicle,
+                                                                              command.VehicleType)));
+
+            await serviceProviderRepository.SaveAsync();
 
             return Results.Ok("Vehicle created with success.");
         }

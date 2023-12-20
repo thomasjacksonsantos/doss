@@ -1,5 +1,5 @@
+using System.Linq;
 using Doss.Core.Commands.Vehicles;
-using Doss.Core.Domain.Vehicles;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;
@@ -8,24 +8,31 @@ namespace Ageu.Core.Commands.Vehicles.Handlers
 {
     public class UpdateServiceProviderVehicleCommandHandler : BaseCommandHandler<UpdateServiceProviderVehicleCommand, UpdateServiceProviderVehicleCommandValidator>
     {
-        private readonly IServiceProviderVehicleRepository serviceProviderVehicleRepository;
-        public UpdateServiceProviderVehicleCommandHandler(IServiceProviderVehicleRepository serviceProviderVehicleRepository,
+        private readonly IServiceProviderRepository serviceProviderRepository;
+        public UpdateServiceProviderVehicleCommandHandler(IServiceProviderRepository serviceProviderRepository,
                                              UpdateServiceProviderVehicleCommandValidator validator)
             : base(validator)
-                => this.serviceProviderVehicleRepository = serviceProviderVehicleRepository;
+                => this.serviceProviderRepository = serviceProviderRepository;
 
         public override async Task<Result> HandleImplementation(UpdateServiceProviderVehicleCommand command)
         {
-            // await vehicleRepository.UpdateAsync(new ServiceProviderVehicle(new Vehicle(command.Id,
-            //                                                                 command.Brand,
-            //                                                                 command.Model,
-            //                                                                 command.Color,
-            //                                                                 command.Plate,
-            //                                                                 command.Photo,
-            //                                                                 command.DefaultVehicle,
-            //                                                                 command.VehicleType)));
+            var serviceProvider = await serviceProviderRepository.ReturnVehiclesAll(command.User!.Id);
 
-            await serviceProviderVehicleRepository.SaveAsync();
+            if (serviceProvider.ServiceProviderVehicles!.Any(c => c.Vehicle.Id == command.Id) is false)
+                return Results.Error("Vehicle not found");
+
+            var vehicle = serviceProvider.ReturnVehicleById(command.Id);
+
+            vehicle.ChangeBrand(command.Brand);
+            vehicle.ChangeModel(command.Model);
+            vehicle.ChangeColor(command.Color);
+            vehicle.ChangePlate(command.Plate);
+            vehicle.ChangePhoto(command.Photo);
+            vehicle.ChangeDefaultVehicle(command.DefaultVehicle);
+            vehicle.ChangeVehicleType(command.VehicleType);
+            vehicle.ChangeDate(DateTime.Now);
+
+            await serviceProviderRepository.SaveAsync();
 
             return Results.Ok("Vehicle updated with success.");
         }

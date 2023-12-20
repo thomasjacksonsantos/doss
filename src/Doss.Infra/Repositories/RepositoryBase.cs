@@ -83,6 +83,26 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : class
         throw new NotImplementedException();
     }
 
+    public async Task<T> ReturnByFilterAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
+    {
+        IQueryable<T> query = Context.Set<T>();
+
+        if (filter != null)
+        {
+            query = query.Where(filter);
+        }
+
+        if (includeProperties != null)
+        {
+            Parallel.ForEach(includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries), (includeProperty) =>
+            {
+                query = query.Include(includeProperty);
+            });
+        }
+
+        return await query.FirstOrDefaultAsync() ?? null!;
+    }
+
     public virtual async Task<T> ReturnByIdAsync(Guid id)
       => await Context.Set<T>().FindAsync(id) ?? null!;
 

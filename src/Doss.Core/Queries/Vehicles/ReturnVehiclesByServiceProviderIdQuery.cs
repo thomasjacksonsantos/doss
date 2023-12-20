@@ -23,9 +23,10 @@ public class ReturnVehiclesByServiceProviderIdQuery : Query<ReturnVehiclesByServ
         public bool DefaultVehicle { get; set; }
         public VehicleType VehicleType { get; set; }
         public DateTime Created { get; set; }
+        public DateTime? Updated { get; set; }
 
-        public Vehicle(Guid id, string brand, string model, string color, string plate, string photo, bool defaultVehicle, VehicleType vehicleType, DateTime created)
-            => (Id, Brand, Model, Color, Plate, Photo, DefaultVehicle, VehicleType, Created)
-                = (id, brand, model, color, plate, photo, defaultVehicle, vehicleType, created);
+        public Vehicle(Guid id, string brand, string model, string color, string plate, string photo, bool defaultVehicle, VehicleType vehicleType, DateTime created, DateTime? updated = null)
+            => (Id, Brand, Model, Color, Plate, Photo, DefaultVehicle, VehicleType, Created, Updated)
+                = (id, brand, model, color, plate, photo, defaultVehicle, vehicleType, created, updated);
     }
 }

@@ -17,15 +17,36 @@ public class Vehicle
     public DateTime? Updated { get; set; }
 
     public Vehicle(string brand, string model, string color, string plate, string photo, bool defaultVehicle, VehicleType vehicleType)
-        => (Id, Brand, Model, Color, Plate, Photo, DefaultVehicle, VehicleType, Created)
-            = (Guid.NewGuid(), brand, model, color, plate, photo, defaultVehicle, vehicleType, DateTime.Now);
+        => (Brand, Model, Color, Plate, Photo, DefaultVehicle, VehicleType, Created)
+            = (brand, model, color, plate, photo, defaultVehicle, vehicleType, DateTime.Now);
 
     public Vehicle(Guid id, string brand, string model, string color, string plate, string photo, bool defaultVehicle, VehicleType vehicleType)
         => (Id, Brand, Model, Color, Plate, Photo, DefaultVehicle, VehicleType, Updated)
             = (id, brand, model, color, plate, photo, defaultVehicle, vehicleType, DateTime.Now);
 
-    public void SetUpdateDate(DateTime datetime)
+    public void ChangeDate(DateTime datetime)
         => Updated = datetime;
+
+    public void ChangePhoto(string photo)
+        => Photo = photo;
+
+    public void ChangeDefaultVehicle(bool defaultVehicle)
+        => DefaultVehicle = defaultVehicle;
+
+    public void ChangeVehicleType(VehicleType vehicleType)
+        => VehicleType = vehicleType;
+
+    public void ChangeBrand(string brand)
+        => Brand = brand;
+
+    public void ChangeModel(string model)
+        => Model = model;
+
+    public void ChangeColor(string color)
+        => Color = color;
+
+    public void ChangePlate(string plate)
+        => Plate = plate;
 
     public static implicit operator Vehicle(OnBoardVehicle vehicle)
         => new Vehicle(vehicle.Brand, vehicle.Model, vehicle.Color, vehicle.Plate, vehicle.Photo, vehicle.DefaultVehicle, vehicle.VehicleType);

@@ -42,4 +42,12 @@ public class ServiceProviderRepository : RepositoryBase<ServiceProvider>, IServi
                                                 UserId = @UserId",
                                             param: new { UserId = userId, UserStatus = userStatus },
                                             commandType: System.Data.CommandType.Text);
+
+    public async Task<ServiceProvider> ReturnVehiclesAll(Guid serviceProviderId)
+        => await Context.ServiceProvider
+                        .Include(c => c.ServiceProviderVehicles)!
+                        .ThenInclude(c => c.Vehicle)
+                        .AsSplitQuery()
+                        .SingleOrDefaultAsync(c => c.Id == serviceProviderId) ?? null!;
+
 }
