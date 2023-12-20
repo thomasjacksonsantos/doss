@@ -1,14 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Doss.Core.Commands.OnBoard.Residentials;
 using Doss.Core.Seedwork;
-using Doss.Core.Domain.OnBoard;
-using Doss.Core.Queries.ResidentialsOnBoard;
-using MediatR;
-using Doss.Core.Domain.Residentials;
-using Doss.Core.Commands.Verifications;
 using Doss.Core.Queries.Residentials;
-using Doss.Core.Queries.ServiceProviders;
-using Doss.Core.Commands.Residentials;
+using MediatR;
 
 namespace Doss.Api.Controllers.ResidentialsOnBoard
 {
@@ -33,11 +26,11 @@ namespace Doss.Api.Controllers.ResidentialsOnBoard
         /// <returns>Return all bank</returns>
         /// <response code="201">Returns the newly created item</response>
         /// <response code="400">If the item is null</response>
-        [ProducesResponseType(typeof(Result<ResidentialInfoQuery.Response>), StatusCodes.Status200OK)] 
+        [ProducesResponseType(typeof(Result<ResidentialInfoQuery.Response>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
         [HttpGet("info")]
         public async Task<IActionResult> Get([FromRoute] ResidentialInfoQuery query)
-        => await HandleQuery<ResidentialInfoQuery, ResidentialInfoQuery.Response>(query);
+            => await HandleQuery<ResidentialInfoQuery, ResidentialInfoQuery.Response>(query);
 
 
         /// <summary>
@@ -47,10 +40,23 @@ namespace Doss.Api.Controllers.ResidentialsOnBoard
         /// <returns>Return all bank</returns>
         /// <response code="201">Returns the newly created item</response>
         /// <response code="400">If the item is null</response>
-        [ProducesResponseType(typeof(Result<ResidentialCheckQuery.Response>), StatusCodes.Status200OK)] 
+        [ProducesResponseType(typeof(Result<ResidentialCheckQuery.Response>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
         [HttpGet("check")]
         public async Task<IActionResult> Get([FromRoute] ResidentialCheckQuery query)
-        => await HandleQuery<ResidentialCheckQuery, ResidentialCheckQuery.Response>(query);
+            => await HandleQuery<ResidentialCheckQuery, ResidentialCheckQuery.Response>(query);
+
+        /// <summary>
+        /// returns the total number of active users.
+        /// </summary>
+        /// <param name="query">Quey</param>
+        /// <returns>Return response total active</returns>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result<ActiveResidentialQuery.Response>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpGet("active")]
+        public async Task<IActionResult> Get([FromRoute] ActiveResidentialQuery query)
+            => await HandleQuery<ActiveResidentialQuery, ActiveResidentialQuery.Response>(query);
     }
 }

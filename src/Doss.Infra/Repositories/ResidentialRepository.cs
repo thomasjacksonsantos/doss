@@ -123,4 +123,12 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                 .Select(c => new ResidentialContactsQuery.Contact(c.Id, c.Name, c.Phone, c.Photo))
                 .ToListAsync();
     }
+
+    public async Task<ActiveResidentialQuery.Response> ReturnTotalActive(Guid serviceProviderId)
+        => new ActiveResidentialQuery.Response(await Context
+                    .Residential
+                    .Where(c => c.ResidentialWithServiceProviders
+                                .Select(c => c.ServiceProviderPlan.ServiceProviderId)
+                                .Contains(serviceProviderId))
+                    .CountAsync());
 }

@@ -16,4 +16,5 @@ public interface IResidentialRepository : IRepositoryBase<Residential>
     Task UpdateVerificationStatus(Guid id, VerificationStatus verificationStatus);
     Task<IEnumerable<ReturnChatQuery.Chat>> ReturnChatMessage(Guid residentialVerificationRequestId, int page, int total = 20);
     Task<IEnumerable<ResidentialContactsQuery.Contact>> ReturnContacts(Guid serviceProviderId, int page, int total = 20);
+    Task<ActiveResidentialQuery.Response> ReturnTotalActive(Guid serviceProviderId);
 }
