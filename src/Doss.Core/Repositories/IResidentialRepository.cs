@@ -1,5 +1,6 @@
 using Doss.Core.Domain.Enums;
 using Doss.Core.Domain.Residentials;
+using Doss.Core.Queries.Contacts;
 using Doss.Core.Queries.Residentials;
 using Doss.Core.Queries.Verifications;
 
@@ -14,4 +15,5 @@ public interface IResidentialRepository : IRepositoryBase<Residential>
     Task<ResidentialVerificationRequest> ReturnVerificationRequestById(Guid id);
     Task UpdateVerificationStatus(Guid id, VerificationStatus verificationStatus);
     Task<IEnumerable<ReturnChatQuery.Chat>> ReturnChatMessage(Guid residentialVerificationRequestId, int page, int total = 20);
+    Task<IEnumerable<ResidentialContactsQuery.Contact>> ReturnContacts(Guid serviceProviderId, int page, int total = 20);
 }

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Doss.Core.Queries.Residentials;
 using Doss.Core.Queries.Verifications;
 using Doss.Core.Domain.Enums;
+using Doss.Core.Queries.Contacts;
 using Dapper;
 
 namespace Doss.Infra.Repositories;
@@ -101,6 +102,25 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                 .Skip(page)
                 .Take(total)
                 .Select(c => new ReturnChatQuery.Chat(c.Id, c.UserId, c.Message, c.Photo, c.Audio, c.Created))
+                .ToListAsync();
+    }
+
+    public async Task<IEnumerable<ResidentialContactsQuery.Contact>> ReturnContacts(Guid serviceProviderId, int page, int total = 20)
+    {
+        if (total <= 0 || total > 20)
+            total = 20;
+
+        if (page > 0)
+            page = (page - 1) * total;
+
+        return await Context
+                    .Residential
+                    .Where(c => c.ResidentialWithServiceProviders
+                                .Select(c => c.ServiceProviderPlan.ServiceProviderId)
+                                .Contains(serviceProviderId))
+                .Skip(page)
+                .Take(total)
+                .Select(c => new ResidentialContactsQuery.Contact(c.Id, c.Name, c.Phone, c.Photo))
                 .ToListAsync();
     }
 }

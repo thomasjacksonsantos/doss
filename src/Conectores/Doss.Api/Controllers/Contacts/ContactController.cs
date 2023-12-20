@@ -69,7 +69,7 @@ namespace Doss.Api.Controllers.ResidentialsOnBoard
             => await HandleCommand(command);
 
         /// <summary>
-        /// Return list of contacts.
+        /// Return list of contacts useful.
         /// </summary>
         /// <param name="query">Quey</param>
         /// <returns>Return all contacts emergency</returns>
@@ -80,5 +80,18 @@ namespace Doss.Api.Controllers.ResidentialsOnBoard
         [HttpGet("useful")]
         public async Task<IActionResult> Get([FromRoute] UsefulContactsQuery query)
         => await HandleQuery<UsefulContactsQuery, UsefulContactsQuery.Response>(query);
+
+        /// <summary>
+        /// Return list of contacts residential.
+        /// </summary>
+        /// <param name="query">Quey</param>
+        /// <returns>Return all contacts emergency</returns>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result<ResidentialContactsQuery.Response>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpGet("residential")]
+        public async Task<IActionResult> Get([FromRoute] ResidentialContactsQuery query)
+        => await HandleQuery<ResidentialContactsQuery, ResidentialContactsQuery.Response>(query);
     }
 }

@@ -5,6 +5,7 @@ using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.ServiceProviders;
 using Doss.Core.Domain.Enums;
 using Dapper;
+using Doss.Core.Queries.Contacts;
 
 namespace Doss.Infra.Repositories;
 
@@ -48,6 +49,5 @@ public class ServiceProviderRepository : RepositoryBase<ServiceProvider>, IServi
                         .Include(c => c.ServiceProviderVehicles)!
                         .ThenInclude(c => c.Vehicle)
                         .AsSplitQuery()
-                        .SingleOrDefaultAsync(c => c.Id == serviceProviderId) ?? null!;
-
+                        .SingleOrDefaultAsync(c => c.Id == serviceProviderId) ?? null!;    
 }
