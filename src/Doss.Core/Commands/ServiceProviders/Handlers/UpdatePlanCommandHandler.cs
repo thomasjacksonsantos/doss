@@ -3,7 +3,7 @@ using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;
 
-namespace Ageu.Core.Commands.ServicesProviders.Handlers;
+namespace Doss.Core.Commands.ServicesProviders.Handlers;
 
 public class UpdatePlanCommandHandler : BaseCommandHandler<UpdatePlanCommand, UpdatePlanCommandValidator>
 {

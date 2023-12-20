@@ -3,7 +3,7 @@ using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;
 
-namespace Ageu.Core.Commands.Vehicles.Handlers;
+namespace Doss.Core.Commands.Vehicles.Handlers;
 
 public class UpdateResidentialCommandHandler : BaseCommandHandler<UpdateResidentialCommand, UpdateResidentialCommandValidator>
 {

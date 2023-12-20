@@ -1,10 +1,9 @@
-using Doss.Core.Commands.OnBoard.ServiceProviders;
 using Doss.Core.Domain.OnBoard;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;
 
-namespace Ageu.Core.Commands.OnBoard.ServiceProviders.Handlers;
+namespace Doss.Core.Commands.OnBoard.ServiceProviders.Handlers;
 
 public class ServiceProviderOnBoardCoverageCommandHandler : BaseCommandHandler<ServiceProviderOnBoardCoverageCommand, ServiceProviderOnBoardCoverageCommandValidator>
 {

@@ -1,9 +1,8 @@
-using Doss.Core.Commands.Verifications;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;
 
-namespace Ageu.Core.Commands.Verifications.Handlers;
+namespace Doss.Core.Commands.Verifications.Handlers;
 
 public class UpdateServiceProviderVerificationStatusCommandHandler : BaseCommandHandler<UpdateServiceProviderVerificationStatusCommand, UpdateServiceProviderVerificationStatusCommandValidator>
 {

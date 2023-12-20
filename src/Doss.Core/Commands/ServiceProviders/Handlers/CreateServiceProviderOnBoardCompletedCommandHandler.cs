@@ -1,11 +1,10 @@
-using Doss.Core.Commands.ServiceProviders;
 using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.ServiceProviders;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;
 
-namespace Ageu.Core.Commands.ServiceProviders.Handlers;
+namespace Doss.Core.Commands.ServiceProviders.Handlers;
 
 public class CreateServiceProviderOnBoardCompletedCommandHandler : BaseCommandHandler<CreateServiceProviderOnBoardCompletedCommand, CreateServiceProviderOnBoardCompletedCommandValidator>
 {

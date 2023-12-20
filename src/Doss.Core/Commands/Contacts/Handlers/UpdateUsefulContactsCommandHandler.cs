@@ -1,5 +1,4 @@
 using Doss.Core.Commands.Contacts;
-using Doss.Core.Domain.OnBoard;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;

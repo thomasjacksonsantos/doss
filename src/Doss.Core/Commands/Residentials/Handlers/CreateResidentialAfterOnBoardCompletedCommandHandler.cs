@@ -1,9 +1,8 @@
-using Doss.Core.Commands.Residentials;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using FluentValidation;
 
-namespace Ageu.Core.Commands.Residentials.Handlers;
+namespace Doss.Core.Commands.Residentials.Handlers;
 
 public class CreateResidentialAfterOnBoardCompletedCommandHandler : BaseCommandHandler<CreateResidentialAfterOnBoardCompletedCommand, CreateResidentialAfterOnBoardCompletedCommandValidator>
 {

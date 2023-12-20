@@ -1,4 +1,3 @@
-using Doss.Core.Commands.OnBoard.ServiceProviders;
 using Doss.Core.Commands.ServiceProviders;
 using Doss.Core.Domain.OnBoard;
 using Doss.Core.Interfaces.Repositories;
@@ -6,7 +5,7 @@ using Doss.Core.Seedwork;
 using FluentValidation;
 using MediatR;
 
-namespace Ageu.Core.Commands.OnBoard.ServiceProviders.Handlers;
+namespace Doss.Core.Commands.OnBoard.ServiceProviders.Handlers;
 
 public class ServiceProviderOnBoardFormPaymentCommandHandler : BaseCommandHandler<ServiceProviderOnBoardFormPaymentCommand, ServiceProviderOnBoardFormPaymentCommandValidator>
 {

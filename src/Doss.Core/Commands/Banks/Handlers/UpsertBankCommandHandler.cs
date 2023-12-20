@@ -4,6 +4,7 @@ using Doss.Core.Seedwork;
 using FluentValidation;
 
 namespace Doss.Core.Commands.Banks.Handlers;
+
 public class UpsertBankCommandHandler: BaseCommandHandler<UpsertBankCommand, UpsertBankCommandValidator>
 {
     private readonly IBankRepository bankRepository;
