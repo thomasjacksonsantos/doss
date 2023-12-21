@@ -7,6 +7,7 @@ using Doss.Core.Queries.Verifications;
 using Doss.Core.Domain.Enums;
 using Doss.Core.Queries.Contacts;
 using Dapper;
+using Doss.Core.Seedwork;
 
 namespace Doss.Infra.Repositories;
 
@@ -122,6 +123,29 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                 .Take(total)
                 .Select(c => new ResidentialContactsQuery.Contact(c.Id, c.Name, c.Phone, c.Photo))
                 .ToListAsync();
+    }
+
+    public async Task<IEnumerable<ResidentialListByServiceProviderIdQuery.Residential>> ReturnResidentialList(Guid serviceProviderId, int page, int total = 20, UserStatus? status = null)
+    {
+        if (total <= 0 || total > 20)
+            total = 20;
+
+        if (page > 0)
+            page = (page - 1) * total;
+
+        return await Context
+                    .Residential
+                    .Include(c => c.ResidentialWithServiceProviders)
+                    .ThenInclude(c => c.ServiceProviderPlan)
+                    .Include(c => c.ResidentialWithServiceProviders)
+                    .ThenInclude(c => c.Plan)
+                    .Where(c => c.ResidentialWithServiceProviders
+                                .Select(c => c.ServiceProviderPlan.ServiceProviderId)
+                                .Contains(serviceProviderId) && status.IsNotNull() ? c.UserStatus == status : 0 == 0)
+                    .Skip(page)
+                    .Take(total)
+                    .Select(c => new ResidentialListByServiceProviderIdQuery.Residential(c.Id, c.Name, c.UserStatus, c.Photo, c.ResidentialWithServiceProviders.First().Plan.Description))
+                    .ToListAsync();
     }
 
     public async Task<ActiveResidentialQuery.Response> ReturnTotalActive(Guid serviceProviderId)

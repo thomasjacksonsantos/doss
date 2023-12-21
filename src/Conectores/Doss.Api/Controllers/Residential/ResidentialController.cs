@@ -58,5 +58,18 @@ namespace Doss.Api.Controllers.ResidentialsOnBoard
         [HttpGet("active")]
         public async Task<IActionResult> Get([FromRoute] ActiveResidentialQuery query)
             => await HandleQuery<ActiveResidentialQuery, ActiveResidentialQuery.Response>(query);
+
+        /// <summary>
+        /// returns the residential.
+        /// </summary>
+        /// <param name="query">Quey</param>
+        /// <returns>Return response total active</returns>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result<ResidentialListByServiceProviderIdQuery.Response>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpGet()]
+        public async Task<IActionResult> Get([FromQuery] ResidentialListByServiceProviderIdQuery query)
+            => await HandleQuery<ResidentialListByServiceProviderIdQuery, ResidentialListByServiceProviderIdQuery.Response>(query);            
     }
 }

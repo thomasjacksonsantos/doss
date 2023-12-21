@@ -4,6 +4,7 @@ using Doss.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Doss.Infra.Migrations
 {
     [DbContext(typeof(DossDbContext))]
-    partial class DossDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231221123104_config-enum-to-string-contact")]
+    partial class configenumtostringcontact
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -618,15 +620,12 @@ namespace Doss.Infra.Migrations
                     b.Property<Guid>("ResidentialId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ResidentialWithServiceProviderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("VehicleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ResidentialWithServiceProviderId");
+                    b.HasIndex("ResidentialId");
 
                     b.HasIndex("VehicleId");
 
@@ -1025,9 +1024,11 @@ namespace Doss.Infra.Migrations
 
             modelBuilder.Entity("Doss.Core.Domain.Vehicles.ResidentialVehicle", b =>
                 {
-                    b.HasOne("Doss.Core.Domain.Residentials.ResidentialWithServiceProvider", null)
+                    b.HasOne("Doss.Core.Domain.Residentials.Residential", null)
                         .WithMany("ResidentialVehicles")
-                        .HasForeignKey("ResidentialWithServiceProviderId");
+                        .HasForeignKey("ResidentialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Doss.Core.Domain.Vehicles.Vehicle", "Vehicle")
                         .WithMany()
@@ -1062,17 +1063,14 @@ namespace Doss.Infra.Migrations
 
             modelBuilder.Entity("Doss.Core.Domain.Residentials.Residential", b =>
                 {
+                    b.Navigation("ResidentialVehicles");
+
                     b.Navigation("ResidentialWithServiceProviders");
                 });
 
             modelBuilder.Entity("Doss.Core.Domain.Residentials.ResidentialVerificationRequest", b =>
                 {
                     b.Navigation("Messages");
-                });
-
-            modelBuilder.Entity("Doss.Core.Domain.Residentials.ResidentialWithServiceProvider", b =>
-                {
-                    b.Navigation("ResidentialVehicles");
                 });
 
             modelBuilder.Entity("Doss.Core.Domain.ServiceProviders.ServiceProvider", b =>

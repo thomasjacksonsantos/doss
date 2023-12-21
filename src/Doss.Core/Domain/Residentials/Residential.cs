@@ -1,5 +1,4 @@
 using Doss.Core.Domain.Enums;
-using Doss.Core.Domain.Vehicles;
 
 namespace Doss.Core.Domain.Residentials;
 
@@ -12,19 +11,12 @@ public class Residential
     public string Phone { get; private set; }
     public string Photo { get; private set; }
     public bool CompletedRegistration { get; private set; }
-    public UserStatus UserStatus { get; private set; }
-    public IEnumerable<ResidentialVehicle>? ResidentialVehicles { get; private set; }
+    public UserStatus UserStatus { get; private set; }    
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
     public IEnumerable<ResidentialWithServiceProvider> ResidentialWithServiceProviders { get; set; } = new List<ResidentialWithServiceProvider>();
     public Residential(Guid id, string name, TypeDocument typeDocument, string document, string phone, string photo, bool completedRegistration)
             => (Id, Name, TypeDocument, Document, Phone, Photo, CompletedRegistration, UserStatus, Created) = (id, name, typeDocument, document.OnlyNumbers(), phone.OnlyNumbers(), photo, completedRegistration, UserStatus.Active, DateTime.Now);
-
-    public void AddVehicle(ResidentialVehicle residentialVehicle)
-    {
-        if (ResidentialVehicles is not { }) ResidentialVehicles = new List<ResidentialVehicle>();
-        ((List<ResidentialVehicle>)ResidentialVehicles).Add(residentialVehicle);
-    }
 
     public void AddResidentialWithServiceProvider(ResidentialWithServiceProvider residentialWithServiceProvider)
     {

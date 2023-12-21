@@ -1,6 +1,7 @@
 using Doss.Core.Domain.Addresses;
 using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.ServiceProviders;
+using Doss.Core.Domain.Vehicles;
 
 namespace Doss.Core.Domain.Residentials;
 
@@ -11,13 +12,22 @@ public class ResidentialWithServiceProvider
     public Residential Residential { get; set; }
     public Guid ServiceProviderPlanId { get; set; }
     public ServiceProviderPlan ServiceProviderPlan { get; set; } = null!;
+    public IEnumerable<ResidentialVehicle>? ResidentialVehicles { get; private set; }
     public Guid PlanId { get; set; }
     public Plan Plan { get; set; }
     public Address Address { get; set; }
+
     public ResidentialWithServiceProvider()
     {
 
     }
+
     public ResidentialWithServiceProvider(Guid serviceProviderPlanId, Guid planId, Address address)
         => (ServiceProviderPlanId, PlanId, Address) = (serviceProviderPlanId, planId, address);
+
+    public void AddVehicle(ResidentialVehicle residentialVehicle)
+    {
+        if (ResidentialVehicles is not { }) ResidentialVehicles = new List<ResidentialVehicle>();
+        ((List<ResidentialVehicle>)ResidentialVehicles).Add(residentialVehicle);
+    }
 }
