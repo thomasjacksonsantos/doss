@@ -40,6 +40,6 @@ public class ResidentialWithServiceProvider
     public void AddVehicle(ResidentialVehicle residentialVehicle)
     {
         if (ResidentialVehicles is not { }) ResidentialVehicles = new List<ResidentialVehicle>();
-        ((List<ResidentialVehicle>)ResidentialVehicles).Add(residentialVehicle);
+        ResidentialVehicles.Append(residentialVehicle);
     }
 }

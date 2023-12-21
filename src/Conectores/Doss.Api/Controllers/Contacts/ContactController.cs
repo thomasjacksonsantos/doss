@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Doss.Core.Seedwork;
-using Doss.Core.Queries.Residentials;
 using Doss.Core.Queries.Contacts;
-using MediatR;
 using Doss.Core.Commands.Contacts;
+using MediatR;
 
 namespace Doss.Api.Controllers.ResidentialsOnBoard
 {

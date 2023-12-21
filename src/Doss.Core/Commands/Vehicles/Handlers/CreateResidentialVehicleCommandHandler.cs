@@ -16,16 +16,17 @@ public class CreateResidentialVehicleCommandHandler : BaseCommandHandler<CreateR
     public override async Task<Result> HandleImplementation(CreateResidentialVehicleCommand command)
     {
         var residential = await residentialRepository.ReturnVehicles(command.User!.Id, command.ResidentialWithServiceProviderId);
-        
+
         var residentialWithServiceProvider = residential.ReturnResidentialWithServiceProvider(command.ResidentialWithServiceProviderId);
 
-        residentialWithServiceProvider.AddVehicle(new ResidentialVehicle(new Vehicle(command.Brand,
-                                                                          command.Model,
-                                                                          command.Color,
-                                                                          command.Plate,
-                                                                          command.Photo,
-                                                                          command.DefaultVehicle,
-                                                                          command.VehicleType)));
+        residentialWithServiceProvider.AddVehicle(new ResidentialVehicle(command.ResidentialWithServiceProviderId, 
+                                                    new Vehicle(command.Brand,
+                                                                command.Model,
+                                                                command.Color,
+                                                                command.Plate,
+                                                                command.Photo,
+                                                                command.DefaultVehicle,
+                                                                command.VehicleType)));
 
 
         await residentialRepository.SaveAsync();

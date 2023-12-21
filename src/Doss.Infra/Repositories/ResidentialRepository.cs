@@ -45,8 +45,9 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
     {
         return await Context.Residential
                     .Include(c => c.ResidentialWithServiceProviders)
+                    .Where(c => c.Id == id)
                     .Select(c => new ResidentialInfoQuery.Response(c.Id, c.Name, c.UserStatus, c.Photo, c.ResidentialWithServiceProviders.First().Id))
-                    .SingleOrDefaultAsync(c => c.Id == id) ?? null!;
+                    .FirstOrDefaultAsync() ?? null!;
     }
 
     public async Task<Residential> ReturnVehicles(Guid id, Guid residentialWithServiceProviderId)
@@ -54,6 +55,8 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                     .Include(c => c.ResidentialWithServiceProviders)
                     .ThenInclude(c => c.ResidentialVehicles)!
                     .ThenInclude(c => c.Vehicle)
+                    .Include(c => c.ResidentialWithServiceProviders)
+                    .ThenInclude(c => c.ServiceProviderPlan)
                     .Where(c => c.Id == id && c.ResidentialWithServiceProviders.Select(c => c.Id).Contains(residentialWithServiceProviderId))
                     .SingleOrDefaultAsync() ?? null!;
 

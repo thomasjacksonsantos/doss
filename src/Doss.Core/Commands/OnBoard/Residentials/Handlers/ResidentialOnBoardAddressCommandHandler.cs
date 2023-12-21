@@ -35,7 +35,7 @@ public class ResidentialOnBoardAddressCommandHandler : BaseCommandHandler<Reside
                                                              command.City,
                                                              command.Street,
                                                              command.Complement,
-                                                             command.Neighborhood,
+                                                             command.Neighborhood,  
                                                              command.ZipCode.ConvertToInt(),
                                                              command.Number,
                                                              zipCode.Latitude ?? 0,

@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Doss.Core.Commands.OnBoard.ServiceProviders;
 using Doss.Core.Seedwork;
 using Doss.Core.Domain.OnBoard;
-using Doss.Core.Queries.ServiceProvidersOnBoard;
-using MediatR;
 using Doss.Core.Queries.Vehicles;
 using Doss.Core.Commands.Vehicles;
+using MediatR;
 
 namespace Doss.Api.Controllers.ServiceProvidersOnBoard
 {
@@ -33,6 +31,7 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
         ///
         ///     POST /Todo
         ///     {
+        ///         "residentialWithServiceProviderId": "guid",
         ///         "brand": "honda",
         ///         "model": "civic",
         ///         "color": "black",
@@ -159,7 +158,7 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
         /// <response code="400">If the item is null</response>
         [ProducesResponseType(typeof(Result<OnBoardServiceProvider>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-        [HttpGet("residential/all")]
+        [HttpGet("residential/{ResidentialWithServiceProviderId}/all")]
         public async Task<IActionResult> Get([FromRoute] ReturnVehiclesByResidentialIdQuery query)
             => await HandleQuery<ReturnVehiclesByResidentialIdQuery, ReturnVehiclesByResidentialIdQuery.Response>(query);
     }

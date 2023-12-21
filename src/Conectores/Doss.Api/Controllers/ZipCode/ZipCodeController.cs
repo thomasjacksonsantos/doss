@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Doss.Core.Commands.OnBoard.ServiceProviders;
 using Doss.Core.Seedwork;
-using MediatR;
 using Doss.Core.Queries.ZipCode;
+using MediatR;
 
 namespace Doss.Api.Controllers.ServiceProvidersOnBoard
 {

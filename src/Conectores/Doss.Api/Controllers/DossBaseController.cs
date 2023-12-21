@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Doss.Core.Seedwork;
 using Microsoft.AspNetCore.Authorization;
-using MediatR;
 using Microsoft.Identity.Web.Resource;
+using MediatR;
 
 namespace Doss.Api.Controllers;
 
