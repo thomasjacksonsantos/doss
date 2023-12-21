@@ -14,7 +14,7 @@ public class Residential
     public UserStatus UserStatus { get; private set; }    
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
-    public IEnumerable<ResidentialWithServiceProvider> ResidentialWithServiceProviders { get; set; } = new List<ResidentialWithServiceProvider>();
+    public IEnumerable<ResidentialWithServiceProvider> ResidentialWithServiceProviders { get; set; } = new List<ResidentialWithServiceProvider>();    
     public ResidentialWithServiceProvider ReturnResidentialWithServiceProvider(Guid serviceProviderId)
         => ResidentialWithServiceProviders
             .Where(c => c.ServiceProviderPlan.ServiceProviderId == serviceProviderId)

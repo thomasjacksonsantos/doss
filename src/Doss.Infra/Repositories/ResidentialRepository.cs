@@ -6,8 +6,8 @@ using Doss.Core.Queries.Residentials;
 using Doss.Core.Queries.Verifications;
 using Doss.Core.Domain.Enums;
 using Doss.Core.Queries.Contacts;
-using Dapper;
 using Doss.Core.Seedwork;
+using Dapper;
 
 namespace Doss.Infra.Repositories;
 
@@ -48,6 +48,14 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                     .Select(c => new ResidentialInfoQuery.Response(c.Id, c.Name, c.UserStatus, c.Photo, c.ResidentialWithServiceProviders.First().Id))
                     .SingleOrDefaultAsync(c => c.Id == id) ?? null!;
     }
+
+    public async Task<Residential> ReturnVehicles(Guid id, Guid residentialWithServiceProviderId)
+        => await Context.Residential
+                    .Include(c => c.ResidentialWithServiceProviders)
+                    .ThenInclude(c => c.ResidentialVehicles)!
+                    .ThenInclude(c => c.Vehicle)
+                    .Where(c => c.Id == id && c.ResidentialWithServiceProviders.Select(c => c.Id).Contains(residentialWithServiceProviderId))
+                    .SingleOrDefaultAsync() ?? null!;
 
     public async Task<ServiceProviderVerificationRequestAllQuery.Response> ReturnVerificationAllByServiceProvider(Guid id, int page, int total = 20)
     {

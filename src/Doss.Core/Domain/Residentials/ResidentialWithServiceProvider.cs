@@ -18,6 +18,13 @@ public class ResidentialWithServiceProvider
             .Select(c => c.Vehicle)
             .FirstOrDefault(c => c.DefaultVehicle)!;
 
+    public Vehicle ReturnVehicleById(Guid vehicleId)
+        => ResidentialVehicles!
+            .Select(c => c.Vehicle)
+            .SingleOrDefault(c => c.Id == vehicleId)!;
+    public void ResetDefaultVehicles()
+        => ResidentialVehicles!.ForEach(c => c.Vehicle.DefaultVehicle = false);
+
     public Guid PlanId { get; set; }
     public Plan Plan { get; set; }
     public Address Address { get; set; }

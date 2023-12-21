@@ -44,7 +44,7 @@ public class ServiceProviderRepository : RepositoryBase<ServiceProvider>, IServi
                                             param: new { Id = id, UserStatus = userStatus },
                                             commandType: System.Data.CommandType.Text);
 
-    public async Task<ServiceProvider> ReturnVehiclesAll(Guid serviceProviderId)
+    public async Task<ServiceProvider> ReturnVehicles(Guid serviceProviderId)
         => await Context.ServiceProvider
                         .Include(c => c.ServiceProviderVehicles)!
                         .ThenInclude(c => c.Vehicle)

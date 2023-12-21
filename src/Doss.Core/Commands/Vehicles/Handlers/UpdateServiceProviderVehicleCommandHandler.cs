@@ -14,7 +14,7 @@ public class UpdateServiceProviderVehicleCommandHandler : BaseCommandHandler<Upd
 
     public override async Task<Result> HandleImplementation(UpdateServiceProviderVehicleCommand command)
     {
-        var serviceProvider = await serviceProviderRepository.ReturnVehiclesAll(command.User!.Id);
+        var serviceProvider = await serviceProviderRepository.ReturnVehicles(command.User!.Id);
 
         if (serviceProvider.ServiceProviderVehicles!.Any(c => c.Vehicle.Id == command.Id) is false)
             return Results.Error("Vehicle not found");
