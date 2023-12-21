@@ -13,6 +13,11 @@ public class ResidentialWithServiceProvider
     public Guid ServiceProviderPlanId { get; set; }
     public ServiceProviderPlan ServiceProviderPlan { get; set; } = null!;
     public IEnumerable<ResidentialVehicle>? ResidentialVehicles { get; private set; }
+    public Vehicle VehicleDefault
+        => ResidentialVehicles!
+            .Select(c => c.Vehicle)
+            .FirstOrDefault(c => c.DefaultVehicle)!;
+
     public Guid PlanId { get; set; }
     public Plan Plan { get; set; }
     public Address Address { get; set; }

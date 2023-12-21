@@ -35,6 +35,7 @@ public class ResidentialOnBoardAddressCommandHandler : BaseCommandHandler<Reside
                                                              command.City,
                                                              command.Street,
                                                              command.Complement,
+                                                             command.Neighborhood,
                                                              command.ZipCode.ConvertToInt(),
                                                              command.Number,
                                                              zipCode.Latitude ?? 0,
@@ -45,6 +46,7 @@ public class ResidentialOnBoardAddressCommandHandler : BaseCommandHandler<Reside
             residentialOnBoard.Address.ChangeState(command.State);
             residentialOnBoard.Address.ChangeCity(command.City);
             residentialOnBoard.Address.ChangeStreet(command.Street);
+            residentialOnBoard.Address.ChangeNeighborhood(command.Neighborhood);
             residentialOnBoard.Address.ChangeComplement(command.Complement);
             residentialOnBoard.Address.ChangeZipCode(command.ZipCode.ConvertToInt());
             residentialOnBoard.Address.ChangeNumber(command.Number);

@@ -148,6 +148,38 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                     .ToListAsync();
     }
 
+    public async Task<ResidentialDetailsByServiceProviderIdQuery.Response> ReturnResidentialDetails(Guid residentialId, Guid serviceProviderId)
+    {
+        var residential = await Context
+                                .Residential
+                                .Include(c => c.ResidentialWithServiceProviders)
+                                .ThenInclude(c => c.ResidentialVehicles)!
+                                .ThenInclude(c => c.Vehicle)
+                                .Include(c => c.ResidentialWithServiceProviders)
+                                .ThenInclude(c => c.Address)
+                                .Where(c => c.ResidentialWithServiceProviders
+                                            .Select(c => c.ServiceProviderPlan.ServiceProviderId)
+                                            .Contains(serviceProviderId) && c.Id == residentialId)
+                                .FirstOrDefaultAsync();
+
+        var residentialWithServiceProvider = residential!.ReturnResidentialWithServiceProvider(serviceProviderId);
+
+        return new ResidentialDetailsByServiceProviderIdQuery.Response(new ResidentialDetailsByServiceProviderIdQuery.Address(residentialWithServiceProvider.Address.Country,
+                                                                                                                                         residentialWithServiceProvider.Address.State,
+                                                                                                                                         residentialWithServiceProvider.Address.City,
+                                                                                                                                         residentialWithServiceProvider.Address.Neighborhood,
+                                                                                                                                         residentialWithServiceProvider.Address.Street,
+                                                                                                                                         residentialWithServiceProvider.Address.Number,
+                                                                                                                                         residentialWithServiceProvider.Address.ZipCode,
+                                                                                                                                         residentialWithServiceProvider.Address.Complement),
+                                                                                  new ResidentialDetailsByServiceProviderIdQuery.Vehicle(residentialWithServiceProvider.VehicleDefault.Brand,
+                                                                                                                                         residentialWithServiceProvider.VehicleDefault.Model,
+                                                                                                                                         residentialWithServiceProvider.VehicleDefault.Color,
+                                                                                                                                         residentialWithServiceProvider.VehicleDefault.Plate,
+                                                                                                                                         residentialWithServiceProvider.VehicleDefault.Photo,
+                                                                                                                                         residentialWithServiceProvider.VehicleDefault.VehicleType));
+    }
+
     public async Task<ActiveResidentialQuery.Response> ReturnTotalActive(Guid serviceProviderId)
         => new ActiveResidentialQuery.Response(await Context
                     .Residential

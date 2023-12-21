@@ -34,6 +34,7 @@ public class ServiceProviderOnBoardAddressCommandHandler : BaseCommandHandler<Se
                                                              command.State,
                                                              command.City,
                                                              command.Street,
+                                                             command.Neighborhood,
                                                              command.Complement,
                                                              command.ZipCode.ConvertToInt(),
                                                              command.Number,
@@ -45,6 +46,7 @@ public class ServiceProviderOnBoardAddressCommandHandler : BaseCommandHandler<Se
             serviceProviderOnBoard.Address.ChangeState(command.State);
             serviceProviderOnBoard.Address.ChangeCity(command.City);
             serviceProviderOnBoard.Address.ChangeStreet(command.Street);
+            serviceProviderOnBoard.Address.ChangeNeighborhood(command.Neighborhood);
             serviceProviderOnBoard.Address.ChangeComplement(command.Complement);
             serviceProviderOnBoard.Address.ChangeZipCode(command.ZipCode.ConvertToInt());
             serviceProviderOnBoard.Address.ChangeLatitude(zipCode.Latitude ?? 0);

@@ -15,6 +15,11 @@ public class Residential
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
     public IEnumerable<ResidentialWithServiceProvider> ResidentialWithServiceProviders { get; set; } = new List<ResidentialWithServiceProvider>();
+    public ResidentialWithServiceProvider ReturnResidentialWithServiceProvider(Guid serviceProviderId)
+        => ResidentialWithServiceProviders
+            .Where(c => c.ServiceProviderPlan.ServiceProviderId == serviceProviderId)
+            .FirstOrDefault()!;
+
     public Residential(Guid id, string name, TypeDocument typeDocument, string document, string phone, string photo, bool completedRegistration)
             => (Id, Name, TypeDocument, Document, Phone, Photo, CompletedRegistration, UserStatus, Created) = (id, name, typeDocument, document.OnlyNumbers(), phone.OnlyNumbers(), photo, completedRegistration, UserStatus.Active, DateTime.Now);
 
