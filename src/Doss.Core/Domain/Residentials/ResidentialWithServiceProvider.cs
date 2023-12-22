@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Doss.Core.Domain.Addresses;
 using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.ServiceProviders;
@@ -12,7 +13,7 @@ public class ResidentialWithServiceProvider
     public Residential Residential { get; set; }
     public Guid ServiceProviderPlanId { get; set; }
     public ServiceProviderPlan ServiceProviderPlan { get; set; } = null!;
-    public IEnumerable<ResidentialVehicle>? ResidentialVehicles { get; private set; }
+    public Collection<ResidentialVehicle>? ResidentialVehicles { get; set; }
     public Vehicle VehicleDefault
         => ResidentialVehicles!
             .Select(c => c.Vehicle)
@@ -39,7 +40,8 @@ public class ResidentialWithServiceProvider
 
     public void AddVehicle(ResidentialVehicle residentialVehicle)
     {
-        if (ResidentialVehicles is not { }) ResidentialVehicles = new List<ResidentialVehicle>();
-        ResidentialVehicles.Append(residentialVehicle);
+        if (ResidentialVehicles is not { }) ResidentialVehicles = new Collection<ResidentialVehicle>();
+
+        ResidentialVehicles.Add(residentialVehicle);
     }
 }
