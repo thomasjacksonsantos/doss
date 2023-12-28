@@ -1,17 +1,19 @@
-using Doss.Core.Commands.Vehicles;
 using Doss.Core.Domain.Vehicles;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
+using Doss.Core.Services;
 using FluentValidation;
 
 namespace Doss.Core.Commands.Vehicles.Handlers;
 public class CreateResidentialVehicleCommandHandler : BaseCommandHandler<CreateResidentialVehicleCommand, CreateResidentialVehicleCommandValidator>
 {
     private readonly IResidentialRepository residentialRepository;
+    private readonly IBlobStorage blobStorage;
     public CreateResidentialVehicleCommandHandler(IResidentialRepository residentialRepository,
-                                                      CreateResidentialVehicleCommandValidator validator)
+                                                  IBlobStorage blobStorage,
+                                                  CreateResidentialVehicleCommandValidator validator)
         : base(validator)
-            => this.residentialRepository = residentialRepository;
+            => (this.residentialRepository, this.blobStorage) = (residentialRepository, blobStorage);
 
     public override async Task<Result> HandleImplementation(CreateResidentialVehicleCommand command)
     {
@@ -30,6 +32,11 @@ public class CreateResidentialVehicleCommandHandler : BaseCommandHandler<CreateR
 
 
         await residentialRepository.SaveAsync();
+
+        using(var ms = new MemoryStream(Convert.FromBase64String(command.Photo)))
+        {
+            await blobStorage.Upload(ms, $"{command.Model}");
+        }
 
         return Results.Ok("Vehicle created with success.");
     }

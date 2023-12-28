@@ -1,6 +1,5 @@
-using Doss.Infra.Data;
+using Doss.Core.Services;
 using Doss.Infra.Repositories;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Doss.Infra.Seedwork;
@@ -8,7 +7,13 @@ namespace Doss.Infra.Seedwork;
 public static class Bootstrap
 {
     public static void InitInfra(this IServiceCollection service)
-        => service.ConfigureInfra();
+    {
+        service.ConfigureInfra();
+        service.ConfigureBlobStorage();
+    }
+
+    public static void ConfigureBlobStorage(this IServiceCollection service)
+        => service.AddScoped<IBlobStorage, BlobStorage>();
 
     private static void ConfigureInfra(this IServiceCollection service)
     {
