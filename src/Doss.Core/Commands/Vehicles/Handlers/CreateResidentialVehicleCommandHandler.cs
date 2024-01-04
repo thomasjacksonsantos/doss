@@ -21,22 +21,21 @@ public class CreateResidentialVehicleCommandHandler : BaseCommandHandler<CreateR
 
         var residentialWithServiceProvider = residential.ReturnResidentialWithServiceProvider(command.ResidentialWithServiceProviderId);
 
-        residentialWithServiceProvider.AddVehicle(new ResidentialVehicle(command.ResidentialWithServiceProviderId, 
-                                                    new Vehicle(command.Brand,
-                                                                command.Model,
-                                                                command.Color,
-                                                                command.Plate,
-                                                                command.Photo,
-                                                                command.DefaultVehicle,
-                                                                command.VehicleType)));
+        var vehicle = new Vehicle(command.Brand,
+                                  command.Model,
+                                  command.Color,
+                                  command.Plate,
+                                  command.Photo,
+                                  command.DefaultVehicle,
+                                  command.VehicleType);
+
+        residentialWithServiceProvider.AddVehicle(new ResidentialVehicle(command.ResidentialWithServiceProviderId,
+                                                    vehicle));
 
 
         await residentialRepository.SaveAsync();
 
-        using(var ms = new MemoryStream(Convert.FromBase64String(command.Photo)))
-        {
-            await blobStorage.Upload(ms, $"{command.Model}");
-        }
+        await blobStorage.Upload(command.Photo, $"/vehicle/{vehicle.Id}");
 
         return Results.Ok("Vehicle created with success.");
     }

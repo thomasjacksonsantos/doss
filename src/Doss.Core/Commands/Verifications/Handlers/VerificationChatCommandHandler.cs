@@ -18,9 +18,9 @@ public class VerificationChatCommandHandler : BaseCommandHandler<VerificationCha
             return Results.Error("Message is empty");
 
         var verification = await unitOfWork.ResidencialRepository.ReturnVerificationRequestById(command.ResidentialVerificationRequestId);
-        verification.AddMessage(command.User!.Id, command.Message, command.Photo);
+        verification.AddMessage(command.User!.Id, message: command.Message, photo: command.Photo, audio: command.Audio);
         await unitOfWork.ServiceProviderRepository.SaveAsync();
-        
+
         return Results.Ok("Message created with success.");
     }
 }
