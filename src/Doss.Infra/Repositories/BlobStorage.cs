@@ -12,7 +12,18 @@ public class BlobStorage : IBlobStorage
     public BlobStorage(IOptions<AppSettings> appSettings)
         => (this.appSettings) = (appSettings.Value);
 
-    public async Task Upload(string fileBase64, string filename)
+    public async Task SendAudio(string fileBase64, string filename)
+    {
+        var client = new BlobServiceClient(appSettings.BlobStorage.BlobStorageConnectionString);
+        var container = client.GetBlobContainerClient(appSettings.BlobStorage.ContainerName);
+
+        using (var ms = new MemoryStream(Convert.FromBase64String(fileBase64)))
+        {
+            await container.UploadBlobAsync(filename, ms);
+        }
+    }
+
+    public async Task SendImage(string fileBase64, string filename)
     {
         var client = new BlobServiceClient(appSettings.BlobStorage.BlobStorageConnectionString);
         var container = client.GetBlobContainerClient(appSettings.BlobStorage.ContainerName);
@@ -22,7 +33,7 @@ public class BlobStorage : IBlobStorage
 
         using (var ms = new MemoryStream(file))
         {
-            await container.UploadBlobAsync($"{filename}.jpeg", ms);
+            await container.UploadBlobAsync(filename, ms);
         }
     }
 }

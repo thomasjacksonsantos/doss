@@ -2,5 +2,7 @@ namespace Doss.Core.Services;
 
 public interface IBlobStorage
 {
-    Task Upload(string fileBase64, string filename);
+    Task SendImage(string fileBase64, string filename);
+
+    Task SendAudio(string fileBase64, string filename);
 }

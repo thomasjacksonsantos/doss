@@ -10,7 +10,7 @@ public class VerificationMessageConfiguration : IEntityTypeConfiguration<Verific
     {
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Message).HasConversion<string>().HasColumnType("varchar").HasMaxLength(4000);
-        builder.Property(p => p.Photo).HasConversion<string>().HasColumnType("varchar").HasMaxLength(4000);
-        builder.Property(p => p.Audio).HasConversion<string>().HasColumnType("varchar").HasMaxLength(4000);
+        builder.Property(p => p.Photo).HasConversion<string>().HasColumnType("text");
+        builder.Property(p => p.Audio).HasConversion<string>().HasColumnType("text");
     }
 }

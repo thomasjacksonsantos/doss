@@ -21,6 +21,16 @@ public class VerificationChatCommandHandler : BaseCommandHandler<VerificationCha
         verification.AddMessage(command.User!.Id, message: command.Message, photo: command.Photo, audio: command.Audio);
         await unitOfWork.ServiceProviderRepository.SaveAsync();
 
+        if (command.Audio.IsNotNull())
+        {
+
+        }
+
+        if (command.Photo.IsNotNull())
+        {
+
+        }
+
         return Results.Ok("Message created with success.");
     }
 }

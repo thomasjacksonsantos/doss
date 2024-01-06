@@ -35,7 +35,7 @@ public class CreateResidentialVehicleCommandHandler : BaseCommandHandler<CreateR
 
         await residentialRepository.SaveAsync();
 
-        await blobStorage.Upload(command.Photo, $"/vehicle/{vehicle.Id}");
+        await blobStorage.SendImage(command.Photo, $"/vehicle/{vehicle.Id}");
 
         return Results.Ok("Vehicle created with success.");
     }
