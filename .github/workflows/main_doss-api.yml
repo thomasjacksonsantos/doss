@@ -10,6 +10,7 @@ on:
   workflow_dispatch:
 
 env:
+  API_PATH: './src/Conectores/Doss.Api/'
   AZURE_FUNCTIONAPP_PACKAGE_PATH: "./src/Conectores/Doss.Function/" # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: "7.0.x" # set this to the dotnet version to use
 
@@ -31,6 +32,7 @@ jobs:
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        working-directory: ${{ env.API_PATH }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
