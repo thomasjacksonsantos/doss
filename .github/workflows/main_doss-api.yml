@@ -67,7 +67,7 @@ jobs:
 
   deploy-azure-functions:
     runs-on: ubuntu-latest
-    needs: db-migrations
+    needs: deploy-api
 
     steps:
       - name: Log into Azure CLI with service principal
