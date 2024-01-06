@@ -22,9 +22,6 @@ jobs:
           dotnet-version: '7.x'
           include-prerelease: true
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
-
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/api
 
@@ -70,11 +67,6 @@ jobs:
     needs: deploy-api
 
     steps:
-      - name: Log into Azure CLI with service principal
-        uses: azure/login@v1.1
-        with:
-          creds: ${{ secrets.AZURE_WEBAPP_CREDENTIALS }}
-
       - name: download api artifact from build azure-functions
         uses: actions/download-artifact@v3
         with:
