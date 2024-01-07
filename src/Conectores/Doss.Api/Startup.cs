@@ -97,7 +97,7 @@ public class Startup
             return settings;
         });
 
-        services.InitIoC();
+        services.InitIoC(configuration: Configuration);
 
         services.AddCors(options =>
         {

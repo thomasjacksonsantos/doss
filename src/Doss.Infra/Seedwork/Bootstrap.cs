@@ -1,19 +1,25 @@
 using Doss.Core.Services;
 using Doss.Infra.Repositories;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Doss.Infra.Seedwork;
 
 public static class Bootstrap
 {
-    public static void InitInfra(this IServiceCollection service)
+    public static void InitInfra(this IServiceCollection service, IConfiguration configuration)
     {
         service.ConfigureInfra();
         service.ConfigureBlobStorage();
+        service.ConfigureServiceBus(configuration);
     }
 
     public static void ConfigureBlobStorage(this IServiceCollection service)
         => service.AddScoped<IBlobStorage, BlobStorage>();
+
+    public static void ConfigureServiceBus(this IServiceCollection service, IConfiguration configuration)
+        => service.AddAzureClients(builder => builder.AddServiceBusClient(configuration.GetConnectionString("ServiceBus")));
 
     private static void ConfigureInfra(this IServiceCollection service)
     {

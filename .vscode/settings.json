@@ -1,4 +1,10 @@
 {
     "appService.defaultWebAppToDeploy": "/subscriptions/8902f34f-e80f-4ebf-9b21-8cf9a4fe297d/resourceGroups/doss-rg/providers/Microsoft.Web/sites/doss-api",
-    "appService.deploySubpath": "src\\Conectores\\Doss.Api"
+    "appService.deploySubpath": "src\\Conectores\\Doss.Api",
+    "azureFunctions.projectSubpath": "src\\Conectores\\Doss.Function",
+    "azureFunctions.deploySubpath": "src\\Conectores\\Doss.Function/bin/Release/net7.0/publish",
+    "azureFunctions.projectLanguage": "C#",
+    "azureFunctions.projectRuntime": "~4",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.preDeployTask": "publish (functions)"
 }

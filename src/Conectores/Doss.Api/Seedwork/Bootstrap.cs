@@ -12,10 +12,11 @@ public static class Bootstrap
     /// InitIoC
     /// </summary>
     /// <param name="services">services</param>
-    public static void InitIoC(this IServiceCollection services)
+    /// <param name="configuration">configuration</param>
+    public static void InitIoC(this IServiceCollection services, IConfiguration configuration)
     {
         services.InitCore();
-        services.InitInfra();
+        services.InitInfra(configuration);
     }
 
     private static string GetConnetion(string connection)

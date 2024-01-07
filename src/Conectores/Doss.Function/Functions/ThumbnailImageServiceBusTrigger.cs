@@ -14,7 +14,7 @@ public class ThumbnailImageServiceBusTrigger
     }
 
     [Function(nameof(ThumbnailImageServiceBusTrigger))]
-    public async Task RunAsync([ServiceBusTrigger("sbq-notify-program-closed", Connection = "ServiceBusConnection")] string message, FunctionContext context)
+    public async Task RunAsync([ServiceBusTrigger("sbq-image-thumbnail", Connection = "ServiceBusConnection")] string message, FunctionContext context)
     {
         var logger = context.GetLogger(nameof(ThumbnailImageServiceBusTrigger));
 
