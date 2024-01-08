@@ -29,16 +29,25 @@ public class VerificationChatCommandHandler : BaseCommandHandler<VerificationCha
         var verification = await unitOfWork.ResidencialRepository.ReturnVerificationRequestById(command.ResidentialVerificationRequestId);
 
         var verificationMessage = new VerificationMessage(command.User!.Id, message: command.Message, photo: command.Photo, audio: command.Audio);
-
         verification.AddMessage(verificationMessage);
         await unitOfWork.ServiceProviderRepository.SaveAsync();
 
         if (command.Photo.IsNotNull())
-            await serviceBus.SendAsync(new UploadImageCommand(verificationMessage.Id, $"verification-chat/image/{verificationMessage.Id}"), appSettings.ServiceBusTopicOrQueueName.UploadImage);
+        {
+            var url = $"verification-chat/image/{verificationMessage.Id}";
+            verificationMessage.AddPhotoUrl(url);
+            await serviceBus.SendAsync(new UploadImageCommand(verificationMessage.Id, url), appSettings.ServiceBusTopicOrQueueName.UploadImage);
+        }
 
         if (command.Audio.IsNotNull())
-            await serviceBus.SendAsync(new UploadAudioCommand(verificationMessage.Id, $"verification-chat/audio/{verificationMessage.Id}"), appSettings.ServiceBusTopicOrQueueName.UploadAudio);
+        {
+            var url = $"verification-chat/audio/{verificationMessage.Id}";
+            verificationMessage.AddAudioUrl(url);
+            await serviceBus.SendAsync(new UploadAudioCommand(verificationMessage.Id, url), appSettings.ServiceBusTopicOrQueueName.UploadAudio);
+        }
 
+        await unitOfWork.ServiceProviderRepository.SaveAsync();
+        
         return Results.Ok("Message created with success.");
     }
 }

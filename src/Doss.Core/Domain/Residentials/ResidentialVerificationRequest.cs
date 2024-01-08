@@ -34,9 +34,17 @@ public class VerificationMessage
     public DateTime Created { get; set; }
     public string Photo { get; set; }
     public string Audio { get; set; }
+    public string PhotoUrl { get; set; }
+    public string AudioUrl { get; set; }
+
     public VerificationMessage()
     { }
 
     public VerificationMessage(Guid userId, string? message = null, string? photo = null, string? audio = null)
-        => (UserId, Message, Photo, Audio, Created) = (userId, message ?? string.Empty, photo ?? string.Empty, audio ?? string.Empty, DateTime.Now);
+        => (UserId, Message, Photo, Audio, PhotoUrl, AudioUrl, Created) = (userId, message ?? string.Empty, photo ?? string.Empty, audio ?? string.Empty, string.Empty, string.Empty, DateTime.Now);
+
+    public void AddPhotoUrl(string url)
+        => PhotoUrl = url;
+    public void AddAudioUrl(string url)
+        => AudioUrl = url;
 }

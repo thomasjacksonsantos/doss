@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Json;
 using Doss.Core.Queries.Images;
 using MediatR;
 using Microsoft.Azure.Functions.Worker;
@@ -21,18 +22,27 @@ namespace Doss.Function
         [Function("DownloadImageServiceBusTrigger")]
         public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
-            var filename = req.Query["filename"]!;
-            
-            var result = await _mediator.Send(new DownloadImageQuery(filename));
+            try
+            {
 
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            response.WriteBytes(result.Data!.Files);
-            response.Headers.Add("Content-Type", "image/jpeg; charset=utf-8");
+                _logger.LogInformation("C# HTTP trigger function processed a request.");
+                var filename = req.Query["filename"]!;
 
-            response.WriteString("Welcome to Azure Functions!");
+                var result = await _mediator.Send(new DownloadImageQuery(filename));
 
-            return response;
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                response.WriteBytes(result.Data!.Files);
+                response.Headers.Add("Content-Type", "image/jpeg; charset=utf-8");
+
+                response.WriteString("Welcome to Azure Functions!");
+
+                return response;
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(JsonSerializer.Serialize(ex));
+                throw;
+            }
         }
     }
 }
