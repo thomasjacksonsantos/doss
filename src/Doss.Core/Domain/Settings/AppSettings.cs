@@ -5,6 +5,7 @@ public class AppSettings
     public Cep Cep { get; set; } = new Cep();
     public WhatsApp WhatsApp { get; set; } = new WhatsApp();
     public BlobStorage BlobStorage { get; set; }
+    public ServiceBusTopicOrQueueName ServiceBusTopicOrQueueName { get; set; }
 }
 
 public class Cep
@@ -26,5 +27,12 @@ public class BlobStorage
     public string BlobStorageConnectionString { get; set; }
     public string ContainerName { get; set; }
     public int ThumbnailWidth { get; set; }
-    public string ThumbnailContainerName { get; set; }    
+    public string ThumbnailContainerName { get; set; }
+}
+
+public class ServiceBusTopicOrQueueName
+{
+    public string UploadImage { get; set; }
+    public string UploadImageThumbnail { get; set; }
+    public string UploadAudio { get; set; }
 }

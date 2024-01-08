@@ -117,6 +117,9 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                 .ToListAsync();
     }
 
+    public async Task<VerificationMessage> ReturnChatMessageById(Guid verificationMessageId)
+        => await Context.VerificationMessage.SingleAsync(c => c.Id == verificationMessageId);
+
     public async Task<IEnumerable<ResidentialContactsQuery.Contact>> ReturnContacts(Guid serviceProviderId, int page, int total = 20)
     {
         if (total <= 0 || total > 20)

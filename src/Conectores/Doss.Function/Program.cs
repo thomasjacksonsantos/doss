@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Doss.Function.Seedwork;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
@@ -11,27 +11,9 @@ var host = new HostBuilder()
 
         var config = builder.Build();
     })
-    // .ConfigureServices((context, services) =>
-    // {
-    //     services
-    //         .AddFunctionsInfra(context.Configuration)
-    //         .AddEmailServices(context.Configuration)
-    //         .AddDomain(context.Configuration)
-    //         .AddNotificationService()
-    //         .AddData(context.Configuration)
-    //         .AddQueriesRepositories()
-    //         .AddDomainRepositories()
-    //         .AddEmailSender(context.Configuration)
-    //         .AddLoggerAbstractImplementations(context.Configuration)
-    //         .AddDb(context.Configuration)
-    //         .AddTargetJobService(context.Configuration)
-    //         .AddInfrastructure();
-
-    //     services.AddDbContext<GurujaContext>(options =>
-    //     {
-    //         options.UseSqlServer(context.Configuration.GetConnectionString("GurujaDbSqlServer"));
-    //     });
-    // })
+    .ConfigureServices((context, services) => {
+        services.InitIoC(context.Configuration);
+    })
     .Build();
 
 host.Run();

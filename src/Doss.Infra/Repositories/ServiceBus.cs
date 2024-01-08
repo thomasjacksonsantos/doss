@@ -21,10 +21,9 @@ public class ServiceBus : IServiceBus
         var message = new ServiceBusMessage(BinaryData.FromObjectAsJson(data, new JsonSerializerOptions
         {
             WriteIndented = true,
-            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-        }));
-
-        message.SessionId = session;
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        }))
+        { SessionId = session };
 
         await sender.SendMessageAsync(message);
     }

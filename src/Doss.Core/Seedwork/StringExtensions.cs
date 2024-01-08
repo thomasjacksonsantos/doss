@@ -8,10 +8,10 @@ namespace System
         static readonly int[] Multiplicador1 = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
         static readonly int[] Multiplicador2 = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 
-        public static bool IsNotNullOrEmpty(this string value)
+        public static bool IsNotNullOrEmpty(this string? value)
             => !string.IsNullOrEmpty(value);
 
-        public static bool IsNullOrEmpty(this string value)
+        public static bool IsNullOrEmpty(this string? value)
             => string.IsNullOrEmpty(value);
 
         public static bool IsValidCpf(this string value)

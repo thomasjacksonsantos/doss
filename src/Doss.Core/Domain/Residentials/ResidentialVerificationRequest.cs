@@ -18,8 +18,8 @@ public class ResidentialVerificationRequest
     public ResidentialVerificationRequest(ResidentialWithServiceProvider residentialWithServiceProvider, string message)
         => (ResidentialWithServiceProvider, Status, Message, Created) = (residentialWithServiceProvider, VerificationStatus.WaitingConfirmation, message, DateTime.Now);
 
-    public void AddMessage(Guid userId, string? message = null, string? photo = null, string? audio = null)
-        => ((List<VerificationMessage>)Messages).Add(new VerificationMessage(userId, message ?? string.Empty, photo ?? string.Empty, audio ?? string.Empty));
+    public void AddMessage(VerificationMessage verificationMessage)
+        => ((List<VerificationMessage>)Messages).Add(verificationMessage);
 
     public void ChangeStatus(VerificationStatus status)
         => Status = status;
@@ -37,6 +37,6 @@ public class VerificationMessage
     public VerificationMessage()
     { }
 
-    public VerificationMessage(Guid userId, string message, string photo, string audio)
-        => (UserId, Message, Photo, Audio, Created) = (userId, message, photo, audio, DateTime.Now);
+    public VerificationMessage(Guid userId, string? message = null, string? photo = null, string? audio = null)
+        => (UserId, Message, Photo, Audio, Created) = (userId, message ?? string.Empty, photo ?? string.Empty, audio ?? string.Empty, DateTime.Now);
 }
