@@ -3,7 +3,6 @@ using Doss.Core.Domain.Settings;
 using Doss.Core.Services;
 using Microsoft.Extensions.Options;
 using Doss.Infra.Seedwork;
-using Azure.Storage.Blobs.Models;
 
 namespace Doss.Infra.Repositories;
 

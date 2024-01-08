@@ -5,28 +5,16 @@
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
     "ServiceBusConnection": "Endpoint=sb://sb-doss.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=rIwl4P/53zUUA3fNQWzu9PhG8XJaYS0OI+ASbJcEjtk=",
     "ConnectionStrings:ConnectionsString": "Server=tcp:dossdb.database.windows.net,1433;Initial Catalog=doss-db;Persist Security Info=False;User ID=doss-db;Password=15_RV272fo@Hd~cP;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
-    "BlobStorage:BlobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=ageustorageaccount;AccountKey=+Vwt88CrYbOdLIsJry8LkjiB2kLOyZmP16vbjbNaZ1aZvKZGQCcx4FDfl959+tVPQRgdyQNofN5D+AStf0sTIg==;EndpointSuffix=core.windows.net",
-    "BlobStorage:ContainerName": "doss-image"
-  },
-  "AppSettings": {
-    "Cep": {
-      "ServiceName": "CepAberto",
-      "Url": "https://www.cepaberto.com",
-      "Token": "beb46aac6a7a96150e2f526f9769471c"
-    },
-    "WhatsApp": {
-      "AccountSid": "AC91ebc79d17a484b7514f2ac5d8de1b0a",
-      "AuthToken": "c21c0c4ed706b1be40139be7094172fe",
-      "NumberPhone": "14155238886"
-    },
-    "BlobStorage": {
-      "BlobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=ageustorageaccount;AccountKey=+Vwt88CrYbOdLIsJry8LkjiB2kLOyZmP16vbjbNaZ1aZvKZGQCcx4FDfl959+tVPQRgdyQNofN5D+AStf0sTIg==;EndpointSuffix=core.windows.net",
-      "ContainerName": "doss-image"
-    },
-    "ServiceBusTopicOrQueueName": {
-      "UploadImage": "sbq-upload-image",
-      "UploadImageThumbnail": "sbq-upload-image-thumbnail",
-      "UploadAudio": "sbq-upload-audio"
-    }
-  }
+    "AppSettings_Cep_ServiceName": "CepAberto",
+    "AppSettings_Cep_Url": "https://www.cepaberto.com",
+    "AppSettings_Cep_Token": "beb46aac6a7a96150e2f526f9769471c",
+    "AppSettings_WhatsApp_AccountSid": "AC91ebc79d17a484b7514f2ac5d8de1b0a",
+    "AppSettings_WhatsApp_AuthToken": "c21c0c4ed706b1be40139be7094172fe",
+    "AppSettings_WhatsApp_NumberPhone": "14155238886",
+    "AppSettings_BlobStorage_BlobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=ageustorageaccount;AccountKey=+Vwt88CrYbOdLIsJry8LkjiB2kLOyZmP16vbjbNaZ1aZvKZGQCcx4FDfl959+tVPQRgdyQNofN5D+AStf0sTIg==;EndpointSuffix=core.windows.net",
+    "AppSettings_BlobStorage_ContainerName": "doss-image",
+    "AppSettings_ServiceBusTopicOrQueueName_UploadImage": "sbq-upload-image",
+    "AppSettings_ServiceBusTopicOrQueueName_UploadImageThumbnail": "sbq-upload-image-thumbnail",
+    "AppSettings_ServiceBusTopicOrQueueName_UploadAudio": "sbq-upload-audio"
+  }  
 }

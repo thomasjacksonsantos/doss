@@ -21,7 +21,19 @@ public static class Bootstrap
     /// <param name="configuration">configuration</param>
     public static void InitIoC(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<AppSettings>(configuration.GetSection(nameof(AppSettings)));
+        services.Configure<AppSettings>(appSettings =>
+        {
+            appSettings = new AppSettings
+            {
+                BlobStorage = new BlobStorage
+                {
+                    BlobStorageConnectionString = Environment.GetEnvironmentVariable("AppSettings_BlobStorage_BlobStorageConnectionString")!,
+                    ContainerName = Environment.GetEnvironmentVariable("AppSettings_BlobStorage_ContainerName")!,
+                }
+            };
+
+            services.AddSingleton(appSettings); 
+        });
 
         services.InitCore();
         services.InitInfra(configuration);
