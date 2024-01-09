@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Doss.Function
 {
@@ -40,7 +41,7 @@ namespace Doss.Function
             }
             catch (System.Exception ex)
             {
-                _logger.LogError(JsonSerializer.Serialize(ex));
+                _logger.LogError(JsonConvert.SerializeObject(ex));
                 throw;
             }
         }
