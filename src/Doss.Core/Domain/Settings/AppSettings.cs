@@ -6,6 +6,12 @@ public class AppSettings
     public WhatsApp WhatsApp { get; set; } = new WhatsApp();
     public BlobStorage BlobStorage { get; set; }
     public ServiceBusTopicOrQueueName ServiceBusTopicOrQueueName { get; set; }
+    public Images Images { get; set; }
+}
+
+public class Images
+{
+    public string DownloadImageUrl { get; set; }
 }
 
 public class Cep
