@@ -54,7 +54,7 @@ public static class Bootstrap
         var conn = Environment.GetEnvironmentVariable($"SQLAZURECONNSTR_{connection}");
         if (string.IsNullOrEmpty(conn))
         {
-            conn = Environment.GetEnvironmentVariable($"ConnectionStrings:{connection}");
+            conn = Environment.GetEnvironmentVariable($"ConnectionStrings_{connection}");
         }
 
         if (string.IsNullOrEmpty(conn))

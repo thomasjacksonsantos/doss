@@ -4,7 +4,7 @@
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
     "ServiceBusConnection": "Endpoint=sb://sb-doss.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=rIwl4P/53zUUA3fNQWzu9PhG8XJaYS0OI+ASbJcEjtk=",
-    "ConnectionStrings:ConnectionsString": "Server=tcp:dossdb.database.windows.net,1433;Initial Catalog=doss-db;Persist Security Info=False;User ID=doss-db;Password=15_RV272fo@Hd~cP;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+    "ConnectionStrings_ConnectionsString": "Server=tcp:dossdb.database.windows.net,1433;Initial Catalog=doss-db;Persist Security Info=False;User ID=doss-db;Password=15_RV272fo@Hd~cP;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
     "AppSettings_Cep_ServiceName": "CepAberto",
     "AppSettings_Cep_Url": "https://www.cepaberto.com",
     "AppSettings_Cep_Token": "beb46aac6a7a96150e2f526f9769471c",
