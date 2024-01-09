@@ -21,18 +21,18 @@ public static class Bootstrap
     /// <param name="configuration">configuration</param>
     public static void InitIoC(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<AppSettings>(appSettings =>
+        services.AddSingleton(settings =>
         {
-            appSettings = new AppSettings
+            var appSettings = new AppSettings
             {
                 BlobStorage = new BlobStorage
                 {
-                    BlobStorageConnectionString = Environment.GetEnvironmentVariable("AppSettings_BlobStorage_BlobStorageConnectionString")!,
-                    ContainerName = Environment.GetEnvironmentVariable("AppSettings_BlobStorage_ContainerName")!,
+                    BlobStorageConnectionString = Environment.GetEnvironmentVariable("AppSettings_BlobStorage_BlobStorageConnectionString", EnvironmentVariableTarget.Process)!,
+                    ContainerName = Environment.GetEnvironmentVariable("AppSettings_BlobStorage_ContainerName", EnvironmentVariableTarget.Process)!,
                 }
             };
 
-            services.AddSingleton(appSettings); 
+            return appSettings;
         });
 
         services.InitCore();

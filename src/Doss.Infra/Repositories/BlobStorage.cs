@@ -9,8 +9,8 @@ namespace Doss.Infra.Repositories;
 public class BlobStorage : IBlobStorage
 {
     private readonly AppSettings appSettings;
-    public BlobStorage(IOptions<AppSettings> appSettings)
-        => this.appSettings = appSettings.Value;
+    public BlobStorage(AppSettings appSettings)
+        => this.appSettings = appSettings;
 
     public async Task<byte[]> DownloadAsync(string filename)
     {
