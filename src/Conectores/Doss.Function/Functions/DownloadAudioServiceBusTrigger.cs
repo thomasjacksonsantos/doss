@@ -8,18 +8,18 @@ using Newtonsoft.Json;
 
 namespace Doss.Function
 {
-    public class DownloadImageServiceBusTrigger
+    public class DownloadAudioServiceBusTrigger
     {
         private readonly IMediator _mediator;
         private readonly ILogger _logger;
 
-        public DownloadImageServiceBusTrigger(IMediator mediator, ILoggerFactory loggerFactory)
+        public DownloadAudioServiceBusTrigger(IMediator mediator, ILoggerFactory loggerFactory)
         {
             _mediator = mediator;
-            _logger = loggerFactory.CreateLogger<DownloadImageServiceBusTrigger>();
+            _logger = loggerFactory.CreateLogger<DownloadAudioServiceBusTrigger>();
         }
 
-        [Function("DownloadImageServiceBusTrigger")]
+        [Function("DownloadAudioServiceBusTrigger")]
         public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
             try
@@ -32,7 +32,7 @@ namespace Doss.Function
 
                 var response = req.CreateResponse(HttpStatusCode.OK);
                 response.WriteBytes(result.Data!.Files);
-                response.Headers.Add("Content-Type", "image/jpeg; charset=utf-8");
+                response.Headers.Add("Content-Type", "audio/mpeg; charset=utf-8");
 
                 response.WriteString("Welcome to Azure Functions!");
 

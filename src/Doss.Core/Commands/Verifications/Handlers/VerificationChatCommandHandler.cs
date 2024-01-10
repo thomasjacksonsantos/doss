@@ -1,4 +1,4 @@
-using Doss.Core.Commands.Images;
+using Doss.Core.Commands.Files;
 using Doss.Core.Domain.Residentials;
 using Doss.Core.Domain.Settings;
 using Doss.Core.Interfaces.Repositories;

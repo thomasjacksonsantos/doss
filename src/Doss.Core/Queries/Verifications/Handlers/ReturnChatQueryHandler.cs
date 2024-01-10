@@ -18,7 +18,11 @@ public class ReturnChatQueryHandler : IRequestHandler<ReturnChatQuery, Result<Re
     public async Task<Result<ReturnChatQuery.Response>> Handle(ReturnChatQuery query, CancellationToken cancellationToken)
     {
         var response = await residentialRepository.ReturnChatMessage(query.ResidentialVerificationRequestId, query.Page, query.Total);
-        response.Chats.ForEach(c => c.AddUrlBase(appSettings.Images.DownloadImageUrl));
+        response.Chats.ForEach(c =>
+        {
+            c.AddImageUrlBase(appSettings.Files.DownloadImageUrl);
+            c.AddAudioUrlBase(appSettings.Files.DownloadAudioUrl);
+        });
         return Results.Ok(response);
     }
 }

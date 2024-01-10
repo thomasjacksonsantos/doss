@@ -23,21 +23,26 @@ public class ReturnChatQuery : Query<ReturnChatQuery.Response>
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         [JsonIgnore]
-        public string UrlBase { get; set; }
+        public string ImageUrlBase { get; set; }
+        [JsonIgnore]
+        public string AudioUrlBase { get; set; }
         public string Message { get; set; }
         [JsonIgnore]
         public string Photo { get; set; }
         [JsonIgnore]
         public string Audio { get; set; }
         public string PhotoUrl
-            => Photo.IsNotNullOrEmpty() ? $"{UrlBase}{Photo}" : string.Empty;
+            => Photo.IsNotNullOrEmpty() ? $"{ImageUrlBase}{Photo}" : string.Empty;
         public string AudioUrl
-            => Audio.IsNotNullOrEmpty() ? $"{UrlBase}{Audio}" : string.Empty;
+            => Audio.IsNotNullOrEmpty() ? $"{AudioUrlBase}{Audio}" : string.Empty;
         public DateTime When { get; set; }
         public Chat(Guid id, Guid userId, string message, string photoUrl, string audioUrl, DateTime when)
             => (Id, UserId, Message, Photo, Audio, When) = (id, userId, message, photoUrl, audioUrl, when);
 
-        public void AddUrlBase(string urlBase)
-            => UrlBase = urlBase;
+        public void AddImageUrlBase(string urlBase)
+            => ImageUrlBase = urlBase;
+
+        public void AddAudioUrlBase(string urlBase)
+            => AudioUrlBase = urlBase;
     }
 }

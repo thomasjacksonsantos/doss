@@ -3,7 +3,7 @@ using Doss.Core.Seedwork;
 using FluentValidation;
 using Doss.Core.Services;
 
-namespace Doss.Core.Commands.Images.Handlers;
+namespace Doss.Core.Commands.Files.Handlers;
 
 public class UploadImageCommandHandler : BaseCommandHandler<UploadImageCommand, UploadImageCommandValidator>
 {

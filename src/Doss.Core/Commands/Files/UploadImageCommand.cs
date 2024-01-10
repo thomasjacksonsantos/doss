@@ -1,6 +1,6 @@
 using Doss.Core.Seedwork;
 
-namespace Doss.Core.Commands.Images;
+namespace Doss.Core.Commands.Files;
 
 public class UploadImageCommand : Command
 {

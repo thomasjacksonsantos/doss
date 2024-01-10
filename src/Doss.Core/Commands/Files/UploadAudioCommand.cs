@@ -1,6 +1,8 @@
-namespace Doss.Core.Commands.Images;
+using Doss.Core.Seedwork;
 
-public class UploadAudioCommand
+namespace Doss.Core.Commands.Files;
+
+public class UploadAudioCommand : Command
 {
     public Guid VerificationMessageId { get; set; }
     public string Filename { get; set; }

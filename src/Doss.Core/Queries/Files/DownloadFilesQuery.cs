@@ -1,11 +1,11 @@
 using Doss.Core.Seedwork;
 
-namespace Doss.Core.Queries.Images;
+namespace Doss.Core.Queries.Files;
 
-public class DownloadImageQuery : Query<DownloadImageQuery.Response>
+public class DownloadFilesQuery : Query<DownloadFilesQuery.Response>
 {
     public string Filename { get; set; }
-    public DownloadImageQuery(string filename)
+    public DownloadFilesQuery(string filename)
     {
         Filename = filename;
     }
