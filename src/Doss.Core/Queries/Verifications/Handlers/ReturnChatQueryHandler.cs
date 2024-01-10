@@ -1,8 +1,8 @@
 using Doss.Core.Domain.Settings;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
-using MediatR;
 using Microsoft.Extensions.Options;
+using MediatR;
 
 namespace Doss.Core.Queries.Verifications.Handlers;
 
@@ -17,9 +17,8 @@ public class ReturnChatQueryHandler : IRequestHandler<ReturnChatQuery, Result<Re
 
     public async Task<Result<ReturnChatQuery.Response>> Handle(ReturnChatQuery query, CancellationToken cancellationToken)
     {
-        var messages = await residentialRepository.ReturnChatMessage(query.ResidentialVerificationRequestId, query.Page, query.Total);
-
-        messages.ForEach(c => c.AddUrlBase(appSettings.Images.DownloadImageUrl));
-        return Results.Ok(new ReturnChatQuery.Response(messages));
+        var response = await residentialRepository.ReturnChatMessage(query.ResidentialVerificationRequestId, query.Page, query.Total);
+        response.Chats.ForEach(c => c.AddUrlBase(appSettings.Images.DownloadImageUrl));
+        return Results.Ok(response);
     }
 }

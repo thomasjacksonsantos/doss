@@ -10,10 +10,12 @@ public class ReturnChatQuery : Query<ReturnChatQuery.Response>
     public int Total { get; set; }
     public class Response
     {
+        public int Page { get; set; }
+        public int Total { get; set; }
         public IEnumerable<Chat> Chats { get; set; }
 
-        public Response(IEnumerable<Chat> chats)
-            => Chats = chats;
+        public Response(IEnumerable<Chat> chats, int page, int total)
+            => (Chats, Page, Total) = (chats, page, total);
     }
 
     public class Chat
@@ -34,7 +36,7 @@ public class ReturnChatQuery : Query<ReturnChatQuery.Response>
         public DateTime When { get; set; }
         public Chat(Guid id, Guid userId, string message, string photoUrl, string audioUrl, DateTime when)
             => (Id, UserId, Message, Photo, Audio, When) = (id, userId, message, photoUrl, audioUrl, when);
-        
+
         public void AddUrlBase(string urlBase)
             => UrlBase = urlBase;
     }

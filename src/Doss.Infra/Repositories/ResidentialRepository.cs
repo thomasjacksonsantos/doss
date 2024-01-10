@@ -100,7 +100,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                         .SingleOrDefaultAsync(c => c.Id == id) ?? null!;
     }
 
-    public async Task<IEnumerable<ReturnChatQuery.Chat>> ReturnChatMessage(Guid residentialVerificationRequestId, int page, int total)
+    public async Task<ReturnChatQuery.Response> ReturnChatMessage(Guid residentialVerificationRequestId, int page, int total)
     {
         if (total <= 0 || total > 20)
             total = 20;
@@ -108,13 +108,19 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
         if (page > 0)
             page = (page - 1) * total;
 
-        return await Context.VerificationMessage
+        var totalResult = await Context.VerificationMessage
+                                 .Where(c => c.ResidentialVerificationRequestId == residentialVerificationRequestId)
+                                 .CountAsync();
+
+        var messages = await Context.VerificationMessage
                 .OrderByDescending(c => c.Created)
                 .Where(c => c.ResidentialVerificationRequestId == residentialVerificationRequestId)
                 .Skip(page)
                 .Take(total)
                 .Select(c => new ReturnChatQuery.Chat(c.Id, c.UserId, c.Message, c.PhotoUrl, c.AudioUrl, c.Created))
                 .ToListAsync();
+
+        return new ReturnChatQuery.Response(messages, (page + 1), totalResult);
     }
 
     public async Task<VerificationMessage> ReturnChatMessageById(Guid verificationMessageId)
