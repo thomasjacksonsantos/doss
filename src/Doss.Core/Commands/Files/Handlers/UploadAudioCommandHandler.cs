@@ -18,7 +18,7 @@ public class UploadAudioCommandHandler : BaseCommandHandler<UploadAudioCommand, 
     public override async Task<Result> HandleImplementation(UploadAudioCommand command)
     {
         var verificationMessage = await residentialRepository.ReturnChatMessageById(command.VerificationMessageId);
-        await blobStorage.SendImage(verificationMessage.Audio, command.Filename);
+        await blobStorage.SendAudio(verificationMessage.Audio, command.Filename);
         return Results.Ok("Message created with success.");
     }
 }
