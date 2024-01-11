@@ -1,8 +1,8 @@
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using MediatR;
 using System.Text.Json;
 using Doss.Core.Commands.Files;
+using MediatR;
 
 namespace Doss.Functions;
 
