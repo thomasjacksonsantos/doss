@@ -8,14 +8,19 @@ public class ReturnChatQuery : Query<ReturnChatQuery.Response>
     public Guid ResidentialVerificationRequestId { get; set; }
     public int Page { get; set; }
     public int Total { get; set; }
+
     public class Response
     {
         public int Page { get; set; }
         public int Total { get; set; }
+        public string PhotoUrl { get; set; }
         public IEnumerable<Chat> Chats { get; set; }
 
         public Response(IEnumerable<Chat> chats, int page, int total)
             => (Chats, Page, Total) = (chats, page, total);
+
+        public void ChangePhotoUrl(string url)
+            => PhotoUrl = url;
     }
 
     public class Chat

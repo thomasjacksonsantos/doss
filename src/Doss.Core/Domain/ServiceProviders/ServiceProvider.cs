@@ -12,6 +12,7 @@ public class ServiceProvider
     public TypeDocument TypeDocument { get; private set; }
     public string Phone { get; private set; }
     public string Photo { get; private set; }
+    public string PhotoUrl { get; set; }
     public bool CompletedRegistration { get; private set; }
     public UserStatus UserStatus { get; private set; }
     public IEnumerable<ServiceProviderVehicle>? ServiceProviderVehicles { get; private set; }
@@ -19,14 +20,14 @@ public class ServiceProvider
         => ServiceProviderVehicles!.Select(c => c.Vehicle).Single(c => c.Id == vehicleId);
     public void ResetDefaultVehicles()
         => ServiceProviderVehicles!.ForEach(c => c.Vehicle.ChangeDefaultVehicle(false));
-        
+
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
     public IEnumerable<ServiceProviderPlan> ServiceProviderPlans { get; private set; } = new List<ServiceProviderPlan>();
 
     public ServiceProvider(Guid id, string name, TypeDocument typeDocument, string document, string phone, string photo, bool completedRegistration)
-    => (Id, Name, TypeDocument, Document, Phone, Photo, CompletedRegistration, UserStatus, Created)
-        = (id, name, typeDocument, document.OnlyNumbers(), phone.OnlyNumbers(), photo, completedRegistration, UserStatus.Active, DateTime.Now);
+    => (Id, Name, TypeDocument, Document, Phone, Photo, PhotoUrl, CompletedRegistration, UserStatus, Created)
+        = (id, name, typeDocument, document.OnlyNumbers(), phone.OnlyNumbers(), photo, string.Empty, completedRegistration, UserStatus.Active, DateTime.Now);
 
     public void AddVehicle(ServiceProviderVehicle serviceProviderVehicle)
     {
@@ -34,6 +35,9 @@ public class ServiceProvider
 
         ((List<ServiceProviderVehicle>)ServiceProviderVehicles).Add(serviceProviderVehicle);
     }
+
+    public void ChangePhotoUrl(string url)
+        => PhotoUrl = url;
 
     public void ChangeName(string name)
         => Name = name;

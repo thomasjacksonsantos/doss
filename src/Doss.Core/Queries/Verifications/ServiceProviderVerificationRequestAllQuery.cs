@@ -29,9 +29,9 @@ public class ServiceProviderVerificationRequestAllQuery : Query<ServiceProviderV
     public class Residential
     {
         public string Name { get; set; }
-        public string Photo { get; set; }
-        public Residential(string name, string photo)
-            => (Name, Photo) = (name, photo);
+        public string PhotoUrl { get; set; }
+        public Residential(string name, string photoUrl)
+            => (Name, PhotoUrl) = (name, photoUrl);
     }
 
     public class Address

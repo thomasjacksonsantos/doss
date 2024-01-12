@@ -12,5 +12,5 @@ public class ServiceProviderVerificationRequestAllQueryHandler : IRequestHandler
         => this.residentialRepository = residentialRepository;
 
     public async Task<Result<ServiceProviderVerificationRequestAllQuery.Response>> Handle(ServiceProviderVerificationRequestAllQuery query, CancellationToken cancellationToken)
-        => Results.Ok(await residentialRepository.ReturnVerificationAllByServiceProvider(query.User!.Id, query.Page, query.Total));
+        => Results.Ok(await residentialRepository.ReturnVerificationAllByServiceProvider(query.User!.Id, Domain.Enums.VerificationStatus.WaitingConfirmation, query.Page, query.Total));
 }

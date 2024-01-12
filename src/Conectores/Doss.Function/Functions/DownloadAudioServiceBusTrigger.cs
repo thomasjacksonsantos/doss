@@ -32,9 +32,7 @@ namespace Doss.Function
 
                 var response = req.CreateResponse(HttpStatusCode.OK);
                 response.WriteBytes(result.Data!.Files);
-                response.Headers.Add("Content-Type", "audio/mpeg; charset=utf-8");
-
-                response.WriteString("Welcome to Azure Functions!");
+                response.Headers.Add("Content-Type", "audio/mp3");
 
                 return response;
             }

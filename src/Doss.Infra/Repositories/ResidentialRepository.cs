@@ -8,16 +8,18 @@ using Doss.Core.Domain.Enums;
 using Doss.Core.Queries.Contacts;
 using Doss.Core.Seedwork;
 using Dapper;
+using Microsoft.Extensions.Options;
+using Doss.Core.Domain.Settings;
 
 namespace Doss.Infra.Repositories;
 
 public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRepository
 {
-    public ResidentialRepository(DossDbContext context)
-        : base(context)
-    {
+    private readonly AppSettings appSettings;
 
-    }
+    public ResidentialRepository(IOptions<AppSettings> options, DossDbContext context)
+        : base(context)
+            => (appSettings) = (options.Value);
 
     public override Task<Residential> ReturnByIdAsync(Guid id)
     {
@@ -46,9 +48,14 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
         return await Context.Residential
                     .Include(c => c.ResidentialWithServiceProviders)
                     .Where(c => c.Id == id)
-                    .Select(c => new ResidentialInfoQuery.Response(c.Id, c.Name, c.UserStatus, c.Photo, c.ResidentialWithServiceProviders.First().Id))
+                    .Select(c => new ResidentialInfoQuery.Response(c.Id, c.Name, c.UserStatus, c.PhotoUrl, c.ResidentialWithServiceProviders.First().Id))
                     .FirstOrDefaultAsync() ?? null!;
     }
+
+    public async Task<string> ReturnPhotoUrl(Guid id)
+        => await Context.Residential.Where(c => c.Id == id)
+            .Select(c => c.PhotoUrl)
+            .SingleAsync();
 
     public async Task<Residential> ReturnVehicles(Guid id, Guid residentialWithServiceProviderId)
         => await Context.Residential
@@ -60,7 +67,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                     .Where(c => c.Id == id && c.ResidentialWithServiceProviders.Select(c => c.Id).Contains(residentialWithServiceProviderId))
                     .SingleOrDefaultAsync() ?? null!;
 
-    public async Task<ServiceProviderVerificationRequestAllQuery.Response> ReturnVerificationAllByServiceProvider(Guid id, int page, int total = 20)
+    public async Task<ServiceProviderVerificationRequestAllQuery.Response> ReturnVerificationAllByServiceProvider(Guid id, VerificationStatus status, int page, int total = 20)
     {
         if (total <= 0 || total > 20)
             total = 20;
@@ -69,13 +76,14 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
             page = (page - 1) * total;
 
         var verifications = await Context.ResidentialVerificationRequest
-                                     .Where(c => c.ResidentialWithServiceProvider.ServiceProviderPlan.ServiceProviderId == id)
+                                     .Where(c => c.ResidentialWithServiceProvider.ServiceProviderPlan.ServiceProviderId == id
+                                                    && c.Status == status)
                                      .Select(c => new ServiceProviderVerificationRequestAllQuery
                                                     .Verification(c.Id,
                                                                     c.Message,
                                                                     c.Created,
                                                                     new ServiceProviderVerificationRequestAllQuery
-                                                                        .Residential(c.ResidentialWithServiceProvider.Residential.Name, c.ResidentialWithServiceProvider.Residential.Photo),
+                                                                        .Residential(c.ResidentialWithServiceProvider.Residential.Name, $"{appSettings.Files.DownloadImageUrl}/{c.ResidentialWithServiceProvider.Residential.PhotoUrl}"),
                                                                     new ServiceProviderVerificationRequestAllQuery
                                                                         .Address(c.ResidentialWithServiceProvider.Address.State,
                                                                                 c.ResidentialWithServiceProvider.Address.City,
@@ -93,11 +101,14 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
         => await Connection.ExecuteAsync(sql: "UPDATE Doss.ResidentialVerificationRequest Set [Status] = @VerificationStatus WHERE Id = @Id",
                                       param: new { Id = id, VerificationStatus = verificationStatus.ToString() });
 
-    public async Task<ResidentialVerificationRequest> ReturnVerificationRequestById(Guid id)
+    public async Task<ResidentialVerificationRequest> ReturnVerificationRequestById(Guid id, bool withResidentialWithServiceProvider = false)
     {
-        return await Context.ResidentialVerificationRequest
-                        .Include(c => c.Messages)
-                        .SingleOrDefaultAsync(c => c.Id == id) ?? null!;
+        var queryable = Context.ResidentialVerificationRequest.Include(c => c.Messages);
+
+        if (withResidentialWithServiceProvider)
+            queryable.Include(c => c.ResidentialWithServiceProvider);
+
+        return await queryable.SingleOrDefaultAsync(c => c.Id == id) ?? null!;
     }
 
     public async Task<ReturnChatQuery.Response> ReturnChatMessage(Guid residentialVerificationRequestId, int page, int total)

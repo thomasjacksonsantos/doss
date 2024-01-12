@@ -2,6 +2,7 @@ using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.ServiceProviders;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
+using Doss.Core.Services;
 using FluentValidation;
 
 namespace Doss.Core.Commands.ServiceProviders.Handlers;
@@ -11,12 +12,15 @@ public class CreateServiceProviderOnBoardCompletedCommandHandler : BaseCommandHa
     private readonly IOnBoardServiceProviderRepository onBoardServiceProviderRepository;
     private readonly IServiceProviderRepository serviceProviderRepository;
     private readonly IBankRepository bankRepository;
+    private readonly IBlobStorage blobStorage;
+
     public CreateServiceProviderOnBoardCompletedCommandHandler(IServiceProviderRepository serviceProviderRepository,
                                                          IOnBoardServiceProviderRepository onBoardServiceProviderRepository,
                                                          IBankRepository bankRepository,
+                                                         IBlobStorage blobStorage,
                                                          CreateServiceProviderOnBoardCompletedCommandValidator validator)
         : base(validator)
-            => (this.serviceProviderRepository, this.onBoardServiceProviderRepository, this.bankRepository) = (serviceProviderRepository, onBoardServiceProviderRepository, bankRepository);
+            => (this.serviceProviderRepository, this.onBoardServiceProviderRepository, this.bankRepository, this.blobStorage) = (serviceProviderRepository, onBoardServiceProviderRepository, bankRepository, blobStorage);
 
     public override async Task<Result> HandleImplementation(CreateServiceProviderOnBoardCompletedCommand command)
     {
@@ -37,6 +41,14 @@ public class CreateServiceProviderOnBoardCompletedCommandHandler : BaseCommandHa
         serviceProvider.ChangeUserStatus(Doss.Core.Domain.Enums.UserStatus.Active);
 
         await serviceProviderRepository.AddAsync(serviceProvider);
+        await serviceProviderRepository.SaveAsync();
+
+        var url = $"service-provider/image/{serviceProvider.Id}";
+
+        serviceProvider.ChangePhotoUrl(url);
+
+        await blobStorage.SendImage(onboard.OnBoardUser.Photo, url);
+
         await serviceProviderRepository.SaveAsync();
 
         return Results.Ok("Service provider executed with success.");

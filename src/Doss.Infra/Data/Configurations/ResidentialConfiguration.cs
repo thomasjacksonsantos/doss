@@ -13,6 +13,7 @@ public class ResidentialConfiguration : IEntityTypeConfiguration<Residential>
         builder.Property(p => p.Name).HasColumnType("varchar").HasMaxLength(600);
         builder.Property(p => p.Document).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.Photo).HasColumnType("text");
+        builder.Property(p => p.PhotoUrl).HasConversion<string>().HasColumnType("varchar").HasMaxLength(1000);
         builder.Property(p => p.Phone).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.UserStatus)
                 .HasColumnType("varchar")

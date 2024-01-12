@@ -12,9 +12,6 @@
     "AppSettings_WhatsApp_AuthToken": "c21c0c4ed706b1be40139be7094172fe",
     "AppSettings_WhatsApp_NumberPhone": "14155238886",
     "AppSettings_BlobStorage_BlobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=ageustorageaccount;AccountKey=+Vwt88CrYbOdLIsJry8LkjiB2kLOyZmP16vbjbNaZ1aZvKZGQCcx4FDfl959+tVPQRgdyQNofN5D+AStf0sTIg==;EndpointSuffix=core.windows.net",
-    "AppSettings_BlobStorage_ContainerName": "doss-image",
-    "AppSettings_ServiceBusTopicOrQueueName_UploadImage": "sbq-upload-image",
-    "AppSettings_ServiceBusTopicOrQueueName_UploadImageThumbnail": "sbq-upload-image-thumbnail",
-    "AppSettings_ServiceBusTopicOrQueueName_UploadAudio": "sbq-upload-audio"
+    "AppSettings_BlobStorage_ContainerName": "doss-image"
   }  
 }

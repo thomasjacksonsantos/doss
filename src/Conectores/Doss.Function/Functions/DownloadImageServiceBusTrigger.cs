@@ -34,8 +34,6 @@ namespace Doss.Function
                 response.WriteBytes(result.Data!.Files);
                 response.Headers.Add("Content-Type", "image/jpeg; charset=utf-8");
 
-                response.WriteString("Welcome to Azure Functions!");
-
                 return response;
             }
             catch (Exception ex)

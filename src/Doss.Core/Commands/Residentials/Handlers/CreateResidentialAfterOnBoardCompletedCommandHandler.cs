@@ -1,5 +1,6 @@
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
+using Doss.Core.Services;
 using FluentValidation;
 
 namespace Doss.Core.Commands.Residentials.Handlers;
@@ -8,12 +9,14 @@ public class CreateResidentialAfterOnBoardCompletedCommandHandler : BaseCommandH
 {
     private readonly IOnBoardResidentialRepository onBoardResidentialRepository;
     private readonly IResidentialRepository residentialRepository;
+    private readonly IBlobStorage blobStorage;
 
     public CreateResidentialAfterOnBoardCompletedCommandHandler(IResidentialRepository residentialRepository,
                                                        IOnBoardResidentialRepository onBoardResidentialRepository,
+                                                       IBlobStorage blobStorage,
                                                        CreateResidentialAfterOnBoardCompletedCommandValidator validator)
         : base(validator)
-            => (this.onBoardResidentialRepository, this.residentialRepository) = (onBoardResidentialRepository, residentialRepository);
+            => (this.onBoardResidentialRepository, this.residentialRepository, this.blobStorage) = (onBoardResidentialRepository, residentialRepository, blobStorage);
 
     public override async Task<Result> HandleImplementation(CreateResidentialAfterOnBoardCompletedCommand command)
     {
@@ -27,11 +30,19 @@ public class CreateResidentialAfterOnBoardCompletedCommandHandler : BaseCommandH
         if (residential.IsNotNull())
             return Results.Error("residential has already been registered.");
 
-        residential = new Doss.Core.Domain.Residentials.Residential(command.UserId, onboard.OnBoardUser.Name, onboard.OnBoardUser.TypeDocument, onboard.OnBoardUser.Document,
+        residential = new Domain.Residentials.Residential(command.UserId, onboard.OnBoardUser.Name, onboard.OnBoardUser.TypeDocument, onboard.OnBoardUser.Document,
                                                                     onboard.OnBoardUser.Phone, onboard.OnBoardUser.Phone, true);
 
-        residential.AddResidentialWithServiceProvider(new Doss.Core.Domain.Residentials.ResidentialWithServiceProvider(onboard.ServiceProviderPlanId!.Value, onboard.PlanId!.Value, onboard.Address!));
+        residential.AddResidentialWithServiceProvider(new Domain.Residentials.ResidentialWithServiceProvider(onboard.ServiceProviderPlanId!.Value, onboard.PlanId!.Value, onboard.Address!));
         await residentialRepository.AddAsync(residential, saveChanges: true);
+
+        var url = $"service-provider/image/{residential.Id}";
+
+        residential.ChangePhotoUrl(url);
+
+        await blobStorage.SendImage(onboard.OnBoardUser.Photo, url);
+        
+        await residentialRepository.SaveAsync();
 
         return Results.Ok("Residentia user created with success.");
     }
