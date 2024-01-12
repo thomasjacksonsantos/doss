@@ -101,15 +101,11 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
         => await Connection.ExecuteAsync(sql: "UPDATE Doss.ResidentialVerificationRequest Set [Status] = @VerificationStatus WHERE Id = @Id",
                                       param: new { Id = id, VerificationStatus = verificationStatus.ToString() });
 
-    public async Task<ResidentialVerificationRequest> ReturnVerificationRequestById(Guid id, bool withResidentialWithServiceProvider = false)
-    {
-        var queryable = Context.ResidentialVerificationRequest.Include(c => c.Messages);
-
-        if (withResidentialWithServiceProvider)
-            queryable.Include(c => c.ResidentialWithServiceProvider);
-
-        return await queryable.SingleOrDefaultAsync(c => c.Id == id) ?? null!;
-    }
+    public async Task<ResidentialVerificationRequest> ReturnVerificationRequestById(Guid id)
+        => await Context.ResidentialVerificationRequest
+                        .Include(c => c.Messages)
+                        .Include(c => c.ResidentialWithServiceProvider)
+                        .SingleOrDefaultAsync(c => c.Id == id) ?? null!;
 
     public async Task<ReturnChatQuery.Response> ReturnChatMessage(Guid residentialVerificationRequestId, int page, int total)
     {

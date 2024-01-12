@@ -13,7 +13,7 @@ public interface IResidentialRepository : IRepositoryBase<Residential>
     Task<ResidentialInfoQuery.Response> ReturnResidentialInfo(Guid id);
     Task<string> ReturnPhotoUrl(Guid id);
     Task<ServiceProviderVerificationRequestAllQuery.Response> ReturnVerificationAllByServiceProvider(Guid id, VerificationStatus status, int page, int total = 20);
-    Task<ResidentialVerificationRequest> ReturnVerificationRequestById(Guid id, bool withResidentialWithServiceProvider = false);
+    Task<ResidentialVerificationRequest> ReturnVerificationRequestById(Guid id);
     Task UpdateVerificationStatus(Guid id, VerificationStatus verificationStatus);
     Task<ReturnChatQuery.Response> ReturnChatMessage(Guid residentialVerificationRequestId, int page, int total = 20);
     Task<VerificationMessage> ReturnChatMessageById(Guid verificationMessageId);
