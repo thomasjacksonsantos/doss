@@ -76,9 +76,11 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
             page = (page - 1) * total;
 
         var verifications = await Context.ResidentialVerificationRequest
-                                     .Where(c => c.ResidentialWithServiceProvider.ServiceProviderPlan.ServiceProviderId == id
-                                                    && c.Status == status)
-                                     .Select(c => new ServiceProviderVerificationRequestAllQuery
+                                    .Include(c => c.ResidentialWithServiceProvider)
+                                    .ThenInclude(c => c.ServiceProviderPlan)
+                                    .ThenInclude(c => c.Address)
+                                    .Where(c => c.ResidentialWithServiceProvider.ServiceProviderPlan.ServiceProviderId == id && c.Status == status)
+                                    .Select(c => new ServiceProviderVerificationRequestAllQuery
                                                     .Verification(c.Id,
                                                                     c.Message,
                                                                     c.Created,
@@ -89,7 +91,9 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                                                                                 c.ResidentialWithServiceProvider.Address.City,
                                                                                 c.ResidentialWithServiceProvider.Address.Street,
                                                                                 c.ResidentialWithServiceProvider.Address.Number,
-                                                                                c.ResidentialWithServiceProvider.Address.ZipCode)))
+                                                                                c.ResidentialWithServiceProvider.Address.ZipCode,
+                                                                                c.ResidentialWithServiceProvider.Address.Latitude,
+                                                                                c.ResidentialWithServiceProvider.Address.Longitude)))
                                                                                 .Skip(page)
                                                                                 .Take(total)
                                                                                 .ToListAsync();

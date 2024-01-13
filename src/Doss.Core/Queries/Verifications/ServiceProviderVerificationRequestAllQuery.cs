@@ -41,7 +41,9 @@ public class ServiceProviderVerificationRequestAllQuery : Query<ServiceProviderV
         public string Street { get; set; }
         public int ZipCode { get; set; }
         public string Number { get; set; }
-        public Address(string state, string city, string street, string number, int zipcode)
-            => (State, City, Street, Number, ZipCode) = (state, city, street, number, zipcode);
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public Address(string state, string city, string street, string number, int zipcode, double latitude, double longitude)
+            => (State, City, Street, Number, ZipCode, Latitude, Longitude) = (state, city, street, number, zipcode, latitude, longitude);
     }
 }

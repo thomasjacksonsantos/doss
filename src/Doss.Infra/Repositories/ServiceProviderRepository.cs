@@ -41,7 +41,7 @@ public class ServiceProviderRepository : RepositoryBase<ServiceProvider>, IServi
         => await Connection.ExecuteAsync(@"Update Doss.ServiceProvider set UserStatus = @UserStatus
                                             WHERE
                                                 id = @Id",
-                                            param: new { Id = id, UserStatus = userStatus },
+                                            param: new { Id = id, UserStatus = userStatus.ToString() },
                                             commandType: System.Data.CommandType.Text);
 
     public async Task<ServiceProvider> ReturnVehicles(Guid serviceProviderId)
