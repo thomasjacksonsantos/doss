@@ -20,9 +20,9 @@ public class ReturnChatQueryHandler : IRequestHandler<ReturnChatQuery, Result<Re
         var response = await residentialRepository.ReturnChatMessage(query.ResidentialVerificationRequestId, query.Page, query.Total);
         var residentialVerification = await residentialRepository.ReturnVerificationRequestById(query.ResidentialVerificationRequestId);
 
-        var url = await residentialRepository.ReturnPhotoUrl(residentialVerification.ResidentialWithServiceProvider.ResidentialId);
+        var residential = await residentialRepository.ReturnResidentialInfo(residentialVerification.ResidentialWithServiceProvider.ResidentialId);
 
-        response.ChangePhotoUrl($"{appSettings.Files.DownloadImageUrl}/{url}");
+        response.ChangeResidential(new ReturnChatQuery.Residential(residential.Name, $"{appSettings.Files.DownloadImageUrl}/{residential.PhotoUrl}"));
 
         response.Chats.ForEach(c =>
         {

@@ -13,14 +13,22 @@ public class ReturnChatQuery : Query<ReturnChatQuery.Response>
     {
         public int Page { get; set; }
         public int Total { get; set; }
-        public string PhotoUrl { get; set; }
         public IEnumerable<Chat> Chats { get; set; }
 
+        public Residential Residential { get; set; }
         public Response(IEnumerable<Chat> chats, int page, int total)
             => (Chats, Page, Total) = (chats, page, total);
 
-        public void ChangePhotoUrl(string url)
-            => PhotoUrl = url;
+        public void ChangeResidential(Residential residential)
+            => Residential = residential;
+    }
+
+    public class Residential
+    {
+        public string Name { get; set; }
+        public string PhotoUrl { get; set; }
+        public Residential(string name, string photoUrl)
+            => (Name, PhotoUrl) = (name, photoUrl);
     }
 
     public class Chat
