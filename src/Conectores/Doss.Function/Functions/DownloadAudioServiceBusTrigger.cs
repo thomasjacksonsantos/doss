@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using NAudio.Wave;
 using Newtonsoft.Json;
 
 namespace Doss.Function
@@ -31,8 +32,9 @@ namespace Doss.Function
                 var result = await _mediator.Send(new DownloadFilesQuery(filename));
 
                 var response = req.CreateResponse(HttpStatusCode.OK);
-                response.WriteBytes(result.Data!.Files);
-                response.Headers.Add("Content-Type", "audio/mp3");
+                response.WriteBytes(ObterDadosDoAudio(result.Data!.Files));
+                // response.Headers.Add("Content-Disposition", "attachment; filename=audio.m4a");
+                response.Headers.Add("Content-Type", "audio/m4a");
 
                 return response;
             }
@@ -40,6 +42,23 @@ namespace Doss.Function
             {
                 _logger.LogError(JsonConvert.SerializeObject(ex));
                 throw;
+            }
+        }
+
+        private byte[] ObterDadosDoAudio(byte[] files)
+        {
+            // Implementar a lógica para obter ou gerar dados do áudio
+            // Por exemplo, você pode usar a biblioteca NAudio para gerar um áudio simples.
+            // Aqui está um exemplo básico para ilustrar:
+
+            using (var ms = new MemoryStream(files))
+            {
+                using (var writer = new WaveFileWriter(ms, new WaveFormat()))
+                {
+                    // Adicione dados de áudio aqui
+                    // Exemplo: writer.WriteSamples(seuAudioData, 0, seuAudioData.Length);
+                }
+                return ms.ToArray();
             }
         }
     }

@@ -161,5 +161,18 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
         [HttpGet("residential/{ResidentialWithServiceProviderId}/all")]
         public async Task<IActionResult> Get([FromRoute] ReturnVehiclesByResidentialIdQuery query)
             => await HandleQuery<ReturnVehiclesByResidentialIdQuery, ReturnVehiclesByResidentialIdQuery.Response>(query);
+
+        /// <summary>
+        /// Return vehicle by id.
+        /// </summary>
+        /// <param name="query">Quey</param>
+        /// <returns>Return all vehicle of service provider</returns>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result<OnBoardServiceProvider>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get([FromRoute] ReturnVehicleByIdQuery query)
+            => await HandleQuery<ReturnVehicleByIdQuery, ReturnVehicleByIdQuery.Response>(query);            
     }
 }
