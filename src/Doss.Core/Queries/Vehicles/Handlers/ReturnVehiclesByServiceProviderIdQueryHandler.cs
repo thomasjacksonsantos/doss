@@ -14,19 +14,19 @@ public class ReturnVehiclesByServiceProviderIdQueryHandler : IRequestHandler<Ret
     public async Task<Result<ReturnVehiclesByServiceProviderIdQuery.Response>> Handle(ReturnVehiclesByServiceProviderIdQuery query, CancellationToken cancellationToken)
     {
 
-        var vehicles = await serviceProviderVehicleRepository.ReturnAllAsync(c => c.ServiceProviderId == query.User!.Id, includeProperties: "Vehicle");
+        var vehicles = await serviceProviderVehicleRepository.ReturnAllVehicles(query.User!.Id, query.Page, query.Total);
 
         return Results.Ok(new ReturnVehiclesByServiceProviderIdQuery.Response(vehicles
                                                             .Select(c =>
-                                                                new ReturnVehiclesByServiceProviderIdQuery.Vehicle(c.Vehicle.Id,
-                                                                                                                    c.Vehicle.Brand,
-                                                                                                                    c.Vehicle.Model,
-                                                                                                                    c.Vehicle.Color,
-                                                                                                                    c.Vehicle.Plate,
-                                                                                                                    c.Vehicle.Photo,
-                                                                                                                    c.Vehicle.DefaultVehicle,
-                                                                                                                    c.Vehicle.VehicleType,
-                                                                                                                    c.Vehicle.Created,
-                                                                                                                    c.Vehicle.Updated))));
+                                                                new ReturnVehiclesByServiceProviderIdQuery.Vehicle(c.Id,
+                                                                                                                    c.Brand,
+                                                                                                                    c.Model,
+                                                                                                                    c.Color,
+                                                                                                                    c.Plate,
+                                                                                                                    c.Photo,
+                                                                                                                    c.DefaultVehicle,
+                                                                                                                    c.VehicleType,
+                                                                                                                    c.Created,
+                                                                                                                    c.Updated))));
     }
 }

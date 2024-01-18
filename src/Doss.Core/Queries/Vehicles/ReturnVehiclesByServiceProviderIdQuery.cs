@@ -5,8 +5,12 @@ namespace Doss.Core.Queries.Vehicles;
 
 public class ReturnVehiclesByServiceProviderIdQuery : Query<ReturnVehiclesByServiceProviderIdQuery.Response>
 {
+    public int Page { get; set; }
+    public int Total { get; set; }
+    
     public class Response
     {
+
         public IEnumerable<Vehicle> Vehicles { get; set; }
         public Response(IEnumerable<Vehicle> vehicles)
              => Vehicles = vehicles;

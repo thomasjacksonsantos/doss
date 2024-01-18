@@ -146,7 +146,7 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
         [ProducesResponseType(typeof(Result<OnBoardServiceProvider>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
         [HttpGet("service-provider/all")]
-        public async Task<IActionResult> Get([FromRoute] ReturnVehiclesByServiceProviderIdQuery query)
+        public async Task<IActionResult> Get([FromQuery] ReturnVehiclesByServiceProviderIdQuery query)
             => await HandleQuery<ReturnVehiclesByServiceProviderIdQuery, ReturnVehiclesByServiceProviderIdQuery.Response>(query);
 
         /// <summary>
