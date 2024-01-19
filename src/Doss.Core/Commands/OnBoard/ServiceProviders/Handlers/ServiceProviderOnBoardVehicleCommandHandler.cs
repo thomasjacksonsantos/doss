@@ -22,16 +22,14 @@ public class ServiceProviderOnBoardVehicleCommandHandler : BaseCommandHandler<Se
         serviceProviderOnBoard.ChangeStep(OnBoardStepEnum.Vehicle);
 
         if (serviceProviderOnBoard.Vehicle is not { })
-            serviceProviderOnBoard.AddVehicle(new OnBoardVehicle(command.Brand, command.Model, command.Color, command.Plate, command.Photo, command.DefaultVehicle, command.VehicleType));
+            serviceProviderOnBoard.AddVehicle(new OnBoardVehicle(command.ModelVehicleId, command.Color, command.Plate, command.Photo, command.DefaultVehicle));
         else
         {
-            serviceProviderOnBoard.Vehicle.ChangeBrand(command.Brand);
-            serviceProviderOnBoard.Vehicle.ChangeModel(command.Model);
+            serviceProviderOnBoard.Vehicle.ChangeModelVehicle(command.ModelVehicleId);
             serviceProviderOnBoard.Vehicle.ChangeColor(command.Color);
             serviceProviderOnBoard.Vehicle.ChangePlate(command.Plate);
             serviceProviderOnBoard.Vehicle.ChangePhoto(command.Photo);
             serviceProviderOnBoard.Vehicle.ChangeDefaultVehicle(command.DefaultVehicle);
-            serviceProviderOnBoard.Vehicle.ChangeVehicleType(command.VehicleType);
         }
 
         await onBoardServiceProviderRepository.SaveAsync();
@@ -44,12 +42,10 @@ public sealed class ServiceProviderOnBoardVehicleCommandValidator : AbstractVali
 {
     public ServiceProviderOnBoardVehicleCommandValidator()
     {
-        RuleFor(c => c.Brand).NotEmpty();
-        RuleFor(c => c.Model).NotEmpty();
+        RuleFor(c => c.ModelVehicleId).NotEmpty();
         RuleFor(c => c.Color).NotEmpty();
         RuleFor(c => c.Plate).NotEmpty();
         RuleFor(c => c.Photo).NotEmpty();
         RuleFor(c => c.DefaultVehicle).NotEmpty();
-        RuleFor(c => c.VehicleType).NotEmpty();
     }
 }

@@ -5,6 +5,7 @@ using Doss.Core.Domain.Residentials;
 using Doss.Core.Domain.ServiceProviders;
 using Doss.Core.Domain.Vehicles;
 using Doss.Infra.Data.Configuration;
+using Doss.Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Doss.Infra.Data
@@ -38,7 +39,10 @@ namespace Doss.Infra.Data
             modelBuilder.ApplyConfiguration(new ResidentialVerificationRequestConfiguration());
             modelBuilder.ApplyConfiguration(new VerificationMessageConfiguration());
             modelBuilder.ApplyConfiguration(new UsefulContactConfiguration());
-            
+            modelBuilder.ApplyConfiguration(new BrandVehicleConfiguration());
+            modelBuilder.ApplyConfiguration(new ModelVehicleConfiguration());
+            modelBuilder.ApplyConfiguration(new TypeVehicleConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -82,7 +86,7 @@ namespace Doss.Infra.Data
             => Set<ResidentialVerificationRequest>();
 
         public DbSet<VerificationMessage> VerificationMessage
-            => Set<VerificationMessage>();            
+            => Set<VerificationMessage>();
 
         public DbSet<Plan> Plan
             => Set<Plan>();
@@ -98,5 +102,14 @@ namespace Doss.Infra.Data
 
         public DbSet<UsefulContact> UsefulContact
             => Set<UsefulContact>();
+
+        public DbSet<TypeVehicle> TypeVehicle
+            => Set<TypeVehicle>();
+            
+        public DbSet<BrandVehicle> BrandVehicle
+            => Set<BrandVehicle>();
+
+        public DbSet<ModelVehicle> ModelVehicle
+            => Set<ModelVehicle>();
     }
 }

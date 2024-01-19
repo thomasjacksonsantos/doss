@@ -1,4 +1,5 @@
 using Doss.Core.Domain.Enums;
+using Doss.Core.Domain.Vehicles;
 using Doss.Core.Seedwork;
 
 namespace Doss.Core.Queries.Residentials;
@@ -18,15 +19,15 @@ public class ResidentialDetailsByServiceProviderIdQuery : Query<ResidentialDetai
 
     public class Vehicle
     {
-        public string Brand { get; set; }
-        public string Model { get; set; }
+        public Guid TypeVehicleId { get; set; }
+        public Guid BrandVehicleId { get; set; }
+        public Guid ModelVehicleId { get; set; }
         public string Color { get; set; }
         public string Plate { get; set; }
         public string Photo { get; set; }
-        public VehicleType VehicleType { get; set; }
 
-        public Vehicle(string brand, string model, string color, string plate, string photo, VehicleType vehicleType)
-            => (Brand, Model, Color, Plate, Photo, VehicleType) = (brand, model, color, plate, photo, vehicleType);
+        public Vehicle(Guid typeVehicleId, Guid brandVehicleId, Guid modelVehicleId, string color, string plate, string photo)
+            => (TypeVehicleId, BrandVehicleId, ModelVehicleId, Color, Plate, Photo) = (typeVehicleId, brandVehicleId, modelVehicleId, color, plate, photo);
     }
 
     public class Address

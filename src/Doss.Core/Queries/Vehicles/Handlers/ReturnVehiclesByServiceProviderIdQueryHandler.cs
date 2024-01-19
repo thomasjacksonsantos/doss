@@ -19,13 +19,13 @@ public class ReturnVehiclesByServiceProviderIdQueryHandler : IRequestHandler<Ret
         return Results.Ok(new ReturnVehiclesByServiceProviderIdQuery.Response(vehicles
                                                             .Select(c =>
                                                                 new ReturnVehiclesByServiceProviderIdQuery.Vehicle(c.Id,
-                                                                                                                    c.Brand,
-                                                                                                                    c.Model,
+                                                                                                                    c.ModelVehicle.BrandVehicle.TypeVehicleId,
+                                                                                                                    c.ModelVehicle.BrandVehicleId,
+                                                                                                                    c.ModelVehicleId,
                                                                                                                     c.Color,
                                                                                                                     c.Plate,
                                                                                                                     c.Photo,
                                                                                                                     c.DefaultVehicle,
-                                                                                                                    c.VehicleType,
                                                                                                                     c.Created,
                                                                                                                     c.Updated))));
     }

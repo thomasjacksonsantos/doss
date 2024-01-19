@@ -62,6 +62,9 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                     .Include(c => c.ResidentialWithServiceProviders)
                     .ThenInclude(c => c.ResidentialVehicles)!
                     .ThenInclude(c => c.Vehicle)
+                    .ThenInclude(c => c.ModelVehicle)
+                    .ThenInclude(c => c.BrandVehicle)
+                    .ThenInclude(c => c.TypeVehicle)
                     .Include(c => c.ResidentialWithServiceProviders)
                     .ThenInclude(c => c.ServiceProviderPlan)
                     .Where(c => c.Id == id && c.ResidentialWithServiceProviders.Select(c => c.Id).Contains(residentialWithServiceProviderId))
@@ -186,6 +189,9 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                                 .Include(c => c.ResidentialWithServiceProviders)
                                 .ThenInclude(c => c.ResidentialVehicles)!
                                 .ThenInclude(c => c.Vehicle)
+                                .ThenInclude(c => c.ModelVehicle)
+                                .ThenInclude(c => c.BrandVehicle)
+                                .ThenInclude(c => c.TypeVehicle)
                                 .Include(c => c.ResidentialWithServiceProviders)
                                 .ThenInclude(c => c.Address)
                                 .Where(c => c.ResidentialWithServiceProviders
@@ -203,12 +209,12 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                                                                                                                                          residentialWithServiceProvider.Address.Number,
                                                                                                                                          residentialWithServiceProvider.Address.ZipCode,
                                                                                                                                          residentialWithServiceProvider.Address.Complement),
-                                                                                  new ResidentialDetailsByServiceProviderIdQuery.Vehicle(residentialWithServiceProvider.VehicleDefault.Brand,
-                                                                                                                                         residentialWithServiceProvider.VehicleDefault.Model,
+                                                                                  new ResidentialDetailsByServiceProviderIdQuery.Vehicle(residentialWithServiceProvider.VehicleDefault.ModelVehicle.BrandVehicle.TypeVehicleId,
+                                                                                                                                         residentialWithServiceProvider.VehicleDefault.ModelVehicle.BrandVehicleId,
+                                                                                                                                         residentialWithServiceProvider.VehicleDefault.ModelVehicleId,
                                                                                                                                          residentialWithServiceProvider.VehicleDefault.Color,
                                                                                                                                          residentialWithServiceProvider.VehicleDefault.Plate,
-                                                                                                                                         residentialWithServiceProvider.VehicleDefault.Photo,
-                                                                                                                                         residentialWithServiceProvider.VehicleDefault.VehicleType));
+                                                                                                                                         residentialWithServiceProvider.VehicleDefault.Photo));
     }
 
     public async Task<ActiveResidentialQuery.Response> ReturnTotalActive(Guid serviceProviderId)

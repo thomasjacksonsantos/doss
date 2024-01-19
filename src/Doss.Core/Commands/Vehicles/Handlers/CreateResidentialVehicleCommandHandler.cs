@@ -21,13 +21,11 @@ public class CreateResidentialVehicleCommandHandler : BaseCommandHandler<CreateR
 
         var residentialWithServiceProvider = residential.ReturnResidentialWithServiceProvider(command.ResidentialWithServiceProviderId);
 
-        var vehicle = new Vehicle(command.Brand,
-                                  command.Model,
+        var vehicle = new Vehicle(command.ModelVehicleId,
                                   command.Color,
                                   command.Plate,
                                   command.Photo,
-                                  command.DefaultVehicle,
-                                  command.VehicleType);
+                                  command.DefaultVehicle);
 
         residentialWithServiceProvider.AddVehicle(new ResidentialVehicle(command.ResidentialWithServiceProviderId,
                                                     vehicle));
@@ -45,12 +43,10 @@ public sealed class CreateResidentialVehicleCommandValidator : AbstractValidator
 {
     public CreateResidentialVehicleCommandValidator()
     {
-        RuleFor(c => c.Brand).NotEmpty();
-        RuleFor(c => c.Model).NotEmpty();
+        RuleFor(c => c.ModelVehicleId).NotEmpty();
         RuleFor(c => c.Color).NotEmpty();
         RuleFor(c => c.Plate).NotEmpty();
         RuleFor(c => c.Photo).NotEmpty();
         RuleFor(c => c.DefaultVehicle).NotEmpty();
-        RuleFor(c => c.VehicleType).NotEmpty();
     }
 }
