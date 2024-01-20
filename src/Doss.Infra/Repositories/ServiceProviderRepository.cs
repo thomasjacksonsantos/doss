@@ -5,7 +5,6 @@ using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.ServiceProviders;
 using Doss.Core.Domain.Enums;
 using Dapper;
-using Doss.Core.Queries.Contacts;
 
 namespace Doss.Infra.Repositories;
 
