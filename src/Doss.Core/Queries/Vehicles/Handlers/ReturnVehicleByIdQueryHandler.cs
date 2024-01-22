@@ -17,13 +17,13 @@ public class ReturnVehicleByIdQueryHandler : IRequestHandler<ReturnVehicleByIdQu
         var vehicle = await vehicleRepository.ReturnByIdAsync(query.Id);
 
         return Results.Ok(new ReturnVehicleByIdQuery.Response(new ReturnVehicleByIdQuery.Vehicle(vehicle.Id,
-                                                                                                    vehicle.ModelVehicle.BrandVehicle.TypeVehicleId,
-                                                                                                    vehicle.ModelVehicle.BrandVehicleId,
-                                                                                                    vehicle.ModelVehicleId,
+                                                                                                    vehicle.Brand,
+                                                                                                    vehicle.Model,
                                                                                                     vehicle.Color,
                                                                                                     vehicle.Plate,
                                                                                                     vehicle.Photo,
                                                                                                     vehicle.DefaultVehicle,
+                                                                                                    vehicle.VehicleType,
                                                                                                     vehicle.Created,
                                                                                                     vehicle.Updated)));
     }

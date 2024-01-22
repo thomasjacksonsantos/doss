@@ -24,11 +24,13 @@ public class UpdateResidentialVehicleCommandHandler : BaseCommandHandler<UpdateR
         if (vehicle.DefaultVehicle)
             residentialWithService.ResetDefaultVehicles();
 
-        vehicle.ChangeModelVehicle(command.ModelVehicleId);
+        vehicle.ChangeBrand(command.Brand);
+        vehicle.ChangeModel(command.Model);
         vehicle.ChangeColor(command.Color);
         vehicle.ChangePlate(command.Plate);
         vehicle.ChangePhoto(command.Photo);
         vehicle.ChangeDefaultVehicle(command.DefaultVehicle);
+        vehicle.ChangeVehicleType(command.VehicleType);
         vehicle.ChangeDate(DateTime.Now);
 
         await residentialRepository.SaveAsync();
@@ -42,7 +44,8 @@ public sealed class UpdateResidentialVehicleCommandValidator : AbstractValidator
     public UpdateResidentialVehicleCommandValidator()
     {
         RuleFor(c => c.Id).NotEmpty();
-        RuleFor(c => c.ModelVehicleId).NotEmpty();
+        RuleFor(c => c.Brand).NotEmpty();
+        RuleFor(c => c.Model).NotEmpty();
         RuleFor(c => c.Color).NotEmpty();
         RuleFor(c => c.Plate).NotEmpty();
         RuleFor(c => c.Photo).NotEmpty();

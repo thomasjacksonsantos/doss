@@ -24,9 +24,6 @@ public class ServiceProviderVehicleRepository : RepositoryBase<ServiceProviderVe
         return await Context
                     .ServiceProviderVehicle
                     .Include(c => c.Vehicle)
-                    .ThenInclude(c => c.ModelVehicle)
-                    .ThenInclude(c => c.BrandVehicle)
-                    .ThenInclude(c => c.TypeVehicle)
                     .Where(c => c.ServiceProviderId == serviceProviderId)
                 .Skip(page)
                 .Take(total)

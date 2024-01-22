@@ -24,11 +24,13 @@ public class UpdateServiceProviderVehicleCommandHandler : BaseCommandHandler<Upd
         if (command.DefaultVehicle)
             serviceProvider.ResetDefaultVehicles();
 
-        vehicle.ChangeModelVehicle(command.ModelVehicleId);
+        vehicle.ChangeBrand(command.Brand);
+        vehicle.ChangeModel(command.Model);
         vehicle.ChangeColor(command.Color);
         vehicle.ChangePlate(command.Plate);
         vehicle.ChangePhoto(command.Photo);
         vehicle.ChangeDefaultVehicle(command.DefaultVehicle);
+        vehicle.ChangeVehicleType(command.VehicleType);
         vehicle.ChangeDate(DateTime.Now);
 
         await serviceProviderRepository.SaveAsync();
@@ -42,10 +44,12 @@ public sealed class UpdateServiceProviderVehicleCommandValidator : AbstractValid
     public UpdateServiceProviderVehicleCommandValidator()
     {
         RuleFor(c => c.Id).NotEmpty();
-        RuleFor(c => c.ModelVehicleId).NotEmpty();
+        RuleFor(c => c.Brand).NotEmpty();
+        RuleFor(c => c.Model).NotEmpty();
         RuleFor(c => c.Color).NotEmpty();
         RuleFor(c => c.Plate).NotEmpty();
         RuleFor(c => c.Photo).NotEmpty();
         RuleFor(c => c.DefaultVehicle).NotEmpty();
+        RuleFor(c => c.VehicleType).NotEmpty();
     }
 }

@@ -6,10 +6,12 @@ namespace Doss.Core.Commands.Vehicles
     public class CreateResidentialVehicleCommand : Command
     {
         public Guid ResidentialWithServiceProviderId { get; set; }
-        public Guid ModelVehicleId { get; set; }
+        public string Brand { get; set; } = string.Empty;
+        public string Model { get; set; } = string.Empty;
         public string Color { get; set; } = string.Empty;
         public string Plate { get; set; } = string.Empty;
         public string Photo { get; set; } = string.Empty;
         public bool DefaultVehicle { get; set; }
+        public VehicleType VehicleType { get; set; }
     }
 }

@@ -17,11 +17,13 @@ public class CreateServiceProviderVehicleCommandHandler : BaseCommandHandler<Cre
     {
         var serviceProvider = await serviceProviderRepository.ReturnByIdAsync(command.User!.Id);
 
-        serviceProvider.AddVehicle(new ServiceProviderVehicle(new Vehicle(command.ModelVehicleId,
+                serviceProvider.AddVehicle(new ServiceProviderVehicle(new Vehicle(command.Brand,
+                                                                          command.Model,
                                                                           command.Color,
                                                                           command.Plate,
                                                                           command.Photo,
-                                                                          command.DefaultVehicle)));
+                                                                          command.DefaultVehicle,
+                                                                          command.VehicleType)));
 
         await serviceProviderRepository.SaveAsync();
 
@@ -33,10 +35,12 @@ public sealed class CreateServiceProviderVehicleCommandValidator : AbstractValid
 {
     public CreateServiceProviderVehicleCommandValidator()
     {
-        RuleFor(c => c.ModelVehicleId).NotEmpty();
+        RuleFor(c => c.Brand).NotEmpty();
+        RuleFor(c => c.Model).NotEmpty();
         RuleFor(c => c.Color).NotEmpty();
         RuleFor(c => c.Plate).NotEmpty();
         RuleFor(c => c.Photo).NotEmpty();
         RuleFor(c => c.DefaultVehicle).NotEmpty();
+        RuleFor(c => c.VehicleType).NotEmpty();
     }
 }

@@ -39,9 +39,6 @@ namespace Doss.Infra.Data
             modelBuilder.ApplyConfiguration(new ResidentialVerificationRequestConfiguration());
             modelBuilder.ApplyConfiguration(new VerificationMessageConfiguration());
             modelBuilder.ApplyConfiguration(new UsefulContactConfiguration());
-            modelBuilder.ApplyConfiguration(new BrandVehicleConfiguration());
-            modelBuilder.ApplyConfiguration(new ModelVehicleConfiguration());
-            modelBuilder.ApplyConfiguration(new TypeVehicleConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -102,14 +99,5 @@ namespace Doss.Infra.Data
 
         public DbSet<UsefulContact> UsefulContact
             => Set<UsefulContact>();
-
-        public DbSet<TypeVehicle> TypeVehicle
-            => Set<TypeVehicle>();
-            
-        public DbSet<BrandVehicle> BrandVehicle
-            => Set<BrandVehicle>();
-
-        public DbSet<ModelVehicle> ModelVehicle
-            => Set<ModelVehicle>();
     }
 }

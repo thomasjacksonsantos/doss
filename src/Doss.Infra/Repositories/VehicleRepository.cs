@@ -14,10 +14,5 @@ public class VehicleRepository : RepositoryBase<Vehicle>, IVehicleRepository
     }
 
     public override async Task<Vehicle> ReturnByIdAsync(Guid id)
-        => await Context
-                    .Vehicle
-                    .Include(c => c.ModelVehicle)
-                    .ThenInclude(c => c.BrandVehicle)
-                    .ThenInclude(c => c.TypeVehicle)
-                    .SingleAsync(c => c.Id == id);
+        => await Context.Vehicle.SingleAsync(c => c.Id == id);
 }

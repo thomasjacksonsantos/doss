@@ -20,13 +20,13 @@ public class ReturnVehiclesByResidentialIdQueryHandler : IRequestHandler<ReturnV
         return Results.Ok(new ReturnVehiclesByResidentialIdQuery.Response(residentialWithServiceProvider.ResidentialVehicles!
                                                             .Select(c =>
                                                                 new ReturnVehiclesByResidentialIdQuery.Vehicle(c.Vehicle.Id,
-                                                                                                                    c.Vehicle.ModelVehicle.BrandVehicle.TypeVehicleId,
-                                                                                                                    c.Vehicle.ModelVehicle.BrandVehicleId,
-                                                                                                                    c.Vehicle.ModelVehicleId,
+                                                                                                                    c.Vehicle.Brand,
+                                                                                                                    c.Vehicle.Model,
                                                                                                                     c.Vehicle.Color,
                                                                                                                     c.Vehicle.Plate,
                                                                                                                     c.Vehicle.Photo,
                                                                                                                     c.Vehicle.DefaultVehicle,
+                                                                                                                    c.Vehicle.VehicleType,
                                                                                                                     c.Vehicle.Created,
                                                                                                                     c.Vehicle.Updated))));
     }
