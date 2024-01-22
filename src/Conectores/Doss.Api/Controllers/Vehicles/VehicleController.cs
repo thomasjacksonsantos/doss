@@ -137,6 +137,52 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
             => await HandleCommand(command);
 
         /// <summary>
+        /// Update default vehicle.
+        /// </summary>
+        /// <param name="command">Body</param>
+        /// <returns>Result</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /Todo
+        ///     {
+        ///         "vehicleId": Guid,
+        ///         "defaultVehicle": bool
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpPut("{vehicleId}/default/{defaultVehicle}")]
+        public async Task<IActionResult> Put([FromRoute] UpdateDefaultVehicleCommand command)
+            => await HandleCommand(command);
+
+        /// <summary>
+        /// Update vehicle of service provider.
+        /// </summary>
+        /// <param name="command">Body</param>
+        /// <returns>Result</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /Todo
+        ///     {
+        ///         "vehicleId": Guid,
+        ///         "vehicleStatus": Aticve / Inactive
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpPut("{vehicleId}/status/{vehicleStatus}")]
+        public async Task<IActionResult> Put([FromRoute] UpdateStatusVehicleCommand command)
+            => await HandleCommand(command);            
+
+        /// <summary>
         /// Return list vehicles service provider.
         /// </summary>
         /// <param name="query">Quey</param>

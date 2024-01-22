@@ -26,6 +26,7 @@ public class ReturnVehiclesByServiceProviderIdQueryHandler : IRequestHandler<Ret
                                                                                                                     c.Photo,
                                                                                                                     c.DefaultVehicle,
                                                                                                                     c.VehicleType,
+                                                                                                                    c.VehicleStatus,
                                                                                                                     c.Created,
                                                                                                                     c.Updated))));
     }

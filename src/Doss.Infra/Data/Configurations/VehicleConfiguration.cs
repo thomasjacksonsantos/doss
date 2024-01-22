@@ -16,5 +16,7 @@ public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
         builder.Property(p => p.Plate).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.VehicleType).HasConversion<string>();
         builder.Property(p => p.VehicleType).HasColumnType("varchar").HasMaxLength(20);
+        builder.Property(p => p.VehicleStatus).HasConversion<string>();
+        builder.Property(p => p.VehicleStatus).HasColumnType("varchar").HasMaxLength(20);
     }
 }
