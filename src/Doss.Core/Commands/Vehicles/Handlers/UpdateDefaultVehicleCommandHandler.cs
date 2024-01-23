@@ -24,6 +24,5 @@ public sealed class UpdateDefaultVehicleCommandValidator : AbstractValidator<Upd
     public UpdateDefaultVehicleCommandValidator()
     {
         RuleFor(c => c.VehicleId).NotEmpty();
-        RuleFor(c => c.DefaultVehicle).NotEmpty();
     }
 }
