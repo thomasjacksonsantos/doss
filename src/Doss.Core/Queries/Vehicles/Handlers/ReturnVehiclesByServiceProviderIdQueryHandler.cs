@@ -14,7 +14,7 @@ public class ReturnVehiclesByServiceProviderIdQueryHandler : IRequestHandler<Ret
     public async Task<Result<ReturnVehiclesByServiceProviderIdQuery.Response>> Handle(ReturnVehiclesByServiceProviderIdQuery query, CancellationToken cancellationToken)
     {
 
-        var vehicles = await serviceProviderVehicleRepository.ReturnAllVehicles(query.User!.Id, query.Page, query.Total);
+        var vehicles = await serviceProviderVehicleRepository.ReturnVehiclesByStatus(query.User!.Id, Domain.Enums.VehicleStatus.Active, query.Page, query.Total);
 
         return Results.Ok(new ReturnVehiclesByServiceProviderIdQuery.Response(vehicles
                                                             .Select(c =>
