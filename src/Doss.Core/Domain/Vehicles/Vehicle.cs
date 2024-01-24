@@ -19,8 +19,8 @@ public class Vehicle
     public DateTime? Updated { get; set; }
 
     public Vehicle(string brand, string model, string color, string plate, string photo, bool defaultVehicle, VehicleType vehicleType)
-        => (Brand, Model, Color, Plate, Photo, DefaultVehicle, VehicleType, VehicleStatus, Created)
-            = (brand, model, color, plate, photo, defaultVehicle, vehicleType, VehicleStatus.Active, DateTime.Now);
+        => (Brand, Model, Color, Plate, Photo, PhotoUrl, DefaultVehicle, VehicleType, VehicleStatus, Created)
+            = (brand, model, color, plate, photo, string.Empty, defaultVehicle, vehicleType, VehicleStatus.Active, DateTime.Now);
 
     public void ChangeDate(DateTime datetime)
         => Updated = datetime;
