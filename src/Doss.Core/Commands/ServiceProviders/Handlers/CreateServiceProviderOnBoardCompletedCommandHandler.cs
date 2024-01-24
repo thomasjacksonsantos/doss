@@ -35,19 +35,22 @@ public class CreateServiceProviderOnBoardCompletedCommandHandler : BaseCommandHa
             return Results.Error("service provider has already been registered.");
 
         serviceProvider = new ServiceProvider(command.UserId, onboard.OnBoardUser.Name, onboard.OnBoardUser.TypeDocument, onboard.OnBoardUser.Document, onboard.OnBoardUser.Phone, onboard.OnBoardUser.Photo, true);
-        serviceProvider.AddVehicle(new Doss.Core.Domain.Vehicles.ServiceProviderVehicle(onboard.Vehicle!));
+        serviceProvider.AddVehicle(new Domain.Vehicles.ServiceProviderVehicle(onboard.Vehicle!));
         var bank = await bankRepository.ReturnByIdAsync(onboard.BankId!.Value);
         serviceProvider.AddServiceProviderPlan(new ServiceProviderPlan(onboard.AccountBank, onboard.AgencyBank, onboard.CoverageArea, onboard.Address!, bank, onboard.Plans!.Select(c => (Plan)c).ToList()!));
-        serviceProvider.ChangeUserStatus(Doss.Core.Domain.Enums.UserStatus.Active);
+        serviceProvider.ChangeUserStatus(Domain.Enums.UserStatus.Active);
 
         await serviceProviderRepository.AddAsync(serviceProvider);
         await serviceProviderRepository.SaveAsync();
 
         var url = $"service-provider/image/{serviceProvider.Id}";
+        var urlVehicle = $"vehicle/image/{serviceProvider.ServiceProviderVehicles!.First().Vehicle.Id}";
 
         serviceProvider.ChangePhotoUrl(url);
+        serviceProvider.ServiceProviderVehicles!.First().Vehicle.ChangePhotoUrl(urlVehicle);
 
         await blobStorage.SendImage(onboard.OnBoardUser.Photo, url);
+        await blobStorage.SendImage(onboard.Vehicle!.Photo, urlVehicle);
 
         await serviceProviderRepository.SaveAsync();
 

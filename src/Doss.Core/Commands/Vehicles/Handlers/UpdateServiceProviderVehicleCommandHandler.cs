@@ -28,10 +28,10 @@ public class UpdateServiceProviderVehicleCommandHandler : BaseCommandHandler<Upd
         if (command.DefaultVehicle)
             serviceProvider.ResetDefaultVehicles();
 
-        vehicle.ChangeBrand(command.Brand);
-        vehicle.ChangeModel(command.Model);
-        vehicle.ChangeColor(command.Color);
-        vehicle.ChangePlate(command.Plate);
+        vehicle.ChangeBrand(command.Brand.FirstCharToUpper());
+        vehicle.ChangeModel(command.Model.FirstCharToUpper());
+        vehicle.ChangeColor(command.Color.FirstCharToUpper());
+        vehicle.ChangePlate(command.Plate.ToUpper());
         vehicle.ChangeDefaultVehicle(command.DefaultVehicle);
         vehicle.ChangeVehicleType(command.VehicleType);
         vehicle.ChangeDate(DateTime.Now);

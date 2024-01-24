@@ -21,10 +21,10 @@ public class CreateResidentialVehicleCommandHandler : BaseCommandHandler<CreateR
 
         var residentialWithServiceProvider = residential.ReturnResidentialWithServiceProvider(command.ResidentialWithServiceProviderId);
 
-        var vehicle = new Vehicle(command.Brand,
-                                  command.Model,
-                                  command.Color,
-                                  command.Plate,
+        var vehicle = new Vehicle(command.Brand.FirstCharToUpper(),
+                                  command.Model.FirstCharToUpper(),
+                                  command.Color.FirstCharToUpper(),
+                                  command.Plate.ToUpper(),
                                   command.Photo,
                                   command.DefaultVehicle,
                                   command.VehicleType);
