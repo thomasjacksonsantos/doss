@@ -20,10 +20,10 @@ public class CreateServiceProviderVehicleCommandHandler : BaseCommandHandler<Cre
     {
         var serviceProvider = await serviceProviderRepository.ReturnByIdAsync(command.User!.Id);
 
-        var vehicle = new Vehicle(command.Brand,
-                                  command.Model,
-                                  command.Color,
-                                  command.Plate,
+        var vehicle = new Vehicle(command.Brand.FirstCharToUpper(),
+                                  command.Model.FirstCharToUpper(),
+                                  command.Color.FirstCharToUpper(),
+                                  command.Plate.ToUpper(),
                                   command.Photo,
                                   command.DefaultVehicle,
                                   command.VehicleType);
