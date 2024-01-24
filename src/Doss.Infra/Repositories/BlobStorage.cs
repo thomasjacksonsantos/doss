@@ -27,6 +27,8 @@ public class BlobStorage : IBlobStorage
         var client = new BlobServiceClient(appSettings.BlobStorage.BlobStorageConnectionString);
         var container = client.GetBlobContainerClient(appSettings.BlobStorage.ContainerName);
 
+        await container.DeleteBlobIfExistsAsync(filename);
+        
         using (var ms = new MemoryStream(Convert.FromBase64String(fileBase64)))
             await container.UploadBlobAsync(filename, ms);
     }
