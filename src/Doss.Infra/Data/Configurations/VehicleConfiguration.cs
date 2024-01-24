@@ -12,6 +12,7 @@ public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
         builder.Property(p => p.Brand).HasColumnType("varchar").HasMaxLength(200);
         builder.Property(p => p.Color).HasColumnType("varchar").HasMaxLength(50);
         builder.Property(p => p.Photo).HasColumnType("text");
+        builder.Property(p => p.PhotoUrl).HasConversion<string>().HasColumnType("varchar").HasMaxLength(1000);
         builder.Property(p => p.Model).HasColumnType("varchar").HasMaxLength(50);
         builder.Property(p => p.Plate).HasColumnType("varchar").HasMaxLength(20);
         builder.Property(p => p.VehicleType).HasConversion<string>();

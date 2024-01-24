@@ -11,6 +11,7 @@ public class Vehicle
     public string Color { get; set; }
     public string Plate { get; set; }
     public string Photo { get; set; }
+    public string PhotoUrl { get; set; }
     public bool DefaultVehicle { get; set; }
     public VehicleType VehicleType { get; set; }
     public VehicleStatus VehicleStatus { get; set; }
@@ -43,6 +44,9 @@ public class Vehicle
 
     public void ChangePlate(string plate)
         => Plate = plate;
+
+    public void ChangePhotoUrl(string url)
+        => PhotoUrl = url;
 
     public static implicit operator Vehicle(OnBoardVehicle vehicle)
       => new Vehicle(vehicle.Brand, vehicle.Model, vehicle.Color, vehicle.Plate, vehicle.Photo, vehicle.DefaultVehicle, vehicle.VehicleType);

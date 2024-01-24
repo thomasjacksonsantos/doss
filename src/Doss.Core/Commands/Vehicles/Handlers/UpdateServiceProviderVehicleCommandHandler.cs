@@ -1,5 +1,6 @@
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
+using Doss.Core.Services;
 using FluentValidation;
 
 namespace Doss.Core.Commands.Vehicles.Handlers;
@@ -7,10 +8,13 @@ namespace Doss.Core.Commands.Vehicles.Handlers;
 public class UpdateServiceProviderVehicleCommandHandler : BaseCommandHandler<UpdateServiceProviderVehicleCommand, UpdateServiceProviderVehicleCommandValidator>
 {
     private readonly IServiceProviderRepository serviceProviderRepository;
+    private readonly IBlobStorage blobStorage;
+
     public UpdateServiceProviderVehicleCommandHandler(IServiceProviderRepository serviceProviderRepository,
-                                         UpdateServiceProviderVehicleCommandValidator validator)
+                                                      IBlobStorage blobStorage,
+                                                      UpdateServiceProviderVehicleCommandValidator validator)
         : base(validator)
-            => this.serviceProviderRepository = serviceProviderRepository;
+            => (this.serviceProviderRepository, this.blobStorage) = (serviceProviderRepository, blobStorage);
 
     public override async Task<Result> HandleImplementation(UpdateServiceProviderVehicleCommand command)
     {
@@ -28,10 +32,17 @@ public class UpdateServiceProviderVehicleCommandHandler : BaseCommandHandler<Upd
         vehicle.ChangeModel(command.Model);
         vehicle.ChangeColor(command.Color);
         vehicle.ChangePlate(command.Plate);
-        vehicle.ChangePhoto(command.Photo);
         vehicle.ChangeDefaultVehicle(command.DefaultVehicle);
         vehicle.ChangeVehicleType(command.VehicleType);
         vehicle.ChangeDate(DateTime.Now);
+
+        if (command.Photo.IsNotNullOrEmpty())
+        {
+            var url = $"vehicle/image/{vehicle.Id}";
+            vehicle.ChangePhoto(command.Photo);
+            vehicle.ChangePhotoUrl(url);
+            await blobStorage.SendImage(command.Photo, url);
+        }
 
         await serviceProviderRepository.SaveAsync();
 

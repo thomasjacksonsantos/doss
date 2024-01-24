@@ -38,6 +38,8 @@ public class BlobStorage : IBlobStorage
 
         var file = Convert.FromBase64String(fileBase64)
                           .ConvertToJpeg();
+        
+        await container.DeleteBlobIfExistsAsync(filename);
 
         using (var ms = new MemoryStream(file))
             await container.UploadBlobAsync(filename, ms);

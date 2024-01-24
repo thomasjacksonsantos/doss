@@ -1,29 +1,42 @@
-using Doss.Core.Commands.Vehicles;
 using Doss.Core.Domain.Vehicles;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
+using Doss.Core.Services;
 using FluentValidation;
 
 namespace Doss.Core.Commands.Vehicles.Handlers;
 public class CreateServiceProviderVehicleCommandHandler : BaseCommandHandler<CreateServiceProviderVehicleCommand, CreateServiceProviderVehicleCommandValidator>
 {
     private readonly IServiceProviderRepository serviceProviderRepository;
+    private readonly IBlobStorage blobStorage;
+
     public CreateServiceProviderVehicleCommandHandler(IServiceProviderRepository serviceProviderRepository,
+                                                      IBlobStorage blobStorage,
                                                       CreateServiceProviderVehicleCommandValidator validator)
         : base(validator)
-            => this.serviceProviderRepository = serviceProviderRepository;
+            => (this.serviceProviderRepository, this.blobStorage) = (serviceProviderRepository, blobStorage);
 
     public override async Task<Result> HandleImplementation(CreateServiceProviderVehicleCommand command)
     {
         var serviceProvider = await serviceProviderRepository.ReturnByIdAsync(command.User!.Id);
 
-                serviceProvider.AddVehicle(new ServiceProviderVehicle(new Vehicle(command.Brand,
-                                                                          command.Model,
-                                                                          command.Color,
-                                                                          command.Plate,
-                                                                          command.Photo,
-                                                                          command.DefaultVehicle,
-                                                                          command.VehicleType)));
+        var vehicle = new Vehicle(command.Brand,
+                                  command.Model,
+                                  command.Color,
+                                  command.Plate,
+                                  command.Photo,
+                                  command.DefaultVehicle,
+                                  command.VehicleType);
+
+        serviceProvider.AddVehicle(new ServiceProviderVehicle(vehicle));
+
+        await serviceProviderRepository.SaveAsync();
+
+        var url = $"vehicle/image/{vehicle.Id}";
+
+        await blobStorage.SendImage(command.Photo, url);
+
+        vehicle.ChangePhotoUrl(url);
 
         await serviceProviderRepository.SaveAsync();
 
