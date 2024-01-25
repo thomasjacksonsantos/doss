@@ -1,4 +1,5 @@
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Doss.Core.Domain.Settings;
 using Doss.Core.Services;
 using Doss.Infra.Seedwork;
@@ -41,7 +42,7 @@ public class BlobStorage : IBlobStorage
         var file = Convert.FromBase64String(fileBase64)
                           .ConvertToJpeg();
         
-        await container.DeleteBlobIfExistsAsync(filename);
+        await container.DeleteBlobIfExistsAsync(filename, snapshotsOption: DeleteSnapshotsOption.IncludeSnapshots);
 
         using (var ms = new MemoryStream(file))
             await container.UploadBlobAsync(filename, ms);
