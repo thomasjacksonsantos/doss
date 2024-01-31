@@ -48,5 +48,5 @@ public class ServiceProviderRepository : RepositoryBase<ServiceProvider>, IServi
                         .Include(c => c.ServiceProviderVehicles)!
                         .ThenInclude(c => c.Vehicle)
                         .AsSplitQuery()
-                        .SingleOrDefaultAsync(c => c.Id == serviceProviderId) ?? null!;    
+                        .SingleOrDefaultAsync(c => c.Id == serviceProviderId) ?? null!;
 }

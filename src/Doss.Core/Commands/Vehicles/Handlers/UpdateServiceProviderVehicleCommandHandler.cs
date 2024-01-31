@@ -7,26 +7,21 @@ namespace Doss.Core.Commands.Vehicles.Handlers;
 
 public class UpdateServiceProviderVehicleCommandHandler : BaseCommandHandler<UpdateServiceProviderVehicleCommand, UpdateServiceProviderVehicleCommandValidator>
 {
-    private readonly IServiceProviderRepository serviceProviderRepository;
+    private readonly IVehicleRepository vehicleRepository;
     private readonly IBlobStorage blobStorage;
 
-    public UpdateServiceProviderVehicleCommandHandler(IServiceProviderRepository serviceProviderRepository,
+    public UpdateServiceProviderVehicleCommandHandler(IVehicleRepository vehicleRepository,
                                                       IBlobStorage blobStorage,
                                                       UpdateServiceProviderVehicleCommandValidator validator)
         : base(validator)
-            => (this.serviceProviderRepository, this.blobStorage) = (serviceProviderRepository, blobStorage);
+            => (this.vehicleRepository, this.blobStorage) = (vehicleRepository, blobStorage);
 
     public override async Task<Result> HandleImplementation(UpdateServiceProviderVehicleCommand command)
     {
-        var serviceProvider = await serviceProviderRepository.ReturnVehicles(command.User!.Id);
+        var vehicle = await vehicleRepository.ReturnVehicleById(command.Id);
 
-        if (serviceProvider.ServiceProviderVehicles!.Any(c => c.Vehicle.Id == command.Id) is false)
+        if (vehicle is not {})
             return Results.Error("Vehicle not found");
-
-        var vehicle = serviceProvider.ReturnVehicleById(command.Id);
-
-        if (command.DefaultVehicle)
-            serviceProvider.ResetDefaultVehicles();
 
         vehicle.ChangeBrand(command.Brand.FirstCharToUpper());
         vehicle.ChangeModel(command.Model.FirstCharToUpper());
@@ -39,12 +34,15 @@ public class UpdateServiceProviderVehicleCommandHandler : BaseCommandHandler<Upd
         if (command.Photo.IsNotNullOrEmpty())
         {
             var url = $"vehicle/image/{vehicle.Id}";
-            vehicle.ChangePhoto(command.Photo);
+            // vehicle.ChangePhoto(command.Photo);
             vehicle.ChangePhotoUrl(url);
             await blobStorage.SendImage(command.Photo, url);
         }
 
-        await serviceProviderRepository.SaveAsync();
+        await vehicleRepository.SaveAsync();
+
+        if (command.DefaultVehicle)
+            await vehicleRepository.KeepDefaultVehicleUpdate(command.User!.Id, command.Id);
 
         return Results.Ok("Vehicle updated with success.");
     }

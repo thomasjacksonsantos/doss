@@ -7,26 +7,21 @@ namespace Doss.Core.Commands.Vehicles.Handlers;
 
 public class UpdateResidentialVehicleCommandHandler : BaseCommandHandler<UpdateResidentialVehicleCommand, UpdateResidentialVehicleCommandValidator>
 {
-    private readonly IResidentialRepository residentialRepository;
+    private readonly IVehicleRepository vehicleRepository;
     private readonly IBlobStorage blobStorage;
 
-    public UpdateResidentialVehicleCommandHandler(IResidentialRepository residentialRepository,
+    public UpdateResidentialVehicleCommandHandler(IVehicleRepository vehicleRepository,
                                                   IBlobStorage blobStorage,
                                                   UpdateResidentialVehicleCommandValidator validator)
         : base(validator)
-            => (this.residentialRepository, this.blobStorage) = (residentialRepository, blobStorage);
+            => (this.vehicleRepository, this.blobStorage) = (vehicleRepository, blobStorage);
 
     public override async Task<Result> HandleImplementation(UpdateResidentialVehicleCommand command)
     {
-        var residential = await residentialRepository.ReturnVehicles(command.User!.Id, command.ResidentialWithServiceProviderId);
-        var residentialWithService = residential.ReturnResidentialWithServiceProvider(command.ResidentialWithServiceProviderId);
-        if (residentialWithService.ResidentialVehicles!.Any(c => c.Vehicle.Id == command.Id) is false)
+        var vehicle = await vehicleRepository.ReturnVehicleById(command.Id);
+
+        if (vehicle is not {})
             return Results.Error("Vehicle not found");
-
-        var vehicle = residentialWithService.ReturnVehicleById(command.Id);
-
-        if (vehicle.DefaultVehicle)
-            residentialWithService.ResetDefaultVehicles();
 
         vehicle.ChangeBrand(command.Brand.FirstCharToUpper());
         vehicle.ChangeModel(command.Model.FirstCharToUpper());
@@ -39,12 +34,15 @@ public class UpdateResidentialVehicleCommandHandler : BaseCommandHandler<UpdateR
         if (command.Photo.IsNotNullOrEmpty())
         {
             var url = $"vehicle/image/{vehicle.Id}";
-            vehicle.ChangePhoto(command.Photo);
+            // vehicle.ChangePhoto(command.Photo);
             vehicle.ChangePhotoUrl(url);
             await blobStorage.SendImage(command.Photo, url);
         }
 
-        await residentialRepository.SaveAsync();
+        await vehicleRepository.SaveAsync();
+
+        if (command.DefaultVehicle)
+            await vehicleRepository.KeepDefaultVehicleUpdate(command.User!.Id, command.Id);
 
         return Results.Ok("Vehicle updated with success.");
     }

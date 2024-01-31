@@ -42,4 +42,20 @@ public class VehicleRepository : RepositoryBase<Vehicle>, IVehicleRepository
 
         await Connection.ExecuteAsync(sql, param: new { VehicleId = vehicleId, VehicleStatus = vehicleStatus.ToString() });
     }
+
+    public async Task<Vehicle> ReturnVehicleById(Guid vehicleId)
+        => await Context.Vehicle
+                    .FirstOrDefaultAsync(c => c.Id == vehicleId)
+                     ?? null!;
+
+    public async Task KeepDefaultVehicleUpdate(Guid serviceProviderId, Guid vehicleId)
+        => await Connection.ExecuteAsync(@" update v set v.DefaultVehicle = 0 from Doss.ServiceProvider sp
+                                            inner join Doss.ServiceProviderVehicle spv on sp.Id = spv.ServiceProviderId
+                                            inner join Doss.Vehicle v on spv.VehicleId = v.Id
+                                            WHERE
+                                                sp.Id = @ServiceProviderId
+                                                AND 
+                                                    v.Id <> @VehicleId",
+                                        param: new { ServiceProviderId = serviceProviderId, VehicleId = vehicleId },
+                                        commandType: System.Data.CommandType.Text);
 }

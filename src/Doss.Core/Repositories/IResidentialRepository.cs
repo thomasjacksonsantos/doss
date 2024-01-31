@@ -1,5 +1,6 @@
 using Doss.Core.Domain.Enums;
 using Doss.Core.Domain.Residentials;
+using Doss.Core.Domain.Vehicles;
 using Doss.Core.Queries.Contacts;
 using Doss.Core.Queries.Residentials;
 using Doss.Core.Queries.Verifications;

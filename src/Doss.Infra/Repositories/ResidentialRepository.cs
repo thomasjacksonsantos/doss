@@ -10,6 +10,7 @@ using Doss.Core.Seedwork;
 using Dapper;
 using Microsoft.Extensions.Options;
 using Doss.Core.Domain.Settings;
+using Doss.Core.Domain.Vehicles;
 
 namespace Doss.Infra.Repositories;
 
