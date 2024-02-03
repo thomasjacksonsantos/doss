@@ -32,7 +32,7 @@ public class CreateServiceProviderVehicleCommandHandler : BaseCommandHandler<Cre
 
         await serviceProviderRepository.SaveAsync();
 
-        var url = $"vehicle/image/{vehicle.Id}";
+        var url = $"vehicle/image/{Guid.NewGuid()}";
 
         await blobStorage.SendImage(command.Photo, url);
 

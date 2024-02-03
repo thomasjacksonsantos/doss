@@ -33,8 +33,8 @@ public class UpdateResidentialVehicleCommandHandler : BaseCommandHandler<UpdateR
 
         if (command.Photo.IsNotNullOrEmpty())
         {
-            var url = $"vehicle/image/{vehicle.Id}";
-            // vehicle.ChangePhoto(command.Photo);
+            await blobStorage.DeleteImage(vehicle.PhotoUrl);
+            var url = $"vehicle/image/{Guid.NewGuid()}";
             vehicle.ChangePhotoUrl(url);
             await blobStorage.SendImage(command.Photo, url);
         }

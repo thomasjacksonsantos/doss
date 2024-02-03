@@ -35,7 +35,7 @@ public class CreateResidentialVehicleCommandHandler : BaseCommandHandler<CreateR
 
         await residentialRepository.SaveAsync();
         
-        var url = $"vehicle/image/{vehicle.Id}";
+        var url = $"vehicle/image/{Guid.NewGuid()}";
 
         await blobStorage.SendImage(command.Photo, url);
 

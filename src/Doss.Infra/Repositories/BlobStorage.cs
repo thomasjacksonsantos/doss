@@ -47,4 +47,11 @@ public class BlobStorage : IBlobStorage
         using (var ms = new MemoryStream(file))
             await container.UploadBlobAsync(filename, ms);
     }
+
+    public async Task DeleteImage(string filename)
+    {
+        var client = new BlobServiceClient(appSettings.BlobStorage.BlobStorageConnectionString);
+        var container = client.GetBlobContainerClient(appSettings.BlobStorage.ContainerName);
+        await container.DeleteBlobIfExistsAsync(filename, snapshotsOption: DeleteSnapshotsOption.IncludeSnapshots);
+    }
 }

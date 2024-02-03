@@ -137,6 +137,29 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
             => await HandleCommand(command);
 
         /// <summary>
+        /// Update image vehicle.
+        /// </summary>
+        /// <param name="command">Body</param>
+        /// <returns>Result</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /Todo
+        ///     {
+        ///         "id": Guid,
+        ///         "photo": "base64",
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpPut("image")]
+        public async Task<IActionResult> Put([FromBody] UpdatePhotoVehicleCommand command)
+            => await HandleCommand(command);
+
+        /// <summary>
         /// Update default vehicle.
         /// </summary>
         /// <param name="command">Body</param>
@@ -180,7 +203,7 @@ namespace Doss.Api.Controllers.ServiceProvidersOnBoard
         [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
         [HttpPut("{vehicleId}/status/{vehicleStatus}")]
         public async Task<IActionResult> Put([FromRoute] UpdateStatusVehicleCommand command)
-            => await HandleCommand(command);            
+            => await HandleCommand(command);
 
         /// <summary>
         /// Return list vehicles service provider.
