@@ -2,7 +2,7 @@ using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using MediatR;
 
-namespace Doss.Core.Queries.Residentials.Handlers;
+namespace Doss.Core.Queries.ServiceProviders.Handlers;
 
 public class ActiveResidentialQueryHandler : IRequestHandler<ActiveResidentialQuery, Result<ActiveResidentialQuery.Response>>
 {

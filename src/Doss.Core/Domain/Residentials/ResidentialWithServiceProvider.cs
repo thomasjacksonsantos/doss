@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using Doss.Core.Domain.Addresses;
+using Doss.Core.Domain.Enums;
 using Doss.Core.Domain.Plans;
 using Doss.Core.Domain.ServiceProviders;
 using Doss.Core.Domain.Vehicles;
@@ -11,6 +12,7 @@ public class ResidentialWithServiceProvider
     public Guid Id { get; set; }
     public Guid ResidentialId { get; set; }
     public Residential Residential { get; set; }
+    public ResidentialWithServiceProviderStatus ResidentialWithServiceProviderStatus { get; private set; }
     public Guid ServiceProviderPlanId { get; set; }
     public ServiceProviderPlan ServiceProviderPlan { get; set; } = null!;
     public Collection<ResidentialVehicle>? ResidentialVehicles { get; set; }
@@ -23,6 +25,7 @@ public class ResidentialWithServiceProvider
         => ResidentialVehicles!
             .Select(c => c.Vehicle)
             .SingleOrDefault(c => c.Id == vehicleId)!;
+
     public void ResetDefaultVehicles()
         => ResidentialVehicles!.ForEach(c => c.Vehicle.DefaultVehicle = false);
 
@@ -36,7 +39,7 @@ public class ResidentialWithServiceProvider
     }
 
     public ResidentialWithServiceProvider(Guid serviceProviderPlanId, Guid planId, Address address)
-        => (ServiceProviderPlanId, PlanId, Address) = (serviceProviderPlanId, planId, address);
+        => (ServiceProviderPlanId, PlanId, Address, ResidentialWithServiceProviderStatus) = (serviceProviderPlanId, planId, address, ResidentialWithServiceProviderStatus.Active);
 
     public void AddVehicle(ResidentialVehicle residentialVehicle)
     {

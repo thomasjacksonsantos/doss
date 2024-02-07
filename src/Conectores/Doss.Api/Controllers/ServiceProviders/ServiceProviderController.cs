@@ -68,7 +68,7 @@ public class ServiceProviderController : DossBaseController
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [HttpPost("alert")]
     public async Task<IActionResult> Post([FromBody] ServiceProviderAlertCommand command)
-        => await HandleCommand(command);  
+        => await HandleCommand(command);
 
     /// <summary>
     /// Create new alert to service provider.
@@ -90,8 +90,8 @@ public class ServiceProviderController : DossBaseController
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [HttpPut("status/{UserStatus}")]
     public async Task<IActionResult> Put([FromRoute] UpdateServiceProviderStatusCommand command)
-        => await HandleCommand(command);   
-        
+        => await HandleCommand(command);
+
 
     /// <summary>
     /// Return a service provider list by zipcode.
@@ -144,7 +144,7 @@ public class ServiceProviderController : DossBaseController
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [HttpGet("info")]
     public async Task<IActionResult> Get([FromRoute] ServiceProviderInfoQuery query)
-        => await HandleQuery<ServiceProviderInfoQuery, ServiceProviderInfoQuery.Response>(query);       
+        => await HandleQuery<ServiceProviderInfoQuery, ServiceProviderInfoQuery.Response>(query);
 
     /// <summary>
     /// Return list alerts to service provider with paged.
@@ -157,5 +157,57 @@ public class ServiceProviderController : DossBaseController
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [HttpGet("alert")]
     public async Task<IActionResult> Get([FromRoute] ServiceProviderAlertByIdQuery query)
-        => await HandleQuery<ServiceProviderAlertByIdQuery, ServiceProviderAlertByIdQuery.Response>(query);          
+        => await HandleQuery<ServiceProviderAlertByIdQuery, ServiceProviderAlertByIdQuery.Response>(query);
+
+    /// <summary>
+    /// returns the total number of active users.
+    /// </summary>
+    /// <param name="query">Quey</param>
+    /// <returns>Return response total active</returns>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result<ActiveResidentialQuery.Response>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpGet("active")]
+    public async Task<IActionResult> Get([FromRoute] ActiveResidentialQuery query)
+        => await HandleQuery<ActiveResidentialQuery, ActiveResidentialQuery.Response>(query);
+
+    /// <summary>
+    /// returns the total profit by active and month.
+    /// </summary>
+    /// <param name="query">Quey</param>
+    /// <returns>Return response total active</returns>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result<ActiveResidentialQuery.Response>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpGet("profit")]
+    public async Task<IActionResult> Get([FromRoute] ReturnServiceProviderPlanTotalProfitQuery query)
+        => await HandleQuery<ReturnServiceProviderPlanTotalProfitQuery, ReturnServiceProviderPlanTotalProfitQuery.Response>(query);
+
+        /// <summary>
+        /// returns all customers related to the service provider
+        /// </summary>
+        /// <param name="query">Quey</param>
+        /// <returns>Return response total active</returns>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result<ResidentialListByServiceProviderIdQuery.Response>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpGet("customers")]
+        public async Task<IActionResult> Get([FromQuery] ResidentialListByServiceProviderIdQuery query)
+            => await HandleQuery<ResidentialListByServiceProviderIdQuery, ResidentialListByServiceProviderIdQuery.Response>(query);
+
+        /// <summary>
+        /// returns the residential details.
+        /// </summary>
+        /// <param name="query">Quey</param>
+        /// <returns>Return response total active</returns>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        [ProducesResponseType(typeof(Result<ResidentialListByServiceProviderIdQuery.Response>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [HttpGet("customer/{residentialId}/details")]
+        public async Task<IActionResult> Get([FromRoute] ResidentialDetailsByServiceProviderIdQuery query)
+            => await HandleQuery<ResidentialDetailsByServiceProviderIdQuery, ResidentialDetailsByServiceProviderIdQuery.Response>(query);              
 }

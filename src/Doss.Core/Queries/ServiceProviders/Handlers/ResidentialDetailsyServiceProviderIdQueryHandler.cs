@@ -2,7 +2,7 @@ using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
 using MediatR;
 
-namespace Doss.Core.Queries.Residentials.Handlers;
+namespace Doss.Core.Queries.ServiceProviders.Handlers;
 
 public class ResidentialDetailsyServiceProviderIdQueryHandler : IRequestHandler<ResidentialDetailsByServiceProviderIdQuery, Result<ResidentialDetailsByServiceProviderIdQuery.Response>>
 {

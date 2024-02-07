@@ -2,7 +2,7 @@ using Doss.Core.Domain.Enums;
 using Doss.Core.Domain.Vehicles;
 using Doss.Core.Seedwork;
 
-namespace Doss.Core.Queries.Residentials;
+namespace Doss.Core.Queries.ServiceProviders;
 
 public class ResidentialDetailsByServiceProviderIdQuery : Query<ResidentialDetailsByServiceProviderIdQuery.Response>
 {

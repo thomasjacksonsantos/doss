@@ -10,7 +10,7 @@ using Doss.Core.Seedwork;
 using Dapper;
 using Microsoft.Extensions.Options;
 using Doss.Core.Domain.Settings;
-using Doss.Core.Domain.Vehicles;
+using Doss.Core.Queries.ServiceProviders;
 
 namespace Doss.Infra.Repositories;
 
@@ -216,7 +216,23 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
         => new ActiveResidentialQuery.Response(await Context
                     .Residential
                     .Where(c => c.ResidentialWithServiceProviders
-                                .Select(c => c.ServiceProviderPlan.ServiceProviderId)
-                                .Contains(serviceProviderId))
+                                .Where(c => c.ServiceProviderPlan.ServiceProviderId == serviceProviderId
+                                        && c.ResidentialWithServiceProviderStatus == ResidentialWithServiceProviderStatus.Active)
+                                            .Any())
                     .CountAsync());
+
+
+    public async Task<ReturnServiceProviderPlanTotalProfitQuery.Response> ReturnTotalProfit(Guid serviceProviderId)
+    {
+        var totalActiveByCustomers = await Context.ResidentialWithServiceProvider
+                 .Where(c => c.ServiceProviderPlan.ServiceProviderId == serviceProviderId
+                             && c.ResidentialWithServiceProviderStatus == ResidentialWithServiceProviderStatus.Active)
+                 .SumAsync(c => c.Plan.Price);
+
+        var totalProfitEarn = await Context.ResidentialWithServiceProvider
+                 .Where(c => c.ServiceProviderPlan.ServiceProviderId == serviceProviderId)
+                 .SumAsync(c => c.Plan.Price);
+
+        return new ReturnServiceProviderPlanTotalProfitQuery.Response(totalProfitEarn, totalActiveByCustomers);
+    }
 }

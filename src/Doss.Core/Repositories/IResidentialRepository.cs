@@ -1,8 +1,8 @@
 using Doss.Core.Domain.Enums;
 using Doss.Core.Domain.Residentials;
-using Doss.Core.Domain.Vehicles;
 using Doss.Core.Queries.Contacts;
 using Doss.Core.Queries.Residentials;
+using Doss.Core.Queries.ServiceProviders;
 using Doss.Core.Queries.Verifications;
 
 namespace Doss.Core.Interfaces.Repositories;
@@ -23,4 +23,5 @@ public interface IResidentialRepository : IRepositoryBase<Residential>
     Task<ResidentialDetailsByServiceProviderIdQuery.Response> ReturnResidentialDetails(Guid residentialId, Guid serviceProviderId);
     Task<Residential> ReturnVehicles(Guid id, Guid residentialWithServiceProviderId);
     Task<ActiveResidentialQuery.Response> ReturnTotalActive(Guid serviceProviderId);
+    Task<ReturnServiceProviderPlanTotalProfitQuery.Response> ReturnTotalProfit(Guid serviceProviderId);
 }
