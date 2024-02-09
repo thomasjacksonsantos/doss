@@ -24,6 +24,9 @@ public class ResidentialListByServiceProviderIdQuery : Query<ResidentialListBySe
         public UserStatus Status { get; private set; }
         public string Photo { get; private set; }
         public string Plan { get; private set; }
+        
+        public void ChangePhoto(string photo)
+            => Photo = photo;
 
         public Residential(Guid id, string name, UserStatus status, string photo, string plan)
             => (Id, Name, Status, Photo, Plan) = (id, name, status, photo, plan);
