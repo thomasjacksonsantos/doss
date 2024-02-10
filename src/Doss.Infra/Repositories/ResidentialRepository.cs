@@ -192,7 +192,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                                             : 0 == 0)
                             .Skip(page)
                             .Take(total)
-                            .Select(c => new ResidentialListByServiceProviderIdQuery.Residential(c.Id, c.Name, c.UserStatus, c.Photo, c.ResidentialWithServiceProviders.First().Plan.Description))
+                            .Select(c => new ResidentialListByServiceProviderIdQuery.Residential(c.Id, c.Name, c.UserStatus, c.PhotoUrl, c.ResidentialWithServiceProviders.First().Plan.Description))
                             .ToListAsync();
                             
         return new ResidentialListByServiceProviderIdQuery.Response(residentials, totalResult);
