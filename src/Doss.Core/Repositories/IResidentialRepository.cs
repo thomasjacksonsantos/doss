@@ -19,7 +19,7 @@ public interface IResidentialRepository : IRepositoryBase<Residential>
     Task<ReturnChatQuery.Response> ReturnChatMessage(Guid residentialVerificationRequestId, int page, int total = 20);
     Task<VerificationMessage> ReturnChatMessageById(Guid verificationMessageId);
     Task<IEnumerable<ResidentialContactsQuery.Contact>> ReturnContacts(Guid serviceProviderId, int page, int total = 20);
-    Task<IEnumerable<ResidentialListByServiceProviderIdQuery.Residential>> ReturnResidentialList(Guid serviceProviderId, int page, int total = 20, UserStatus? status = null);
+    Task<ResidentialListByServiceProviderIdQuery.Response> ReturnResidentialList(Guid serviceProviderId, int page, int total = 20, ResidentialWithServiceProviderStatus? status = null);
     Task<ResidentialDetailsByServiceProviderIdQuery.Response> ReturnResidentialDetails(Guid residentialId, Guid serviceProviderId);
     Task<Residential> ReturnVehicles(Guid id, Guid residentialWithServiceProviderId);
     Task<ActiveResidentialQuery.Response> ReturnTotalActive(Guid serviceProviderId);

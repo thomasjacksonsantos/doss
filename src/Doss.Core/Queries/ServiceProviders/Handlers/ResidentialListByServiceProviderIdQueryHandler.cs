@@ -17,10 +17,10 @@ public class ResidentialListByServiceProviderIdQueryHandler : IRequestHandler<Re
 
     public async Task<Result<ResidentialListByServiceProviderIdQuery.Response>> Handle(ResidentialListByServiceProviderIdQuery query, CancellationToken cancellationToken)
     {
-        var residential = await residentialRepository.ReturnResidentialList(query.User!.Id, query.Page, query.Total, query.Status);
+        var response = await residentialRepository.ReturnResidentialList(query.User!.Id, query.Page, query.Total, query.Status);
 
-        residential.ForEach(c => c.ChangePhoto($"{appSettings.Files.DownloadImageUrl}/{c.Photo}"));
+        response.Residentials.ForEach(c => c.ChangePhoto($"{appSettings.Files.DownloadImageUrl}/{c.Photo}"));
 
-        return Results.Ok(new ResidentialListByServiceProviderIdQuery.Response(residential));
+        return Results.Ok(response);
     }
 }

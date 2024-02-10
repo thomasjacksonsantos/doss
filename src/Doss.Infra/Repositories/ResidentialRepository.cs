@@ -157,7 +157,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                 .ToListAsync();
     }
 
-    public async Task<IEnumerable<ResidentialListByServiceProviderIdQuery.Residential>> ReturnResidentialList(Guid serviceProviderId, int page, int total = 20, UserStatus? status = null)
+    public async Task<ResidentialListByServiceProviderIdQuery.Response> ReturnResidentialList(Guid serviceProviderId, int page, int total = 20, ResidentialWithServiceProviderStatus? status = null)
     {
         if (total <= 0 || total > 20)
             total = 20;
@@ -165,19 +165,37 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
         if (page > 0)
             page = (page - 1) * total;
 
-        return await Context
-                    .Residential
-                    .Include(c => c.ResidentialWithServiceProviders)
-                    .ThenInclude(c => c.ServiceProviderPlan)
-                    .Include(c => c.ResidentialWithServiceProviders)
-                    .ThenInclude(c => c.Plan)
-                    .Where(c => c.ResidentialWithServiceProviders
-                                .Select(c => c.ServiceProviderPlan.ServiceProviderId)
-                                .Contains(serviceProviderId) && status.IsNotNull() ? c.UserStatus == status : 0 == 0)
-                    .Skip(page)
-                    .Take(total)
-                    .Select(c => new ResidentialListByServiceProviderIdQuery.Residential(c.Id, c.Name, c.UserStatus, c.Photo, c.ResidentialWithServiceProviders.First().Plan.Description))
-                    .ToListAsync();
+        var totalResult = await Context
+                                    .Residential
+                                    .Where(c => c.ResidentialWithServiceProviders
+                                                .Select(c => c.ServiceProviderPlan.ServiceProviderId)
+                                                .Contains(serviceProviderId) && status.IsNotNull() 
+                                                    ? c.ResidentialWithServiceProviders
+                                                            .Where(c => c.ResidentialWithServiceProviderStatus == status)
+                                                            .Any()
+                                                    : 0 == 0)
+                                    .CountAsync();
+
+        var residentials = await Context
+                            .Residential
+                            .Include(c => c.ResidentialWithServiceProviders)
+                            .ThenInclude(c => c.ServiceProviderPlan)
+                            .Include(c => c.ResidentialWithServiceProviders)
+                            .ThenInclude(c => c.Plan)
+                            .AsSplitQuery()
+                            .Where(c => c.ResidentialWithServiceProviders
+                                        .Select(c => c.ServiceProviderPlan.ServiceProviderId)
+                                        .Contains(serviceProviderId) && status.IsNotNull() 
+                                            ? c.ResidentialWithServiceProviders
+                                                .Where(c => c.ResidentialWithServiceProviderStatus == status)
+                                                .Any()
+                                            : 0 == 0)
+                            .Skip(page)
+                            .Take(total)
+                            .Select(c => new ResidentialListByServiceProviderIdQuery.Residential(c.Id, c.Name, c.UserStatus, c.Photo, c.ResidentialWithServiceProviders.First().Plan.Description))
+                            .ToListAsync();
+                            
+        return new ResidentialListByServiceProviderIdQuery.Response(residentials, totalResult);
     }
 
     public async Task<ResidentialDetailsByServiceProviderIdQuery.Response> ReturnResidentialDetails(Guid residentialId, Guid serviceProviderId)

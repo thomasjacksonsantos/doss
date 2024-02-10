@@ -7,24 +7,24 @@ public class ResidentialListByServiceProviderIdQuery : Query<ResidentialListBySe
 {
     public int Page { get; set; }
     public int Total { get; set; }
-    public UserStatus? Status { get; set; }
+    public ResidentialWithServiceProviderStatus? Status { get; set; }
 
     public class Response
     {
         public IEnumerable<Residential> Residentials { get; set; }
-
-        public Response(IEnumerable<Residential> residentials)
-            => Residentials = residentials;
+        public int Total { get; set; }
+        public Response(IEnumerable<Residential> residentials, int total)
+            => (Residentials, Total) = (residentials, total);
     }
 
     public class Residential
-    {        
+    {
         public Guid Id { get; set; }
         public string Name { get; private set; }
         public UserStatus Status { get; private set; }
         public string Photo { get; private set; }
         public string Plan { get; private set; }
-        
+
         public void ChangePhoto(string photo)
             => Photo = photo;
 
