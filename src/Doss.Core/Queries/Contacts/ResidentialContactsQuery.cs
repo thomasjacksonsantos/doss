@@ -19,8 +19,11 @@ public class ResidentialContactsQuery : Query<ResidentialContactsQuery.Response>
         public Guid Id { get; set; }
         public string Name { get; private set; }
         public string Number { get; private set; }
-        public string Photo { get; set; }
+        public string Photo { get; set; }        
         public Contact(Guid id, string name, string number, string photo)
             => (Id, Name, Number, Photo) = (id, name, number, photo);
+
+        public void ChangePhoto(string url)
+            => Photo = url;
     }
 }

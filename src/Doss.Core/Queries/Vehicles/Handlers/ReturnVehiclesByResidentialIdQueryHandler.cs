@@ -1,8 +1,8 @@
 using Doss.Core.Domain.Settings;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
-using MediatR;
 using Microsoft.Extensions.Options;
+using MediatR;
 
 namespace Doss.Core.Queries.Vehicles.Handlers;
 
@@ -30,7 +30,7 @@ public class ReturnVehiclesByResidentialIdQueryHandler : IRequestHandler<ReturnV
                                                                                                                     c.Vehicle.Model,
                                                                                                                     c.Vehicle.Color,
                                                                                                                     c.Vehicle.Plate,
-                                                                                                                    c.Vehicle.Photo,
+                                                                                                                    c.Vehicle.PhotoUrl,
                                                                                                                     c.Vehicle.DefaultVehicle,
                                                                                                                     c.Vehicle.VehicleType,
                                                                                                                     c.Vehicle.Created,

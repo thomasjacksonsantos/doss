@@ -153,7 +153,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                                 .Contains(serviceProviderId))
                 .Skip(page)
                 .Take(total)
-                .Select(c => new ResidentialContactsQuery.Contact(c.Id, c.Name, c.Phone, c.Photo))
+                .Select(c => new ResidentialContactsQuery.Contact(c.Id, c.Name, c.Phone, c.PhotoUrl))
                 .ToListAsync();
     }
 

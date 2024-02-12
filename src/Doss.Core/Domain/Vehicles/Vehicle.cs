@@ -10,7 +10,6 @@ public class Vehicle
     public string Model { get; set; }
     public string Color { get; set; }
     public string Plate { get; set; }
-    public string Photo { get; set; }
     public string PhotoUrl { get; set; }
     public bool DefaultVehicle { get; set; }
     public VehicleType VehicleType { get; set; }
@@ -18,15 +17,12 @@ public class Vehicle
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
 
-    public Vehicle(string brand, string model, string color, string plate, string photo, bool defaultVehicle, VehicleType vehicleType)
-        => (Brand, Model, Color, Plate, Photo, PhotoUrl, DefaultVehicle, VehicleType, VehicleStatus, Created)
-            = (brand, model, color, plate, photo, string.Empty, defaultVehicle, vehicleType, VehicleStatus.Active, DateTime.Now);
+    public Vehicle(string brand, string model, string color, string plate, bool defaultVehicle, VehicleType vehicleType)
+        => (Brand, Model, Color, Plate, PhotoUrl, DefaultVehicle, VehicleType, VehicleStatus, Created)
+            = (brand, model, color, plate, string.Empty, defaultVehicle, vehicleType, VehicleStatus.Active, DateTime.Now);
 
     public void ChangeDate(DateTime datetime)
         => Updated = datetime;
-
-    public void ChangePhoto(string photo)
-        => Photo = photo;
 
     public void ChangeDefaultVehicle(bool defaultVehicle)
         => DefaultVehicle = defaultVehicle;
@@ -49,5 +45,5 @@ public class Vehicle
         => PhotoUrl = url;
 
     public static implicit operator Vehicle(OnBoardVehicle vehicle)
-      => new Vehicle(vehicle.Brand, vehicle.Model, vehicle.Color, vehicle.Plate, vehicle.Photo, vehicle.DefaultVehicle, vehicle.VehicleType);
+      => new Vehicle(vehicle.Brand, vehicle.Model, vehicle.Color, vehicle.Plate, vehicle.DefaultVehicle, vehicle.VehicleType);
 }

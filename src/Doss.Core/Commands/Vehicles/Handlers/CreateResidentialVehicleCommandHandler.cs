@@ -25,7 +25,6 @@ public class CreateResidentialVehicleCommandHandler : BaseCommandHandler<CreateR
                                   command.Model.FirstCharToUpper(),
                                   command.Color.FirstCharToUpper(),
                                   command.Plate.ToUpper(),
-                                  command.Photo,
                                   command.DefaultVehicle,
                                   command.VehicleType);
 

@@ -34,7 +34,7 @@ public class CreateServiceProviderOnBoardCompletedCommandHandler : BaseCommandHa
         if (serviceProvider.IsNotNull())
             return Results.Error("service provider has already been registered.");
 
-        serviceProvider = new ServiceProvider(command.UserId, onboard.OnBoardUser.Name, onboard.OnBoardUser.TypeDocument, onboard.OnBoardUser.Document, onboard.OnBoardUser.Phone, onboard.OnBoardUser.Photo, true);
+        serviceProvider = new ServiceProvider(command.UserId, onboard.OnBoardUser.Name, onboard.OnBoardUser.TypeDocument, onboard.OnBoardUser.Document, onboard.OnBoardUser.Phone, true);
         serviceProvider.AddVehicle(new Domain.Vehicles.ServiceProviderVehicle(onboard.Vehicle!));
         var bank = await bankRepository.ReturnByIdAsync(onboard.BankId!.Value);
         serviceProvider.AddServiceProviderPlan(new ServiceProviderPlan(onboard.AccountBank, onboard.AgencyBank, onboard.CoverageArea, onboard.Address!, bank, onboard.Plans!.Select(c => (Plan)c).ToList()!));

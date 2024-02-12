@@ -9,7 +9,6 @@ public class Residential
     public string Document { get; private set; }
     public TypeDocument TypeDocument { get; private set; }
     public string Phone { get; private set; }
-    public string Photo { get; private set; }
     public string PhotoUrl { get; set; }
     public bool CompletedRegistration { get; private set; }
     public UserStatus UserStatus { get; private set; }
@@ -21,8 +20,8 @@ public class Residential
             .Where(c => c.ServiceProviderPlan.ServiceProviderId == residentialWithServiceProviderId)
             .FirstOrDefault()!;
 
-    public Residential(Guid id, string name, TypeDocument typeDocument, string document, string phone, string photo, bool completedRegistration)
-            => (Id, Name, TypeDocument, Document, Phone, Photo, PhotoUrl, CompletedRegistration, UserStatus, Created) = (id, name, typeDocument, document.OnlyNumbers(), phone.OnlyNumbers(), photo, string.Empty, completedRegistration, UserStatus.Active, DateTime.Now);
+    public Residential(Guid id, string name, TypeDocument typeDocument, string document, string phone, bool completedRegistration)
+            => (Id, Name, TypeDocument, Document, Phone, PhotoUrl, CompletedRegistration, UserStatus, Created) = (id, name, typeDocument, document.OnlyNumbers(), phone.OnlyNumbers(), string.Empty, completedRegistration, UserStatus.Active, DateTime.Now);
 
     public void AddResidentialWithServiceProvider(ResidentialWithServiceProvider residentialWithServiceProvider)
     {
@@ -41,9 +40,6 @@ public class Residential
 
     public void ChangeTypeDocument(TypeDocument typeDocument)
         => TypeDocument = typeDocument;
-
-    public void ChangePhoto(string photo)
-        => Photo = photo;
 
     public void ChangePhone(string phone)
         => Phone = phone;

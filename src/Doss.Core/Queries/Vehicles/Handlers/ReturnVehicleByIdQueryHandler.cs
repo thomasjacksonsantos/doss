@@ -1,5 +1,7 @@
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
+using Doss.Core.Domain.Settings;
+using Microsoft.Extensions.Options;
 using MediatR;
 
 namespace Doss.Core.Queries.Vehicles.Handlers;
@@ -7,9 +9,10 @@ namespace Doss.Core.Queries.Vehicles.Handlers;
 public class ReturnVehicleByIdQueryHandler : IRequestHandler<ReturnVehicleByIdQuery, Result<ReturnVehicleByIdQuery.Response>>
 {
     private readonly IVehicleRepository vehicleRepository;
+    private readonly AppSettings appSettings;
 
-    public ReturnVehicleByIdQueryHandler(IVehicleRepository vehicleRepository)
-        => this.vehicleRepository = vehicleRepository;
+    public ReturnVehicleByIdQueryHandler(IVehicleRepository vehicleRepository,  IOptions<AppSettings> options)
+        => (this.vehicleRepository, this.appSettings) = (vehicleRepository, options.Value);
 
     public async Task<Result<ReturnVehicleByIdQuery.Response>> Handle(ReturnVehicleByIdQuery query, CancellationToken cancellationToken)
     {
@@ -21,7 +24,7 @@ public class ReturnVehicleByIdQueryHandler : IRequestHandler<ReturnVehicleByIdQu
                                                                                                     vehicle.Model,
                                                                                                     vehicle.Color,
                                                                                                     vehicle.Plate,
-                                                                                                    vehicle.Photo,
+                                                                                                    vehicle.PhotoUrl,
                                                                                                     vehicle.DefaultVehicle,
                                                                                                     vehicle.VehicleType,
                                                                                                     vehicle.Created,

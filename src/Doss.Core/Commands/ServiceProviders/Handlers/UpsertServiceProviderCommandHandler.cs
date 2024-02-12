@@ -16,7 +16,7 @@ public class UpsertServiceProviderCommandHandler : BaseCommandHandler<UpsertServ
     {
         if (command.Id.HasValue is false)
         {
-            await serviceProviderRepository.AddAsync(new ServiceProvider(command.User!.Id, command.Name, command.TypeDocument, command.Document, command.Phone, command.Photo, command.CompletedRegistration), saveChanges: true);
+            await serviceProviderRepository.AddAsync(new ServiceProvider(command.User!.Id, command.Name, command.TypeDocument, command.Document, command.Phone, command.CompletedRegistration), saveChanges: true);
             return Results.Ok("Service provider created with success.");
         }
 
@@ -30,7 +30,6 @@ public class UpsertServiceProviderCommandHandler : BaseCommandHandler<UpsertServ
         serviceProvider.ChangeName(command.Name);
         serviceProvider.ChangeTypeDocument(command.TypeDocument);
         serviceProvider.ChangeDocument(command.Document);
-        serviceProvider.ChangePhoto(command.Photo);
         serviceProvider.ChangePhone(command.Phone);
 
         await serviceProviderRepository.SaveAsync();

@@ -30,8 +30,11 @@ public class CreateResidentialAfterOnBoardCompletedCommandHandler : BaseCommandH
         if (residential.IsNotNull())
             return Results.Error("residential has already been registered.");
 
-        residential = new Domain.Residentials.Residential(command.UserId, onboard.OnBoardUser.Name, onboard.OnBoardUser.TypeDocument, onboard.OnBoardUser.Document,
-                                                                    onboard.OnBoardUser.Phone, onboard.OnBoardUser.Phone, true);
+        residential = new Domain.Residentials.Residential(command.UserId, 
+                                                            onboard.OnBoardUser.Name, 
+                                                            onboard.OnBoardUser.TypeDocument, 
+                                                            onboard.OnBoardUser.Document,
+                                                            onboard.OnBoardUser.Phone, true);
 
         residential.AddResidentialWithServiceProvider(new Domain.Residentials.ResidentialWithServiceProvider(onboard.ServiceProviderPlanId!.Value, onboard.PlanId!.Value, onboard.Address!));
         await residentialRepository.AddAsync(residential, saveChanges: true);
