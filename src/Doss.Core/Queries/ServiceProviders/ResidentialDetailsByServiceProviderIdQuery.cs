@@ -1,5 +1,4 @@
 using Doss.Core.Domain.Enums;
-using Doss.Core.Domain.Vehicles;
 using Doss.Core.Seedwork;
 
 namespace Doss.Core.Queries.ServiceProviders;
@@ -23,11 +22,14 @@ public class ResidentialDetailsByServiceProviderIdQuery : Query<ResidentialDetai
         public string Model { get; set; }
         public string Color { get; set; }
         public string Plate { get; set; }
-        public string Photo { get; set; }
+        public string PhotoUrl { get; set; }
         public VehicleType VehicleType { get; set; }
         
-        public Vehicle(string brand, string model, string color, string plate, string photo, VehicleType vehicleType)
-          => (Brand, Model, Color, Plate, Photo, VehicleType) = (brand, model, color, plate, photo, vehicleType);
+        public Vehicle(string brand, string model, string color, string plate, string photoUrl, VehicleType vehicleType)
+          => (Brand, Model, Color, Plate, PhotoUrl, VehicleType) = (brand, model, color, plate, photoUrl, vehicleType);
+        
+        public void ChangePhotoUrl(string url)
+            => PhotoUrl = url;
     }
 
     public class Address
@@ -40,8 +42,9 @@ public class ResidentialDetailsByServiceProviderIdQuery : Query<ResidentialDetai
         public string Number { get; private set; }
         public int ZipCode { get; private set; }
         public string Complement { get; private set; }
-
-        public Address(string country, string state, string city, string neighborhood, string street, string number, int zipcode, string complement)
-            => (Country, State, City, Neighborhood, Street, Number, ZipCode, Complement) = (country, state, city, neighborhood, street, number, zipcode, complement);
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public Address(string country, string state, string city, string neighborhood, string street, string number, int zipcode, string complement, double latitude, double longitude)
+            => (Country, State, City, Neighborhood, Street, Number, ZipCode, Complement, Latitude, Longitude) = (country, state, city, neighborhood, street, number, zipcode, complement, latitude, longitude);
     }
 }

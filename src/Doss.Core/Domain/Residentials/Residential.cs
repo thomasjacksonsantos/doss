@@ -18,7 +18,7 @@ public class Residential
     public IEnumerable<ResidentialWithServiceProvider> ResidentialWithServiceProviders { get; set; } = new List<ResidentialWithServiceProvider>();
     public ResidentialWithServiceProvider ReturnResidentialWithServiceProvider(Guid residentialWithServiceProviderId)
         => ResidentialWithServiceProviders
-            .Where(c => c.Id == residentialWithServiceProviderId)
+            .Where(c => c.ServiceProviderPlan.ServiceProviderId == residentialWithServiceProviderId)
             .FirstOrDefault()!;
 
     public Residential(Guid id, string name, TypeDocument typeDocument, string document, string phone, string photo, bool completedRegistration)

@@ -96,7 +96,6 @@ namespace Doss.Infra.Data
 
         public DbSet<ResidentialVehicle> ResidentialVehicle
             => Set<ResidentialVehicle>();
-
         public DbSet<UsefulContact> UsefulContact
             => Set<UsefulContact>();
     }

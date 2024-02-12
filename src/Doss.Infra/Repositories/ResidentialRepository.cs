@@ -169,7 +169,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                                     .Residential
                                     .Where(c => c.ResidentialWithServiceProviders
                                                 .Select(c => c.ServiceProviderPlan.ServiceProviderId)
-                                                .Contains(serviceProviderId) && status.IsNotNull() 
+                                                .Contains(serviceProviderId) && status.IsNotNull()
                                                     ? c.ResidentialWithServiceProviders
                                                             .Where(c => c.ResidentialWithServiceProviderStatus == status)
                                                             .Any()
@@ -185,7 +185,7 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                             .AsSplitQuery()
                             .Where(c => c.ResidentialWithServiceProviders
                                         .Select(c => c.ServiceProviderPlan.ServiceProviderId)
-                                        .Contains(serviceProviderId) && status.IsNotNull() 
+                                        .Contains(serviceProviderId) && status.IsNotNull()
                                             ? c.ResidentialWithServiceProviders
                                                 .Where(c => c.ResidentialWithServiceProviderStatus == status)
                                                 .Any()
@@ -194,39 +194,34 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                             .Take(total)
                             .Select(c => new ResidentialListByServiceProviderIdQuery.Residential(c.Id, c.Name, c.UserStatus, c.PhotoUrl, c.ResidentialWithServiceProviders.First().Plan.Description))
                             .ToListAsync();
-                            
+
         return new ResidentialListByServiceProviderIdQuery.Response(residentials, totalResult);
     }
 
     public async Task<ResidentialDetailsByServiceProviderIdQuery.Response> ReturnResidentialDetails(Guid residentialId, Guid serviceProviderId)
     {
-        var residential = await Context
-                                .Residential
-                                .Include(c => c.ResidentialWithServiceProviders)
-                                .ThenInclude(c => c.ResidentialVehicles)!
+        var residentialWithServiceProvider = await Context
+                                .ResidentialWithServiceProvider
+                                .Include(c => c.ResidentialVehicles)!
                                 .ThenInclude(c => c.Vehicle)
-                                .Include(c => c.ResidentialWithServiceProviders)
-                                .ThenInclude(c => c.Address)
-                                .Where(c => c.ResidentialWithServiceProviders
-                                            .Select(c => c.ServiceProviderPlan.ServiceProviderId)
-                                            .Contains(serviceProviderId) && c.Id == residentialId)
-                                .FirstOrDefaultAsync();
+                                .Include(c => c.Address)
+                                .FirstOrDefaultAsync(c => c.ServiceProviderPlan.ServiceProviderId == serviceProviderId && c.ResidentialId == residentialId);
 
-        var residentialWithServiceProvider = residential!.ReturnResidentialWithServiceProvider(serviceProviderId);
-
-        return new ResidentialDetailsByServiceProviderIdQuery.Response(new ResidentialDetailsByServiceProviderIdQuery.Address(residentialWithServiceProvider.Address.Country,
+        return new ResidentialDetailsByServiceProviderIdQuery.Response(new ResidentialDetailsByServiceProviderIdQuery.Address(residentialWithServiceProvider!.Address.Country,
                                                                                                                                          residentialWithServiceProvider.Address.State,
                                                                                                                                          residentialWithServiceProvider.Address.City,
                                                                                                                                          residentialWithServiceProvider.Address.Neighborhood,
                                                                                                                                          residentialWithServiceProvider.Address.Street,
                                                                                                                                          residentialWithServiceProvider.Address.Number,
                                                                                                                                          residentialWithServiceProvider.Address.ZipCode,
-                                                                                                                                         residentialWithServiceProvider.Address.Complement),
+                                                                                                                                         residentialWithServiceProvider.Address.Complement,
+                                                                                                                                         residentialWithServiceProvider.Address.Latitude,
+                                                                                                                                         residentialWithServiceProvider.Address.Longitude),
                                                                                   new ResidentialDetailsByServiceProviderIdQuery.Vehicle(residentialWithServiceProvider.VehicleDefault.Brand,
                                                                                                                                          residentialWithServiceProvider.VehicleDefault.Model,
                                                                                                                                          residentialWithServiceProvider.VehicleDefault.Color,
                                                                                                                                          residentialWithServiceProvider.VehicleDefault.Plate,
-                                                                                                                                         residentialWithServiceProvider.VehicleDefault.Photo,
+                                                                                                                                         residentialWithServiceProvider.VehicleDefault.PhotoUrl,
                                                                                                                                          residentialWithServiceProvider.VehicleDefault.VehicleType));
     }
 
