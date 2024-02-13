@@ -185,29 +185,42 @@ public class ServiceProviderController : DossBaseController
     public async Task<IActionResult> Get([FromRoute] ReturnServiceProviderPlanTotalProfitQuery query)
         => await HandleQuery<ReturnServiceProviderPlanTotalProfitQuery, ReturnServiceProviderPlanTotalProfitQuery.Response>(query);
 
-        /// <summary>
-        /// returns all customers related to the service provider
-        /// </summary>
-        /// <param name="query">Quey</param>
-        /// <returns>Return response total active</returns>
-        /// <response code="201">Returns the newly created item</response>
-        /// <response code="400">If the item is null</response>
-        [ProducesResponseType(typeof(Result<ResidentialListByServiceProviderIdQuery.Response>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-        [HttpGet("customers")]
-        public async Task<IActionResult> Get([FromQuery] ResidentialListByServiceProviderIdQuery query)
-            => await HandleQuery<ResidentialListByServiceProviderIdQuery, ResidentialListByServiceProviderIdQuery.Response>(query);
+    /// <summary>
+    /// returns all customers related to the service provider
+    /// </summary>
+    /// <param name="query">Quey</param>
+    /// <returns>Return response total active</returns>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result<ResidentialListByServiceProviderIdQuery.Response>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpGet("customers")]
+    public async Task<IActionResult> Get([FromQuery] ResidentialListByServiceProviderIdQuery query)
+        => await HandleQuery<ResidentialListByServiceProviderIdQuery, ResidentialListByServiceProviderIdQuery.Response>(query);
 
-        /// <summary>
-        /// returns the residential details.
-        /// </summary>
-        /// <param name="query">Quey</param>
-        /// <returns>Return response total active</returns>
-        /// <response code="201">Returns the newly created item</response>
-        /// <response code="400">If the item is null</response>
-        [ProducesResponseType(typeof(Result<ResidentialListByServiceProviderIdQuery.Response>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-        [HttpGet("customer/{residentialId}/details")]
-        public async Task<IActionResult> Get([FromRoute] ResidentialDetailsByServiceProviderIdQuery query)
-            => await HandleQuery<ResidentialDetailsByServiceProviderIdQuery, ResidentialDetailsByServiceProviderIdQuery.Response>(query);              
+    /// <summary>
+    /// returns the residential details.
+    /// </summary>
+    /// <param name="query">Quey</param>
+    /// <returns>Return response total active</returns>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result<ResidentialListByServiceProviderIdQuery.Response>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpGet("customer/{residentialId}/details")]
+    public async Task<IActionResult> Get([FromRoute] ResidentialDetailsByServiceProviderIdQuery query)
+        => await HandleQuery<ResidentialDetailsByServiceProviderIdQuery, ResidentialDetailsByServiceProviderIdQuery.Response>(query);
+
+    /// <summary>
+    /// returns the vehicles by residential id.
+    /// </summary>
+    /// <param name="query">Quey</param>
+    /// <returns>Return response vehicle all</returns>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result<ResidentialVehicleListByServiceProviderIdQuery.Response>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpGet("customer/{residentialId}/vehicles")]
+    public async Task<IActionResult> Get([FromRoute] ResidentialVehicleListByServiceProviderIdQuery query)
+        => await HandleQuery<ResidentialVehicleListByServiceProviderIdQuery, ResidentialVehicleListByServiceProviderIdQuery.Response>(query);
 }

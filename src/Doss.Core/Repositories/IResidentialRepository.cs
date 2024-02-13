@@ -21,6 +21,7 @@ public interface IResidentialRepository : IRepositoryBase<Residential>
     Task<IEnumerable<ResidentialContactsQuery.Contact>> ReturnContacts(Guid serviceProviderId, int page, int total = 20);
     Task<ResidentialListByServiceProviderIdQuery.Response> ReturnResidentialList(Guid serviceProviderId, int page, int total = 20, ResidentialWithServiceProviderStatus? status = null);
     Task<ResidentialDetailsByServiceProviderIdQuery.Response> ReturnResidentialDetails(Guid residentialId, Guid serviceProviderId);
+    Task<ResidentialVehicleListByServiceProviderIdQuery.Response> ReturnResidentialVehicleList(Guid serviceProviderId, Guid residentialId, int page, int total = 20);
     Task<Residential> ReturnVehicles(Guid id, Guid residentialWithServiceProviderId);
     Task<ActiveResidentialQuery.Response> ReturnTotalActive(Guid serviceProviderId);
     Task<ReturnServiceProviderPlanTotalProfitQuery.Response> ReturnTotalProfit(Guid serviceProviderId);

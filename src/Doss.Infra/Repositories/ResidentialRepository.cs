@@ -11,6 +11,8 @@ using Dapper;
 using Microsoft.Extensions.Options;
 using Doss.Core.Domain.Settings;
 using Doss.Core.Queries.ServiceProviders;
+using Microsoft.Extensions.Azure;
+using Azure;
 
 namespace Doss.Infra.Repositories;
 
@@ -223,6 +225,43 @@ public class ResidentialRepository : RepositoryBase<Residential>, IResidentialRe
                                                                                                                                          residentialWithServiceProvider.VehicleDefault.Plate,
                                                                                                                                          residentialWithServiceProvider.VehicleDefault.PhotoUrl,
                                                                                                                                          residentialWithServiceProvider.VehicleDefault.VehicleType));
+    }
+
+    public async Task<ResidentialVehicleListByServiceProviderIdQuery.Response> ReturnResidentialVehicleList(Guid serviceProviderId, Guid residentialId, int page, int total = 20)
+    {
+        if (total <= 0 || total > 20)
+            total = 20;
+
+        if (page > 0)
+            page = (page - 1) * total;
+
+        var totalResult = await Context.ResidentialWithServiceProvider
+                                    .AsSplitQuery()
+                                    .Where(c => c.ServiceProviderPlan.ServiceProviderId == serviceProviderId
+                                        && c.ResidentialId == residentialId)
+                                    .CountAsync();
+
+        var vehicles = await Context.ResidentialWithServiceProvider
+                                    .Include(c => c.ResidentialVehicles)!
+                                    .ThenInclude(c => c.Vehicle)
+                                    .AsSplitQuery()
+                                    .Where(c => c.ServiceProviderPlan.ServiceProviderId == serviceProviderId
+                                        && c.ResidentialId == residentialId)
+                                    .Skip(page)
+                                    .Take(total)
+                                    .SelectMany(c => c.ResidentialVehicles!.Select(v => new ResidentialVehicleListByServiceProviderIdQuery.Vehicle(v.Vehicle.Id,
+                                                                                                                                                  v.Vehicle.Brand,
+                                                                                                                                                  v.Vehicle.Model,
+                                                                                                                                                  v.Vehicle.Color,
+                                                                                                                                                  v.Vehicle.Plate,
+                                                                                                                                                  v.Vehicle.PhotoUrl,
+                                                                                                                                                  v.Vehicle.DefaultVehicle,
+                                                                                                                                                  v.Vehicle.VehicleType,
+                                                                                                                                                  v.Vehicle.Created,
+                                                                                                                                                  v.Vehicle.Updated)))
+                                                                                                                                                  .ToListAsync();
+
+        return new ResidentialVehicleListByServiceProviderIdQuery.Response(vehicles, totalResult);
     }
 
     public async Task<ActiveResidentialQuery.Response> ReturnTotalActive(Guid serviceProviderId)

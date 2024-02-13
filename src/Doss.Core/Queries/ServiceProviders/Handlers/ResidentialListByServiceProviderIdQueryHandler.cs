@@ -1,8 +1,8 @@
 using Doss.Core.Domain.Settings;
 using Doss.Core.Interfaces.Repositories;
 using Doss.Core.Seedwork;
-using MediatR;
 using Microsoft.Extensions.Options;
+using MediatR;
 
 namespace Doss.Core.Queries.ServiceProviders.Handlers;
 
