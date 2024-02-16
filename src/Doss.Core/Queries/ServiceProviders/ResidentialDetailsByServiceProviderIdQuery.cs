@@ -40,11 +40,11 @@ public class ResidentialDetailsByServiceProviderIdQuery : Query<ResidentialDetai
         public string Neighborhood { get; private set; }
         public string Street { get; private set; }
         public string Number { get; private set; }
-        public int ZipCode { get; private set; }
+        public string ZipCode { get; private set; }
         public string Complement { get; private set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public Address(string country, string state, string city, string neighborhood, string street, string number, int zipcode, string complement, double latitude, double longitude)
+        public Address(string country, string state, string city, string neighborhood, string street, string number, string zipcode, string complement, double latitude, double longitude)
             => (Country, State, City, Neighborhood, Street, Number, ZipCode, Complement, Latitude, Longitude) = (country, state, city, neighborhood, street, number, zipcode, complement, latitude, longitude);
     }
 }

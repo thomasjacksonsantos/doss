@@ -39,11 +39,11 @@ public class ServiceProviderVerificationRequestAllQuery : Query<ServiceProviderV
         public string State { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
-        public int ZipCode { get; set; }
+        public string ZipCode { get; set; }
         public string Number { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public Address(string state, string city, string street, string number, int zipcode, double latitude, double longitude)
+        public Address(string state, string city, string street, string number, string zipcode, double latitude, double longitude)
             => (State, City, Street, Number, ZipCode, Latitude, Longitude) = (state, city, street, number, zipcode, latitude, longitude);
     }
 }

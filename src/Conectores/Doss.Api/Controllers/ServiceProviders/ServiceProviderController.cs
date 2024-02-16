@@ -92,6 +92,25 @@ public class ServiceProviderController : DossBaseController
     public async Task<IActionResult> Put([FromRoute] UpdateServiceProviderStatusCommand command)
         => await HandleCommand(command);
 
+    /// <summary>
+    /// Update service provider.
+    /// </summary>
+    /// <param name="command">command</param>
+    /// <returns>Results ok</returns>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     PUT /Todo
+    ///
+    /// </remarks>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result<UpdateServiceProviderCommand>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpPut]
+    public async Task<IActionResult> Put([FromRoute] UpdateServiceProviderCommand command)
+        => await HandleCommand(command);
+
 
     /// <summary>
     /// Return a service provider list by zipcode.
@@ -223,4 +242,17 @@ public class ServiceProviderController : DossBaseController
     [HttpGet("customer/{residentialId}/vehicles")]
     public async Task<IActionResult> Get([FromRoute] ResidentialVehicleListByServiceProviderIdQuery query)
         => await HandleQuery<ResidentialVehicleListByServiceProviderIdQuery, ResidentialVehicleListByServiceProviderIdQuery.Response>(query);
+
+    /// <summary>
+    /// return service provider.
+    /// </summary>
+    /// <param name="query">Quey</param>
+    /// <returns>Return response vehicle all</returns>
+    /// <response code="201">Returns the newly created item</response>
+    /// <response code="400">If the item is null</response>
+    [ProducesResponseType(typeof(Result<ResidentialVehicleListByServiceProviderIdQuery.Response>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [HttpGet]
+    public async Task<IActionResult> Get([FromRoute] ReturnServiceProviderById query)
+        => await HandleQuery<ReturnServiceProviderById, ReturnServiceProviderById.Response>(query);        
 }

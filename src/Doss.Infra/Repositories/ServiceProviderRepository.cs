@@ -19,6 +19,11 @@ public class ServiceProviderRepository : RepositoryBase<ServiceProvider>, IServi
     public override async Task<ServiceProvider> ReturnByIdAsync(Guid id)
         => await Context.ServiceProvider
                         .Include(c => c.ServiceProviderPlans)
+                        .ThenInclude(c => c.Address)
+                        .Include(c => c.ServiceProviderPlans)
+                        .ThenInclude(c => c.Bank)
+                        .Include(c => c.ServiceProviderPlans)
+                        .ThenInclude(c => c.Plans)
                         .AsSplitQuery()
                         .SingleOrDefaultAsync(c => c.Id == id) ?? null!;
 

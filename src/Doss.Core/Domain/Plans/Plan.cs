@@ -21,6 +21,9 @@ public class Plan
         Updated = DateTime.Now;
     }
 
+    public void ChangeDescription(string description)
+        => Description = description;
+        
     public void ChangePlanStatus(PlanStatus status)
     {
         PlanStatus = status;

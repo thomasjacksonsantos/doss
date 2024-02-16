@@ -1,3 +1,4 @@
+using System.Diagnostics.Contracts;
 using Doss.Core.Domain.Addresses;
 using Doss.Core.Domain.Banks;
 using Doss.Core.Domain.Plans;
@@ -17,6 +18,7 @@ public class ServiceProviderPlan
     public Address Address { get; private set; } = null!;
     public int CoverageArea { get; private set; }
     public DateTime Created { get; private set; }
+    public DateTime? Updated { get; set; }
 
     public ServiceProviderPlan(string accountBank, string agencyBank, int coverageArea)
         => (AccountBank, AgencyBank, CoverageArea, Created) = (accountBank, agencyBank, coverageArea, DateTime.Now);
@@ -26,7 +28,7 @@ public class ServiceProviderPlan
 
     public Plan ReturnPlanById(Guid planId)
         => Plans.SingleOrDefault(c => c.Id == planId) ?? null!;
-        
+
     public void AddPlans(IEnumerable<Plan> plans)
         => Plans = plans;
 
@@ -36,6 +38,34 @@ public class ServiceProviderPlan
         Bank = bank;
     }
 
-    public void AddAddress(Address address)
-        => Address = address;
+    public void ChangeBank(Bank bank)
+    {
+        BankId = bank.Id;
+        Bank = bank;
+        Updated = DateTime.Now;
+    }
+
+    public void ChangeAddress(Address address)
+    {
+        Address = address;
+        Updated = DateTime.Now;
+    }
+
+    public void ChangeAccountBank(string accountBank)
+    {
+        AccountBank = accountBank;
+        Updated = DateTime.Now;
+    }
+
+    public void ChangeAgencyBank(string agencyBank)
+    {
+        AgencyBank = agencyBank;
+        Updated = DateTime.Now;
+    }
+
+    public void ChangeCoverage(int coverage)
+    {
+        CoverageArea = coverage;
+        Updated = DateTime.Now;
+    }
 }
