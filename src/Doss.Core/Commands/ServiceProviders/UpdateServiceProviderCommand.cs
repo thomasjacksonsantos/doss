@@ -5,10 +5,10 @@ namespace Doss.Core.Commands.ServiceProviders;
 
 public class UpdateServiceProviderCommand : Command
 {
-    public ServiceProviderCommand ServiceProvider { get; set; } = null!;
-    public AddressCommand Address { get; set; } = null!;
-    public CoverageCommand Coverage { get; set; } = null!;
-    public FormPaymentCommand FormPayment { get; set; } = null!;
+    public ServiceProviderCommand ServiceProvider { get; set; }
+    public AddressCommand Address { get; set; }
+    public CoverageCommand Coverage { get; set; }
+    public FormPaymentCommand FormPayment { get; set; }
 
     public class ServiceProviderCommand
     {

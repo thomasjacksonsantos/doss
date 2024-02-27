@@ -33,7 +33,7 @@ public class UpdateServiceProviderCommandHandler : BaseCommandHandler<UpdateServ
         serviceProvider.ChangeDocument(command.ServiceProvider.Document);
         serviceProvider.ChangePhone(command.ServiceProvider.Phone);
 
-        if (command.ServiceProvider.Photo.IsNotNull())
+        if (command.ServiceProvider.Photo.IsNotNullOrEmpty())
         {
             var url = $"service-provider/image/{Guid.NewGuid()}";
             serviceProvider.ChangePhotoUrl(url);

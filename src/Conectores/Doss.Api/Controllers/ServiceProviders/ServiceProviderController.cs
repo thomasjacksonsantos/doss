@@ -108,7 +108,7 @@ public class ServiceProviderController : DossBaseController
     [ProducesResponseType(typeof(Result<UpdateServiceProviderCommand>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [HttpPut]
-    public async Task<IActionResult> Put([FromRoute] UpdateServiceProviderCommand command)
+    public async Task<IActionResult> Put([FromBody] UpdateServiceProviderCommand command)
         => await HandleCommand(command);
 
 
