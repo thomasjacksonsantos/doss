@@ -9,6 +9,9 @@ public class ServiceProviderInfoQuery : Query<ServiceProviderInfoQuery.Response>
     {
         public string Name { get; set; } = string.Empty;
         public UserStatus UserStatus { get; set; }
-        public string Photo { get; set; } = string.Empty;
+        public string PhotoUrl { get; set; } = string.Empty;
+
+        public void AddPhotoUrl(string url)
+            => PhotoUrl = url;
     }
 }
